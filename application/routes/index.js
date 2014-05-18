@@ -1,9 +1,17 @@
-var express = require('express');
-var router = express.Router();
+var route = function (app) {
+	app.get('/', function(req, res) {
+		res.render('index');
+	});
 
-/* GET home page. */
-router.get('/', function(req, res) {
-  res.render('index', { title: 'SocialGcap - Inicio' });
-});
+	app.get('/login', function(req, res) {
+		res.render('login');
+	});
 
-module.exports = router;
+	app.get('/registro', function(req, res) {
+		res.render('registro');
+	});
+
+	/* AQUI FALTA EL APARTADO POST DEL REGISTRO */
+}
+
+module.exports = route;
