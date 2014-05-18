@@ -1,1 +1,69 @@
 extends layout
+
+block content
+  .container
+    .container
+      .row
+        .col-md-12
+          .col-md-offset-3.col-md-6
+            .well
+              h1.text-center 
+                | Regístrate o 
+                a(href='/login') inicia sesión
+              form(method='POST',action='',accept-charset='UTF-8').form-horizontal
+                fieldset.page-header
+                  legend Datos de conexión
+                  .form-group
+                    .col-xs-12.col-sm-12.col-md-10.col-md-offset-1.text-center
+                      input.form-control(id='usuario',name='usuario',placeholder='Usuario', type='text', required)
+                  .form-group
+                    .col-xs-12.col-sm-12.col-md-10.col-md-offset-1.text-center
+                      input.form-control(id='pass',name='pass',placeholder='Contraseña', type='password', required)
+                  legend Datos personales
+                  .form-group
+                    .col-xs-12.col-sm-12.col-md-10.col-md-offset-1.text-center
+                      input.form-control(id='nombre',name='nombre',placeholder='Nombre', type='text', required)
+                  .form-group
+                    .col-xs-12.col-sm-12.col-md-10.col-md-offset-1.text-center
+                      input.form-control(id='apellidos',name='apellidos',placeholder='Apellidos', type='text', required)
+                  .form-group
+                    .col-xs-12.col-sm-12.col-md-10.col-md-offset-1.text-center
+                      input.form-control(id='email',name='email',placeholder='Email', type='email', required)
+                  .form-group
+                    .col-xs-12.col-sm-12.col-md-10.col-md-offset-1.text-center
+                      input.form-control(id='fecha-nacimiento',name='fecha-nacimiento',placeholder='Fecha de nacimiento', type='date', required)
+                  legend Tipo de perfil
+                  .form-group
+                    .col-xs-12.col-sm-12.col-md-10.col-md-offset-1.text-center
+                      label.radio-inline
+                        input(type='radio',id='alumno',name='rol',value='alumno')
+                        | Soy un alumno
+                      label.radio-inline
+                        input(type='radio',id='profesor',name='rol',value='profesor')
+                        | Soy un profesor
+                  .form-group
+                    .col-xs-12.col-sm-12.col-md-10.col-md-offset-1.text-center
+                      //- (Este campo aparece solo si el usuario es un alumno, sera obligatorio)
+                      //- (Las opciones de este campo son resultado de una consulta a promociones)
+                      select(id='promocion',name='promocion').form-control
+                        option(selected='selected') Promoción
+                        option DAW 2012-2014
+                        option DAW 2013-2015
+                        option ASIR 2012-2014
+                        option ASIR 2013-2015
+                  .form-group
+                    .col-xs-12.col-sm-12.col-md-10.col-md-offset-1.text-center
+                      //- (Este campo aparece solo si el usuario es un alumno, sera obligatorio)
+                      //- (Las opciones de este campo son resultado de una consulta a cursos)
+                      select(id='curso',name='curso').form-control
+                        option(selected='selected') Curso
+                        option(value='1daw') 1º D.A.W.
+                        option(value='2daw') 2º D.A.W.
+                        option(value='1asir') 1º A.S.I.R.
+                        option(value='2asir') 2º A.S.I.R.
+                  hr
+                  .form-group
+                    .col-md-10.col-md-offset-1
+                      button(type='submit').btn.btn-block.btn-success 
+                        span.glyphicon.glyphicon-ok 
+                        
