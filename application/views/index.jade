@@ -1,5 +1,48 @@
 extends layout
 
+block custom-styles
+  link(rel='stylesheet', href='/lib/bootstrap/css/index.css')
+
 block content
-  h1= title
-  p Welcome to #{title}
+  .site-wrapper
+      .site-wrapper-inner
+        .cover-container
+          .masthead.clearfix
+            .inner
+              //ul.nav.masthead-nav
+                li.active
+                  a(href='#') Inicio
+                li
+                  a(href='/salas') Salas
+                li
+                  a(href='/anuncios') Tablón
+                li
+                  a(href='/usuarios') Usuarios
+          .inner.cover
+            h1.cover-heading SocialGCAP
+            p.lead
+              ¿Eres o fuiste alumno del I.E.S Gran Capitán?
+              br
+              ¿Necesitas repasar antes del examen?
+              br
+              | Charla con tus compañeros, ponte en contacto con tus
+              | profesores, conoce a otros alumnos.
+              br
+              | Únete.
+            p.lead
+              a.btn.btn-lg.btn-info(href='/login') Entra
+              a.btn.btn-lg.btn-success(href='/registro') Regístrate
+          .mastfoot
+            .inner
+              p
+                | Un proyecto conjunto de 
+                a(href='https://github.com/zacr0') @zacroDev
+                |  y 
+                a(href='https://github.com/Rubenrod18') @RubenRod_18
+                | .
+              p
+                | Plantilla basada en Cover, de 
+                a(href='http://getbootstrap.com') Bootstrap
+                | , por 
+                a(href='https://twitter.com/mdo') @mdo
+                | .
