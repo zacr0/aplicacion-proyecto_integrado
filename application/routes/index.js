@@ -1,10 +1,11 @@
 var route = function (app) {
 	app.get('/', function(req, res) {
+		req.session.name = "Prueba";
 		res.render('index');
 	});
 
 	app.get('/login', function(req, res) {
-		res.render('login');
+		res.render('login', {name: req.session.name});
 	});
 
 	app.get('/registro', function(req, res) {
