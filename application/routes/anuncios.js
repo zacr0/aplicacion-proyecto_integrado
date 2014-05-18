@@ -1,6 +1,6 @@
 var route = function (app) {
 	app.get('/anuncios', function(req, res) {
-		res.send('Para los anuncios');
+		res.render('anuncios');
 	});
 
 	/* AQUI FALTA EL APARTADO POST DEL REGISTRO */

@@ -1,6 +1,7 @@
 var route = function (app) {
-	app.get('/perfil/:id', function(req, res) {
-		res.send('Página principal');
+	//app.get('/perfil/:id', function(req, res) {
+	app.get('/perfil', function(req, res) {
+		res.render('perfil');
 	});
 }
 

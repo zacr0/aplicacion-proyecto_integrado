@@ -1,14 +1,14 @@
 var route = function (app) {
 	app.get('/', function(req, res) {
-		res.send('Página principal');
+		res.render('index');
 	});
 
 	app.get('/login', function(req, res) {
-		res.send('Ruta para el login');
+		res.render('login');
 	});
 
 	app.get('/registro', function(req, res) {
-		res.send('Registro');
+		res.render('registro');
 	});
 
 	/* AQUI FALTA EL APARTADO POST DEL REGISTRO */
