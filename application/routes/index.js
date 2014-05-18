@@ -1,9 +1,17 @@
-var express = require('express');
-var router = express.Router();
+var route = function (app) {
+	app.get('/', function(req, res) {
+		res.send('Página principal');
+	});
 
-/* GET home page. */
-router.get('/', function(req, res) {
-  res.render('index', { title: 'Express' });
-});
+	app.get('/login', function(req, res) {
+		res.send('Ruta para el login');
+	});
 
-module.exports = router;
+	app.get('/registro', function(req, res) {
+		res.send('Registro');
+	});
+
+	/* AQUI FALTA EL APARTADO POST DEL REGISTRO */
+}
+
+module.exports = route;
