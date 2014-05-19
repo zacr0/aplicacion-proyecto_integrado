@@ -1,9 +1,22 @@
 $(function() {
 	$('#fecha-nacimiento').datepicker({
 		format: 'dd/mm/yyyy',
+		endDate: new Date($.now()),
+		startDate: new Date('01/01/1970'),
+		language: 'es',
+		minViewMode: 'days',
 		weekStart: 1,
-		viewMode: 'years',
-		minViewMode: 'days'
+		autoclose: true
 	});
 
+	//$('.visible-alumno').hide();
+	//$('.visible-profesor').hide();
+
+	//$('input[name=perfil]').click(function () {
+	//	if (this.id == "#alumno") {
+	//		$(".visible-alumno").show();
+	//	} else {
+	//		$(".visible-alumno").hide();
+	//	}
+	//});
 });

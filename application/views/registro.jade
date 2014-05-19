@@ -39,31 +39,41 @@ block content
                   .form-group
                     .col-xs-12.col-sm-12.col-md-10.col-md-offset-1.text-center
                       label.radio-inline
-                        input(type='radio',id='alumno',name='rol',value='alumno', required)
+                        input(type='radio',id='alumno',name='perfil',value='alumno', required)
                         | Soy un alumno
                       label.radio-inline
-                        input(type='radio',id='profesor',name='rol',value='profesor')
+                        input(type='radio',id='profesor',name='perfil',value='profesor')
                         | Soy un profesor
-                  .form-group
+                  .form-group.visible-alumno
                     .col-xs-12.col-sm-12.col-md-10.col-md-offset-1.text-center
                       //- (Este campo aparece solo si el usuario es un alumno, sera obligatorio)
                       //- (Las opciones de este campo son resultado de una consulta a promociones)
                       select(id='promocion',name='promocion').form-control
-                        option(selected='selected') Promoción
+                        option(selected='selected') ¿Cuál es tu promoción?
                         option DAW 2012-2014
                         option DAW 2013-2015
                         option ASIR 2012-2014
                         option ASIR 2013-2015
-                  .form-group
+                  .form-group.visible-alumno
                     .col-xs-12.col-sm-12.col-md-10.col-md-offset-1.text-center
                       //- (Este campo aparece solo si el usuario es un alumno, sera obligatorio)
                       //- (Las opciones de este campo son resultado de una consulta a cursos)
                       select(id='curso',name='curso').form-control
-                        option(selected='selected') Curso
+                        option(selected='selected') ¿En qué curso estás?
                         option(value='1daw') 1º D.A.W.
                         option(value='2daw') 2º D.A.W.
                         option(value='1asir') 1º A.S.I.R.
                         option(value='2asir') 2º A.S.I.R.
+                  .form-group.visible-profesor
+                    .col-xs-12.col-sm-12.col-md-10.col-md-offset-1.text-center
+                      //- (Este campo aparece solo si el usuario es un profesor, sera obligatorio)
+                      //- (Las opciones de este campo son resultado de una consulta a asignaturas)
+                      select(id='asignaturas',name='asignaturas').form-control
+                        option(selected='selected') ¿Qué asignaturas impartes?
+                        option(value='dwec') Desarrollo Web Entorno Cliente
+                        option(value='dwes') Desarrollo Web Entorno Servidor
+                        option(value='prog') Programación
+                        option(value='diw') Diseño de Aplicaciones Web
                   hr
                   .form-group
                     .col-md-10.col-md-offset-1
