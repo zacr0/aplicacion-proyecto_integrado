@@ -3,6 +3,10 @@ $(function() {
 	var loginForm = $('#form-login');
 
 	$(loginForm).validate({
+		errorPlacement: function(label, element) {
+			label.addClass('control-label');
+			label.insertAfter(element);
+		},
 		rules: {
 			usuario: {
 				required: true
@@ -12,6 +16,8 @@ $(function() {
 			}
 		}
 	});
+
+	// PENDIENTE COMPROBAR VALIDACION
 
 	// PAGINA DE REGISTRO
 	$('#fechanacimiento').datepicker({
@@ -41,6 +47,10 @@ $(function() {
 
 	var registroForm = $('#form-registro');
 	registroForm.validate({
+		errorPlacement: function(label, element) {
+			label.addClass('control-label');
+			label.insertBefore(element);
+		},
 		rules: {
 			usuario: {
 				required: true,
@@ -83,6 +93,9 @@ $(function() {
 			}
 		}
 	});
+
+	// PENDIENTE COMPROBAR VALIDACION
+	
 	/*
 		El nombre debe tener 3 o mas letras y puede ser compuesto
 	*/
