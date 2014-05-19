@@ -9,14 +9,17 @@ $(function() {
 		autoclose: true
 	});
 
-	//$('.visible-alumno').hide();
-	//$('.visible-profesor').hide();
+	$('.visible-alumno').hide();
+	$('.visible-profesor').hide();
 
-	//$('input[name=perfil]').click(function () {
-	//	if (this.id == "#alumno") {
-	//		$(".visible-alumno").show();
-	//	} else {
-	//		$(".visible-alumno").hide();
-	//	}
-	//});
+	$('input[name=perfil]').click(function () {
+		if (this.id == "alumno") {
+			$(".visible-alumno").show();
+			$(".visible-profesor").hide();
+		} 
+		if (this.id == "profesor") {
+			$(".visible-profesor").show();
+			$(".visible-alumno").hide();
+		}
+	});
 });
