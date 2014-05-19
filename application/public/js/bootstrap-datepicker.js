@@ -5,8 +5,8 @@
  * Copyright 2012 Stefan Petre
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * you Mayo not use this file except in compliance with the License.
+ * You Mayo obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
@@ -369,11 +369,11 @@
 				navStep: 10
 		}],
 		dates:{
-			days: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
-			daysShort: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-			daysMin: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
-			months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
-			monthsShort: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+			days: ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"],
+			daysShort: ["Dom", "Lun", "Mar", "Mier", "Jue", "Vie", "Sab", "Dom"],
+			daysMin: ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa", "Do"],
+			months: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
+			monthsShort: ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"]
 		},
 		isLeapYear: function (year) {
 			return (((year % 4 === 0) && (year % 100 !== 0)) || (year % 400 === 0))
@@ -385,7 +385,7 @@
 			var separator = format.match(/[.\/\-\s].*?/),
 				parts = format.split(/\W+/);
 			if (!separator || !parts || parts.length === 0){
-				throw new Error("Invalid date format.");
+				throw new Error("Formato de fecha inválido.");
 			}
 			return {separator: separator, parts: parts};
 		},
