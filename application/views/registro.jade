@@ -1,5 +1,8 @@
 extends layout
 
+block custom-styles
+  link(rel='stylesheet', href='/stylesheets/datepicker.css')
+
 block content
   .container
     .container
@@ -66,4 +69,6 @@ block content
                     .col-md-10.col-md-offset-1
                       button(type='submit').btn.btn-block.btn-success 
                         span.glyphicon.glyphicon-ok 
-                        
+
+block custom-scripts
+  script(src='/js/bootstrap-datepicker.js')
