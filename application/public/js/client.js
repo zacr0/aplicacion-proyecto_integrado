@@ -6,6 +6,10 @@ $(function() {
 		errorPlacement: function(label, element) {
 			label.addClass('control-label');
 			label.insertAfter(element);
+			$(element).parent().addClass('has-error');
+		},
+		unhighlight: function (element) {
+			$(element).parent().removeClass('has-error');
 		},
 		rules: {
 			usuario: {
@@ -16,8 +20,6 @@ $(function() {
 			}
 		}
 	});
-
-	// PENDIENTE COMPROBAR VALIDACION
 
 	// PAGINA DE REGISTRO
 	$('#fechanacimiento').datepicker({
@@ -36,7 +38,7 @@ $(function() {
 	$('input[name=perfil]').click(function () {
 		if (this.id == "alumno") {
 			$(".visible-alumno").show();
-			$("#alumno").attr('required') = 
+			$("#alumno").attr('required');
 			$(".visible-profesor").hide();
 		} 
 		if (this.id == "profesor") {
@@ -49,7 +51,11 @@ $(function() {
 	registroForm.validate({
 		errorPlacement: function(label, element) {
 			label.addClass('control-label');
-			label.insertBefore(element);
+			label.insertAfter(element);
+			$(element).parent().addClass('has-error');
+		},
+		unhighlight: function (element) {
+			$(element).parent().removeClass('has-error');
 		},
 		rules: {
 			usuario: {
@@ -60,6 +66,10 @@ $(function() {
 				required: true,
 				pwd: true,
 				minlength: 6
+			},
+			confirmpass: {
+				required: true,
+				equalTo: '#pass'
 			},
 			nombre: {
 				required: true,
@@ -93,8 +103,6 @@ $(function() {
 			}
 		}
 	});
-
-	// PENDIENTE COMPROBAR VALIDACION
 	
 	/*
 		El nombre debe tener 3 o mas letras y puede ser compuesto
