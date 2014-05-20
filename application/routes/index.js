@@ -4,11 +4,12 @@ var Usuario = require('../models/Usuario'),
 var route = function (app) {
 	app.get('/', function (req, res) {
 		req.session.name = "Prueba";
-		res.render('index');
+		res.render('index', { title: 'SocialGcap - Inicio' });
 	});
 
 	app.get('/login', function (req, res) {
-		res.render('login', {name: req.session.name});
+		res.render('login', {title: 'SocialGcap- Login', 
+        name: req.session.name});
 		//res.render('index', { title: 'SocialGcap - Inicio' });
 	});
 
