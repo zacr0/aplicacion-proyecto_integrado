@@ -10,12 +10,12 @@ block content
               h1.text-center 
                 | Inicia sesión o 
                 a(href='/registro') regístrate
-              form.form-horizontal
+              form(id='form-login',method='POST',action='',accept-charset='UTF-8').form-horizontal
                 fieldset 
-                  .form-group
+                  .form-group.has-feedback
                     .col-xs-12.col-sm-12.col-md-10.col-md-offset-1
                       input.form-control(id='usuario',name='usuario',placeholder='Usuario', type='text', required)
-                  .form-group
+                  .form-group.has-feedback
                     .col-xs-12.col-sm-12.col-md-10.col-md-offset-1
                       input.form-control(id='pass',name='pass',placeholder='Contraseña', type='password', required)
                     .col-xs-10.col-sm-10.col-md-10.col-md-offset-1
@@ -28,3 +28,7 @@ block content
                     .col-md-10.col-md-offset-1
                       button(type='submit').btn.btn-block.btn-success
                         span.glyphicon.glyphicon-ok 
+
+block custom-scripts
+  script(src='/js/jquery.validate.min.js')
+  script(src='/js/messages_es.js')
