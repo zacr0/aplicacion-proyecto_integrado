@@ -1,5 +1,5 @@
 $(function() {
-	$('#fecha-nacimiento').datepicker({
+	$('#fechaNacimiento').datepicker({
 		format: 'dd/mm/yyyy',
 		endDate: new Date($.now()),
 		startDate: new Date('01/01/1970'),
