@@ -30,16 +30,14 @@ var route = function (app) {
           if (err) {
             return console.log(err);
           }
+          console.log('usuario: ' + req.body.usuario +
+            '\npass: ' + req.body.pass +
+            '\nnombre: ' + req.body.nombre +
+            '\napellidos: ' + req.body.apellidos +
+            '\nfecha nacimiento: ' + req.body.fechaNacimiento +
+            '\nperfil: ' + req.body.perfil);
           console.log('OK');
         });
-
-        res.send('usuario: ' + req.body.usuario +
-        	'\npass: ' + req.body.pass +
-        	'\nnombre: ' + req.body.nombre +
-        	'\napellidos: ' + req.body.apellidos +
-        	'\nfecha nacimiento: ' + req.body.fechaNacimiento +
-        	'\nperfil: ' + req.body.perfil
-        );
 	});
 }
 

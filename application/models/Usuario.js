@@ -2,7 +2,7 @@ var mongoose = require('mongoose'),
   Schema = mongoose.Schema;
 
 // Connection for database
-mongoose.connect('mongodb://<user>:<password>@ruta_web');
+mongoose.connect('mongodb://ruben:ruben@ds043388.mongolab.com:43388/proyectointegrado/usuarios');
 
 var Usuario = new Schema({
   nombre: String,
@@ -10,7 +10,7 @@ var Usuario = new Schema({
   usuario: String,
   pass: String,
   foto: String,
-  fecha_nacimiento: Date,
+  fechaNacimiento: Date,
   email: String,
   perfil: String,
   id_promoción: Schema.ObjectId,
