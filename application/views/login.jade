@@ -10,24 +10,25 @@ block content
               h1.text-center 
                 | Inicia sesión o 
                 a(href='/registro') regístrate
-              form.form-horizontal
-                fieldset
-                  legend Conectar con...
-                  img(src='', alt='Facebook')
-                  img(src='', alt='LinkedIn')
-                  img(src='', alt='Google+')
-                  legend O entra normalmente
+              form(id='form-login',method='POST',action='',accept-charset='UTF-8').form-horizontal
+                fieldset 
+                  .form-group.has-feedback
+                    .col-xs-12.col-sm-12.col-md-10.col-md-offset-1
+                      input.form-control(id='usuario',name='usuario',placeholder='Usuario', type='text', required)
+                  .form-group.has-feedback
+                    .col-xs-12.col-sm-12.col-md-10.col-md-offset-1
+                      input.form-control(id='pass',name='pass',placeholder='Contraseña', type='password', required)
+                    .col-xs-10.col-sm-10.col-md-10.col-md-offset-1
+                      .checkbox
+                      label 
+                        input(id='remember',type='checkbox')
+                        |  Recuérdame
+                  hr
                   .form-group
-                    label(for="usuario").col-md-2.control-label
-                      strong Usuario:
-                    .col-md-10
-                      input.form-control(id='usuario', placeholder='Usuario', type='text')
-                  .form-group
-                    label(for="pass").col-md-2.control-label
-                      strong Contraseña:
-                    .col-md-10
-                      input.form-control(id='pass', placeholder='Contraseña', type='password')
-                  .form-group
-                    .col-md-10.col-md-offset-2
-                      button(type='submit').btn.btn-block.btn-success Entrar
+                    .col-md-10.col-md-offset-1
+                      button(type='submit').btn.btn-block.btn-success
+                        span.glyphicon.glyphicon-ok 
 
+block custom-scripts
+  script(src='/js/jquery.validate.min.js')
+  script(src='/js/messages_es.js')
