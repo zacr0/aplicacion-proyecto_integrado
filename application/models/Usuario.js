@@ -10,7 +10,7 @@ var Usuario = new Schema({
   usuario: String,
   pass: String,
   foto: String,
-  fecha_nacimiento: Date,
+  fechaNacimiento: Date,
   email: String,
   perfil: String,
   id_promoción: Schema.ObjectId,
