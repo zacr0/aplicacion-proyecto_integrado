@@ -2,7 +2,7 @@ var mongoose = require('mongoose'),
   Schema = mongoose.Schema;
 
 // Connection for database
-mongoose.connect('mongodb://<user>:<password>@ruta_web');
+mongoose.connect('mongodb://pablo:pablo@ds043388.mongolab.com:43388/proyectointegrado');
 
 var Usuario = new Schema({
   nombre: String,
