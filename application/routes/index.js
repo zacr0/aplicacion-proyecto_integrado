@@ -29,11 +29,11 @@ var route = function (app) {
         user.perfil = req.body.perfil;
         user.save(function (err) {
           if (err) {
-          	res.redirect('/registro');
+            res.render('/registro', {title: 'SocialGcap - Registro', error: req.session.error});
+            delete res.session.error;
             return console.log(err);
           }
           console.log('OK');
-          res.redirect('/perfil');
         });
 
         res.send('usuario: ' + req.body.usuario +

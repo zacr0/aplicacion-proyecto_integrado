@@ -23,7 +23,7 @@ $(function() {
 
 	// PAGINA DE REGISTRO
 	$('#fechanacimiento').datepicker({
-		format: 'dd/mm/yyyy',
+		format: 'mm/dd/yyyy',
 		endDate: new Date($.now()),
 		startDate: new Date('01/01/1970'),
 		language: 'es',
