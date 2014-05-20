@@ -10,6 +10,14 @@ block content
               h1.text-center 
                 | Inicia sesión o 
                 a(href='/registro') regístrate
+              //- Mensaje de error si falla el login
+              if error
+                .alert.alert-danger.alert-dismissable
+                  button(type="button",data-dismiss="alert",aria-hidden="true").close 
+                    &times;
+                  strong 
+                    ¡Lo sentimos! 
+                  | No pudo iniciarse la sesión, inténtelo de nuevo.
               form(id='form-login',method='POST',action='',accept-charset='UTF-8').form-horizontal
                 fieldset 
                   .form-group.has-feedback

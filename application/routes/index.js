@@ -10,15 +10,15 @@ var route = function (app) {
 	app.get('/login', function (req, res) {
 		res.render('login', {title: 'SocialGcap- Login', 
         name: req.session.name});
-		//res.render('index', { title: 'SocialGcap - Inicio' });
 	});
+
+  // Inicio de sesion aqui app.post('/login')...
 
 	app.get('/registro', function (req, res) {
 		res.render('registro', { title: 'SocialGcap - Registro'});
 	});
 
 	app.post('/registro', function (req, res) {
-        
         user = new Usuario();
         user.usuario = req.body.usuario;
         user.usuario = req.body.usuario;
