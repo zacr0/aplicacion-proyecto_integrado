@@ -2,12 +2,12 @@ var Usuario = require('../models/Usuario'), user;
 
 var route = function (app) {
 	app.get('/', function (req, res) {
-		res.render('index', { title: 'SocialGcap - Inicio' });
+		res.redirect('index');
 	});
 
     // Login
 	app.get('/login', function (req, res) {
-		res.render('login', {title: 'SocialGcap - Login'});
+		res.redirect('login');
 	});
 
     app.post('/login', function(req, res) {
@@ -34,8 +34,7 @@ var route = function (app) {
                 );
             } else {
                 console.log('El usuario no existe');
-                res.render('login', {title: 'SocialGcap - Inicio',
-                    error: 'El usuario introducido no existe. ' +
+                res.render('login', {error: 'El usuario introducido no existe. ' +
                     'Compruebe la información que ha introducido e ' +
                     'inténtelo de nuevo.'});
             }
@@ -44,7 +43,7 @@ var route = function (app) {
 
     // Registro
 	app.get('/registro', function (req, res) {
-		res.render('registro', { title: 'SocialGcap - Registro'});
+		res.redirect('registro');
 	});
 
 	app.post('/registro', function (req, res) {
@@ -57,24 +56,19 @@ var route = function (app) {
         user.fechaNacimiento = req.body.fechanacimiento;
         user.perfil = req.body.perfil;
         user.save(function (err) {
+            
           if (err) {
+            req.session.error = err;
             console.log('Error al registrar usuario');
-            res.render('registro', {title: 'SocialGcap - Registro', 
-                error: req.session.error});
+            res.render('registro', {error: req.session.error});
             delete res.session.error;
             return console.log(err);
           }
-          console.log('OK');
+          console.log('Usuario registrado');
         });
 
-        res.send('usuario: ' + req.body.usuario +
-        	'\npass: ' + req.body.pass +
-        	'\nnombre: ' + req.body.nombre +
-        	'\napellidos: ' + req.body.apellidos +
-            '\nemail: ' + req.body.email +
-        	'\nfecha nacimiento: ' + req.body.fechanacimiento +
-        	'\nperfil: ' + req.body.perfil
-        );
+        res.render('login', {success: true});
+
 	});
 }
 
