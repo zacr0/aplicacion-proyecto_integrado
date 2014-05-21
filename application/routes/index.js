@@ -3,12 +3,12 @@ var Usuario = require('../models/Usuario'),
 
 var route = function (app) {
 	app.get('/', function (req, res) {
-		res.redirect('index');
+		res.render('index');
 	});
 
     // Login
 	app.get('/login', function (req, res) {
-		res.redirect('login');
+		res.render('login');
 	});
 
     app.post('/login', function(req, res) {
@@ -44,7 +44,7 @@ var route = function (app) {
 
     // Registro
 	app.get('/registro', function (req, res) {
-		res.redirect('registro');
+		res.render('registro');
 	});
 
 	app.post('/registro', function (req, res) {
