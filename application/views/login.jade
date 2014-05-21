@@ -17,8 +17,8 @@ block content
                     | &times;
                   strong 
                     | ¡Lo sentimos! 
-                  | No pudo iniciarse la sesión, inténtelo de nuevo.
-              form(id='form-login',method='POST',action='',accept-charset='UTF-8').form-horizontal
+                  p=error
+              form(id='form-login',method='POST',action='/login',accept-charset='UTF-8').form-horizontal
                 fieldset 
                   .form-group.has-feedback
                     .col-xs-12.col-sm-12.col-md-10.col-md-offset-1

@@ -2,17 +2,47 @@ var Usuario = require('../models/Usuario'), user;
 
 var route = function (app) {
 	app.get('/', function (req, res) {
-		req.session.name = "Prueba";
 		res.render('index', { title: 'SocialGcap - Inicio' });
 	});
 
+    // Login
 	app.get('/login', function (req, res) {
-		res.render('login', {title: 'SocialGcap - Login', 
-        name: req.session.name});
+		res.render('login', {title: 'SocialGcap - Login'});
 	});
 
-  // Inicio de sesion aqui app.post('/login')...
+    app.post('/login', function(req, res) {
+        Usuario.findOne({usuario: req.body.usuario, pass: req.body.pass},
+         function(err, user) {
+            if (err) {
+                console.log('Error al buscar usuario en la BD');
+            }
 
+            if (user) {
+                req.session.nombre = user.nombre;
+                req.session.apellidos = user.apellidos;
+                req.session.usuario = user.usuario;
+                req.session.perfil = user.perfil;
+                req.session.id_promocion = user.id_promocion;
+                req.session.id_curso = user.id_curso;
+
+                res.send('nombre: ' + req.session.nombre +
+                    '\napellidos: ' + req.session.apellidos +
+                    '\nusuario: ' + req.session.usuario +
+                    '\nperfil: ' + req.session.perfil +
+                    '\nPromocion: ' + req.session.id_promocion +
+                    '\nCurso: ' + req.session.id_curso
+                );
+            } else {
+                console.log('El usuario no existe');
+                res.render('login', {title: 'SocialGcap - Inicio',
+                    error: 'El usuario introducido no existe. ' +
+                    'Compruebe la información que ha introducido e ' +
+                    'inténtelo de nuevo.'});
+            }
+        });
+    });
+
+    // Registro
 	app.get('/registro', function (req, res) {
 		res.render('registro', { title: 'SocialGcap - Registro'});
 	});
@@ -28,7 +58,8 @@ var route = function (app) {
         user.perfil = req.body.perfil;
         user.save(function (err) {
           if (err) {
-            res.render('/registro', {title: 'SocialGcap - Registro', 
+            console.log('Error al registrar usuario');
+            res.render('registro', {title: 'SocialGcap - Registro', 
                 error: req.session.error});
             delete res.session.error;
             return console.log(err);
