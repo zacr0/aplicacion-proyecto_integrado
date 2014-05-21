@@ -18,9 +18,8 @@ block content
                 .alert.alert-danger.alert-dismissable
                   button(type="button",data-dismiss="alert",aria-hidden="true").close 
                     | &times;
-                  strong 
-                    | ¡Lo sentimos! 
-                  | Ocurrió un error durante el registro, inténtelo de nuevo.
+                    | ¡Lo sentimos!
+                  p= error
               form(id='form-registro',method='POST',action='/registro',accept-charset='UTF-8').form-horizontal
                 fieldset.page-header
                   legend Datos de conexión

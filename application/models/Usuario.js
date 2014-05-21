@@ -21,7 +21,7 @@ var Usuario = new Schema({
   fechaNacimiento: Date,
   email: {type: String, trim: true},
   perfil: String,
-  id_promoción: Schema.ObjectId,
+  id_promocion: Schema.ObjectId,
   id_curso: Schema.ObjectId
 });
 
