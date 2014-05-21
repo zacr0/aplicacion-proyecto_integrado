@@ -1,14 +1,15 @@
 var Usuario = require('../models/Usuario'),
-    async = require('async'), user;
+    async = require('async'),
+    user;
 
 var route = function (app) {
 	app.get('/', function (req, res) {
-		res.redirect('index');
+		res.render('index');
 	});
 
     // Login
 	app.get('/login', function (req, res) {
-		res.redirect('login');
+		res.render('login');
 	});
 
     app.post('/login', function(req, res) {
@@ -26,13 +27,14 @@ var route = function (app) {
                 req.session.id_promocion = user.id_promocion;
                 req.session.id_curso = user.id_curso;
 
-                res.send('nombre: ' + req.session.nombre +
+                console.log('nombre: ' + req.session.nombre +
                     '\napellidos: ' + req.session.apellidos +
                     '\nusuario: ' + req.session.usuario +
                     '\nperfil: ' + req.session.perfil +
                     '\nPromocion: ' + req.session.id_promocion +
                     '\nCurso: ' + req.session.id_curso
                 );
+                res.render('perfil');
             } else {
                 console.log('El usuario no existe');
                 res.render('login', {error: 'El usuario introducido no existe. ' +
@@ -44,7 +46,7 @@ var route = function (app) {
 
     // Registro
 	app.get('/registro', function (req, res) {
-		res.redirect('registro');
+		res.render('registro');
 	});
 
 	app.post('/registro', function (req, res) {
