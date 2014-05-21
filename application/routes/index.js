@@ -28,7 +28,7 @@ var route = function (app) {
 
                 stream.on('data', function (data) {
                     if(data.usuario === req.body.usuario)
-                      return res.render('registro', { title: 'SocialGcap - Registro', error: 'Usuario ya existe'});
+                      return res.render('registro', { error: 'Usuario ya existe'});
                 });
                 
                 stream.on('error', function (err) {
