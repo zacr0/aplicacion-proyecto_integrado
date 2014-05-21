@@ -5,7 +5,7 @@ mongoose.connect('mongodb://pablo:pablo@ds043388.mongolab.com:43388/proyectointe
 
 var Anuncio = new Schema({
 	id_usuario: Schema.ObjectId,
-	titulo: {type: String, required: true},
+	titulo: {type: String, trim: true, required: true},
 	contenido: {type: String, required: true},
 	fechaPublicacion: Date,
 	fechaEdicion: Date
