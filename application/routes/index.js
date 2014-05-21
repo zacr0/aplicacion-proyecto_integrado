@@ -8,7 +8,11 @@ var route = function (app) {
 
     // Login
 	app.get('/login', function (req, res) {
-		res.render('login');
+        if (req.session.usuario) {
+            res.redirect('perfil');
+        } else {
+            res.render('login');
+        };
 	});
 
     app.post('/login', function(req, res) {
@@ -26,18 +30,19 @@ var route = function (app) {
                 req.session.id_promocion = user.id_promocion;
                 req.session.id_curso = user.id_curso;
 
-                res.send('nombre: ' + req.session.nombre +
+                res.redirect('/perfil');
+                /*res.send('nombre: ' + req.session.nombre +
                     '\napellidos: ' + req.session.apellidos +
                     '\nusuario: ' + req.session.usuario +
                     '\nperfil: ' + req.session.perfil +
                     '\nPromocion: ' + req.session.id_promocion +
                     '\nCurso: ' + req.session.id_curso
-                );
+                );*/
             } else {
                 console.log('El usuario no existe');
                 res.render('login', {error: 'El usuario introducido no existe. ' +
-                    'Compruebe la información que ha introducido e ' +
-                    'inténtelo de nuevo.'});
+                    'Compruebe que la información que ha introducido sea ' +
+                    'correcta e inténtelo de nuevo.'});
             }
         });
     });
@@ -57,7 +62,8 @@ var route = function (app) {
                 stream.on('data', function (data) {
                     if (data.usuario === req.body.usuario) {
                         return res.render('registro', 
-                            {error: 'Usuario ya existe'});
+                            {error: 'El nombre de usuario introducido ' +
+                            'ya existe, introduzca otro.'});
                     }
                 });
                 
@@ -87,7 +93,6 @@ var route = function (app) {
                     req.session.error = err;
                     console.log('Error al registrar usuario');
                     res.render('registro', {error: req.session.error});
-                    delete res.session.error;
                     return console.log(err);
                   }
                   console.log('Usuario registrado');
@@ -98,6 +103,12 @@ var route = function (app) {
             } // function
         ]); // async.series
 	});
+
+    // Logout
+    app.get('/logout', function (req, res) {
+        req.session.destroy();
+        res.redirect('/');
+    });
 }
 
 module.exports = route;

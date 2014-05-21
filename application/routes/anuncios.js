@@ -1,6 +1,13 @@
 var route = function (app) {
 	app.get('/anuncios', function(req, res) {
-		res.render('anuncios');
+
+		if (req.session.usuario) {
+			res.render('anuncios');
+		} else {
+			res.render('login', {error: 'Debes iniciar sesión ' +
+				'para acceder a SocialGcap.'});
+		}
+
 	});
 
 	/* AQUI FALTA EL APARTADO POST DEL REGISTRO */

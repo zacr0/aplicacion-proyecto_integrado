@@ -1,7 +1,12 @@
 var route = function (app) {
-	//app.get('/perfil/:id', function(req, res) {
 	app.get('/perfil', function(req, res) {
-		res.render('perfil');
+		
+		if (req.session.usuario) {
+			res.render('perfil');
+		} else {
+			res.render('login', {error: 'Debes iniciar sesión ' +
+				'para acceder a SocialGcap.'});
+		}
 	});
 }
 
