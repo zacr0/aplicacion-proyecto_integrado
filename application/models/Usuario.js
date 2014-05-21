@@ -1,7 +1,7 @@
 var mongoose = require('mongoose'), Schema = mongoose.Schema;
 
 // Connection for database
-var connStr = 'mongodb://pablo:pablo@ds043388.mongolab.com:43388/proyectointegrado';
+var connStr = 'mongodb://ruben:ruben@ds043388.mongolab.com:43388/proyectointegrado';
 
 mongoose.connect(connStr, function(err){
   if (err) {
@@ -21,7 +21,7 @@ var Usuario = new Schema({
   fechaNacimiento: Date,
   email: {type: String, trim: true},
   perfil: String,
-  id_promoción: Schema.ObjectId,
+  id_promocion: Schema.ObjectId,
   id_curso: Schema.ObjectId
 });
 

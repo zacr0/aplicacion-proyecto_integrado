@@ -1,4 +1,5 @@
-var Usuario = require('../models/Usuario'), user;
+var Usuario = require('../models/Usuario'),
+    async = require('async'), user;
 
 var route = function (app) {
 	app.get('/', function (req, res) {
@@ -47,28 +48,55 @@ var route = function (app) {
 	});
 
 	app.post('/registro', function (req, res) {
-        user = new Usuario();
-        user.usuario = req.body.usuario;
-        user.pass = req.body.pass;
-        user.nombre = req.body.nombre;
-        user.apellidos = req.body.apellidos;
-        user.email = req.body.email;
-        user.fechaNacimiento = req.body.fechanacimiento;
-        user.perfil = req.body.perfil;
-        user.save(function (err) {
-            
-          if (err) {
-            req.session.error = err;
-            console.log('Error al registrar usuario');
-            res.render('registro', {error: req.session.error});
-            delete res.session.error;
-            return console.log(err);
-          }
-          console.log('Usuario registrado');
-        });
+        var query = Usuario.find();
+        var stream = query.stream();
 
-        res.render('login', {success: true});
+        async.series([
+            function (callback) {
 
+                stream.on('data', function (data) {
+                    if (data.usuario === req.body.usuario) {
+                        return res.render('registro', 
+                            {error: 'Usuario ya existe'});
+                    }
+                });
+                
+                stream.on('error', function (err) {
+                    console.log(err);
+                });
+
+                stream.on('close', function () {
+                    console.log('Ok');
+                    callback();
+                });
+
+            }, function (callback) {
+                console.log('despues de OK');
+
+                user = new Usuario();
+                user.usuario = req.body.usuario;
+                user.pass = req.body.pass;
+                user.nombre = req.body.nombre;
+                user.apellidos = req.body.apellidos;
+                user.email = req.body.email;
+                user.fechaNacimiento = req.body.fechanacimiento;
+                user.perfil = req.body.perfil;
+                user.save(function (err) {
+
+                  if (err) {
+                    req.session.error = err;
+                    console.log('Error al registrar usuario');
+                    res.render('registro', {error: req.session.error});
+                    delete res.session.error;
+                    return console.log(err);
+                  }
+                  console.log('Usuario registrado');
+                  res.render('login', {success: true});
+
+                }); // save
+
+            } // function
+        ]); // async.series
 	});
 }
 
