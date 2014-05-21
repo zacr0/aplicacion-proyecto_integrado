@@ -4,19 +4,49 @@ var Usuario = require('../models/Usuario'),
 
 var route = function (app) {
 	app.get('/', function (req, res) {
-		req.session.name = "Prueba";
-		res.render('index', { title: 'SocialGcap - Inicio' });
+		res.render('index');
 	});
 
+    // Login
 	app.get('/login', function (req, res) {
-		res.render('login', {title: 'SocialGcap - Login', 
-        name: req.session.name});
+		res.render('login');
 	});
 
-  // Inicio de sesion aqui app.post('/login')...
+    app.post('/login', function(req, res) {
+        Usuario.findOne({usuario: req.body.usuario, pass: req.body.pass},
+         function(err, user) {
+            if (err) {
+                console.log('Error al buscar usuario en la BD');
+            }
 
+            if (user) {
+                req.session.nombre = user.nombre;
+                req.session.apellidos = user.apellidos;
+                req.session.usuario = user.usuario;
+                req.session.perfil = user.perfil;
+                req.session.id_promocion = user.id_promocion;
+                req.session.id_curso = user.id_curso;
+
+                console.log('nombre: ' + req.session.nombre +
+                    '\napellidos: ' + req.session.apellidos +
+                    '\nusuario: ' + req.session.usuario +
+                    '\nperfil: ' + req.session.perfil +
+                    '\nPromocion: ' + req.session.id_promocion +
+                    '\nCurso: ' + req.session.id_curso
+                );
+                res.render('perfil');
+            } else {
+                console.log('El usuario no existe');
+                res.render('login', {error: 'El usuario introducido no existe. ' +
+                    'Compruebe la información que ha introducido e ' +
+                    'inténtelo de nuevo.'});
+            }
+        });
+    });
+
+    // Registro
 	app.get('/registro', function (req, res) {
-		res.render('registro', { title: 'SocialGcap - Registro'});
+		res.render('registro');
 	});
 
 	app.post('/registro', function (req, res) {
@@ -27,8 +57,10 @@ var route = function (app) {
             function (callback) {
 
                 stream.on('data', function (data) {
-                    if(data.usuario === req.body.usuario)
-                      return res.render('registro', { error: 'Usuario ya existe'});
+                    if (data.usuario === req.body.usuario) {
+                        return res.render('registro', 
+                            {error: 'Usuario ya existe'});
+                    }
                 });
                 
                 stream.on('error', function (err) {
@@ -52,12 +84,17 @@ var route = function (app) {
                 user.fechaNacimiento = req.body.fechanacimiento;
                 user.perfil = req.body.perfil;
                 user.save(function (err) {
+
                   if (err) {
-                    res.render('/registro', {title: 'SocialGcap - Registro', error: req.session.error});
+                    req.session.error = err;
+                    console.log('Error al registrar usuario');
+                    res.render('registro', {error: req.session.error});
                     delete res.session.error;
                     return console.log(err);
                   }
-                  console.log('OK');
+                  console.log('Usuario registrado');
+                  res.render('login', {success: true});
+
                 }); // save
 
             } // function

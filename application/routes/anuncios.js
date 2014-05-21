@@ -1,6 +1,6 @@
 var route = function (app) {
 	app.get('/anuncios', function(req, res) {
-		res.render('anuncios', {title: 'SocialGcap - Anuncios'});
+		res.render('anuncios');
 	});
 
 	/* AQUI FALTA EL APARTADO POST DEL REGISTRO */

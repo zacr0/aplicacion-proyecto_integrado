@@ -1,5 +1,8 @@
 extends layout
 
+block title
+  title SocialGcap - Registro
+
 block custom-styles
   link(rel='stylesheet', href='/stylesheets/datepicker.css')
 
@@ -18,8 +21,9 @@ block content
                 .alert.alert-danger.alert-dismissable
                   button(type="button",data-dismiss="alert",aria-hidden="true").close 
                     | &times;
-                    | ¡Lo sentimos!
-                  p= error
+                  strong 
+                    | ¡Lo sentimos! 
+                  p=error
               form(id='form-registro',method='POST',action='/registro',accept-charset='UTF-8').form-horizontal
                 fieldset.page-header
                   legend Datos de conexión
