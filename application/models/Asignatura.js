@@ -1,7 +1,16 @@
 var mongoose = require('mongoose'), Schema = mongoose.Schema;
 
 // Databaase connection
-mongoose.connect('mongodb://pablo:pablo@ds043388.mongolab.com:43388/proyectointegrado');
+var connStr = 'mongodb://pablo:pablo@ds043388.mongolab.com:43388/proyectointegrado';
+
+mongoose.connect(connStr, function(err){
+  if (err) {
+    console.log('Error al conectar a MongoDB');
+    throw err;
+  } else {
+    console.log('Conectado a MongoDB');
+  }
+});
 
 var Asignatura = new Schema({
 	nombre: {type: String, required: true, unique: true},
