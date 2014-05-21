@@ -1,14 +1,13 @@
-var mongoose = require('mongoose'),
-  Schema = mongoose.Schema;
+var mongoose = require('mongoose'), Schema = mongoose.Schema;
 
 // Connection for database
-mongoose.connect('mongodb://user:pass@server');
+mongoose.connect('mongodb://pablo:pablo@ds043388.mongolab.com:43388/proyectointegrado');
 
 var Usuario = new Schema({
-  nombre: String,
-  apellidos: String,
-  usuario: String,
-  pass: String,
+  nombre: {type: String, required: true},
+  apellidos: {type: String, required: true},
+  usuario: {type: String, required: true, unique: true},
+  pass: {type: String, required: true},
   foto: String,
   fechaNacimiento: Date,
   email: String,

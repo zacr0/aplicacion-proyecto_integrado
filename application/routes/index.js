@@ -1,5 +1,4 @@
-var Usuario = require('../models/Usuario'),
-	user;
+var Usuario = require('../models/Usuario'), user;
 
 var route = function (app) {
 	app.get('/', function (req, res) {
@@ -8,7 +7,7 @@ var route = function (app) {
 	});
 
 	app.get('/login', function (req, res) {
-		res.render('login', {title: 'SocialGcap- Login', 
+		res.render('login', {title: 'SocialGcap - Login', 
         name: req.session.name});
 	});
 
@@ -21,15 +20,16 @@ var route = function (app) {
 	app.post('/registro', function (req, res) {
         user = new Usuario();
         user.usuario = req.body.usuario;
-        user.usuario = req.body.usuario;
         user.pass = req.body.pass;
         user.nombre = req.body.nombre;
         user.apellidos = req.body.apellidos;
+        user.email = req.body.email;
         user.fechaNacimiento = req.body.fechanacimiento;
         user.perfil = req.body.perfil;
         user.save(function (err) {
           if (err) {
-            res.render('/registro', {title: 'SocialGcap - Registro', error: req.session.error});
+            res.render('/registro', {title: 'SocialGcap - Registro', 
+                error: req.session.error});
             delete res.session.error;
             return console.log(err);
           }
@@ -40,6 +40,7 @@ var route = function (app) {
         	'\npass: ' + req.body.pass +
         	'\nnombre: ' + req.body.nombre +
         	'\napellidos: ' + req.body.apellidos +
+            '\nemail: ' + req.body.email +
         	'\nfecha nacimiento: ' + req.body.fechanacimiento +
         	'\nperfil: ' + req.body.perfil
         );

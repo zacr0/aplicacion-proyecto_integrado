@@ -22,6 +22,8 @@ $(function() {
 	});
 
 	// PAGINA DE REGISTRO
+	var registroForm = $('#form-registro');
+
 	$('#fechanacimiento').datepicker({
 		format: 'mm/dd/yyyy',
 		endDate: new Date($.now()),
@@ -47,7 +49,6 @@ $(function() {
 		}
 	});
 
-	var registroForm = $('#form-registro');
 	registroForm.validate({
 		errorPlacement: function(label, element) {
 			label.addClass('control-label');
@@ -74,7 +75,7 @@ $(function() {
 			nombre: {
 				required: true,
 				nombre: true,
-				minlenght: 3
+				minlength: 3
 			},
 			apellidos: {
 				required: true,
@@ -108,7 +109,8 @@ $(function() {
 		El nombre debe tener 3 o mas letras y puede ser compuesto
 	*/
 	$.validator.addMethod("nombre", function(value) {
-		return /^([a-zA-Z]{3,}\s*)+$/.test(value)
+		//return /^[^\p{L}\s-]{3,}/.test(value)
+		return /^([a-zA-Z]{3,}\s*)+$/.test(value);
 	});
 
 	/*
