@@ -28,7 +28,7 @@ block content
               a(href="usuarios") Usuarios
           ul.nav.navbar-nav.navbar-right
             li
-              a(href="perfil/:usuario")= 'Usuario: ' + usuario
+              a(href="perfil/" + usuario)= 'Usuario: ' + usuario
             li
               a(href="logout").btn.btn-danger Cerrar sesión
 

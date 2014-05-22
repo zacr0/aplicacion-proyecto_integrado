@@ -95,7 +95,7 @@ $(function() {
 		messages: {
 			usuario: {
 				usuario: "El nombre de usuario sólo puede contener minúsculas \
-					y números."
+					y números, y una longitud 3 a 12 caracteres."
 			},
 			pass: {
 				pwd: "La contraseña debe tener al menos 6 caracteres, \
