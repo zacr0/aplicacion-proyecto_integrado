@@ -1,5 +1,8 @@
 extends layout
 
+block title
+  title SocialGCap - Registro
+
 block custom-styles
   link(rel='stylesheet', href='/stylesheets/datepicker.css')
 
@@ -13,6 +16,14 @@ block content
               h1.text-center 
                 | Regístrate o 
                 a(href='/login') inicia sesión
+              //- Mensaje de error si falla el registro
+              if error
+                .alert.alert-danger.alert-dismissable
+                  button(type="button",data-dismiss="alert",aria-hidden="true").close 
+                    | &times;
+                  strong 
+                    | ¡Lo sentimos! 
+                  p=error
               form(id='form-registro',method='POST',action='/registro',accept-charset='UTF-8').form-horizontal
                 fieldset.page-header
                   legend Datos de conexión
@@ -53,20 +64,16 @@ block content
                       //- (Las opciones de este campo son resultado de una consulta a promociones)
                       select(id='promocion',name='promocion').form-control
                         option(selected='selected') ¿Cuál es tu promoción?
-                        option DAW 2012-2014
-                        option DAW 2013-2015
-                        option ASIR 2012-2014
-                        option ASIR 2013-2015
+                        - each queue in promocionData
+                          option #{queue.nombre}
                   .form-group.visible-alumno
                     .col-xs-12.col-sm-12.col-md-10.col-md-offset-1
                       //- (Este campo aparece solo si el usuario es un alumno, sera obligatorio)
                       //- (Las opciones de este campo son resultado de una consulta a cursos)
                       select(id='curso',name='curso').form-control
-                        option(selected='selected') ¿En qué curso estás?
-                        option(value='1daw') 1º D.A.W.
-                        option(value='2daw') 2º D.A.W.
-                        option(value='1asir') 1º A.S.I.R.
-                        option(value='2asir') 2º A.S.I.R.
+                        option(selected='selected') ¿Cuál es tu curso?
+                        - each queue in cursoData
+                          option #{queue.nombre}
                   .form-group.visible-profesor
                     .col-xs-12.col-sm-12.col-md-10.col-md-offset-1
                       //- (Este campo aparece solo si el usuario es un profesor, sera obligatorio)

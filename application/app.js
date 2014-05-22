@@ -5,8 +5,9 @@ var express = require('express'),
     cookieParser = require('cookie-parser'),
     bodyParser = require('body-parser'),
     session = require('express-session'),
-
     app = express(),
+    mongoose = require('mongoose'),
+    db = mongoose.connect('mongodb://pablo:pablo@ds043388.mongolab.com:43388/proyectointegrado'),
     admin_routes = require('./routes/admin_routes'); // Module for routing
 
 // view engine setup
@@ -26,7 +27,7 @@ admin_routes(app);
 
 /// catch 404 and forward to error handler
 app.use(function(req, res, next) {
-    var err = new Error('Not Found');
+    var err = new Error('No encontrado');
     err.status = 404;
     next(err);
 });
@@ -57,5 +58,6 @@ app.use(function(err, req, res, next) {
 
 app.listen(3000); // port to listen
 console.log('Server running on localhost:3000')
+console.log('Conectado a MongoDB');
 
 module.exports = app;

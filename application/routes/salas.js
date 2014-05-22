@@ -1,9 +1,13 @@
 var route = function (app) {
-	/* NO definitivo */
-	//app.get('/salas/:id', function(req, res) {
 	app.get('/salas', function(req, res) {
-		//res.send('salas');
-		res.render('salas', {title: 'SocialGcap - Salas de chat'});
+
+		if (req.session.usuario) {
+			res.render('salas', {usuario: req.session.usuario});
+		} else {
+			res.render('login', {error: 'Debes iniciar sesión ' +
+				'para acceder a SocialGcap.'});
+		}
+
 	});
 }
 

@@ -1,5 +1,8 @@
 extends layout
 
+block title
+  title SocialGCap - Inicio
+
 block custom-styles
   link(rel='stylesheet', href='/lib/bootstrap/css/index.css')
 
@@ -9,15 +12,6 @@ block content
         .cover-container
           .masthead.clearfix
             .inner
-              //ul.nav.masthead-nav
-                li.active
-                  a(href='#') Inicio
-                li
-                  a(href='/salas') Salas
-                li
-                  a(href='/anuncios') Tablón
-                li
-                  a(href='/usuarios') Usuarios
           .inner.cover
             h1.cover-heading SocialGCAP
             p.lead
