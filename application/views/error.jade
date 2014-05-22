@@ -9,8 +9,9 @@ block content
         h1 ¡Lo sentimos! Ocurrió el siguiente error:
         h1= message
         h2= 'Estado del error: ' + error.status
-        p.lead Por favor, envía esta información a los administradores:
-        pre #{error.stack}
+        if error.stack
+          p.lead Por favor, envía esta información a los administradores:
+          pre #{error.stack}
         a(href='/').btn.btn-lg.btn-primary.col-xs-12.col-md-6
           span.glyphicon.glyphicon-home
           |  Volver a SocialGCAP 
