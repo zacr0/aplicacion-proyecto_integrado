@@ -9,7 +9,7 @@ var route = function (app) {
     // Login
 	app.get('/login', function (req, res) {
         if (req.session.usuario) {
-            res.redirect('perfil');
+            res.redirect('perfil', {usuario: req.session.usuario});
         } else {
             res.render('login');
         };
