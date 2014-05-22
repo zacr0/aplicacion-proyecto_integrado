@@ -3,6 +3,9 @@ extends layout
 block title
   title SocialGCap - Anuncios
 
+block custom-styles
+  link(rel='stylesheet', href='/stylesheets/style.css')
+
 block content
   .container
     nav(role="navigation").navbar.navbar-default.navbar-fixed-top
@@ -16,7 +19,7 @@ block content
             span.icon-bar
           a(href="#").navbar-brand SocialGCap
         .collapse.navbar-collapse(id="navbar-collapse")
-          ul.nav.navbar-bar
+          ul.nav.navbar-nav
             li
               a(href="salas") Salas
             li.active
@@ -25,8 +28,9 @@ block content
               a(href="usuarios") Usuarios
           ul.nav.navbar-nav.navbar-right
             li
-              a(href="/perfil/:usuario")= 'Usuario: ' + usuario
+              a(href="perfil/:usuario")= 'Usuario: ' + usuario
             li
               a(href="logout").btn.btn-danger Cerrar sesión
+    
 
 block custom-scripts
