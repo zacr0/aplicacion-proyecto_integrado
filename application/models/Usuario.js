@@ -1,17 +1,5 @@
 var mongoose = require('mongoose'), Schema = mongoose.Schema;
 
-// Connection for database
-var connStr = 'mongodb://ruben:ruben@ds043388.mongolab.com:43388/proyectointegrado';
-
-mongoose.connect(connStr, function(err){
-  if (err) {
-    console.log('Error al conectar a MongoDB');
-    throw err;
-  } else {
-    console.log('Conectado a MongoDB');
-  }
-});
-
 var Usuario = new Schema({
   nombre: {type: String, required: true},
   apellidos: {type: String, required: true},
