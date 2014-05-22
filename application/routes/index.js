@@ -58,7 +58,9 @@ var route = function (app) {
                     });
                 });
             }, function resultados(callback) {
-                res.render('registro', {cursoData: cursoData, promocionData: promocionData});
+                res.render('registro', {cursoData: 
+                    cursoData, 
+                    promocionData: promocionData});
             }
         ]);
 	});
@@ -106,7 +108,7 @@ var route = function (app) {
                     console.log('Error al registrar usuario');
                     res.render('registro', {error: req.session.error, 
                         cursoData: cursoData, 
-                        promocionData: promocionData}});
+                        promocionData: promocionData});
                     return console.log(err);
                   }
                   console.log('Usuario registrado');
