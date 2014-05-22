@@ -2,7 +2,9 @@ var Usuario = require('../models/Usuario'),
     Curso = require('../models/Curso'),
     Promocion = require('../models/Promocion'),
     async = require('async'),
-    user;
+    user,
+    cursoData,
+    promocionData;
 
 var route = function (app) {
 	app.get('/', function (req, res) {
@@ -48,7 +50,6 @@ var route = function (app) {
 
     // Registro
 	app.get('/registro', function (req, res) {
-        var cursoData, promocionData;
 
         async.series([
             function cursos(callback) {
@@ -60,8 +61,6 @@ var route = function (app) {
                     });
                 });
             }, function resultados(callback) {
-                console.log('>>>>>>> ' + promocionData);
-                console.log('>>>>>>> ' + cursoData);
                 res.render('registro', {cursoData: cursoData, promocionData: promocionData});
             }
         ]);
@@ -77,7 +76,7 @@ var route = function (app) {
                 stream.on('data', function (data) {
                     if (data.usuario === req.body.usuario) {
                         return res.render('registro', 
-                            {error: 'Usuario ya existe'});
+                            {error: 'Usuario ya existe', cursoData: cursoData, promocionData: promocionData});
                     }
                 });
                 
@@ -91,7 +90,6 @@ var route = function (app) {
                 });
 
             }, function (callback) {
-                console.log('despues de OK');
 
                 user = new Usuario();
                 user.usuario = req.body.usuario;
@@ -105,8 +103,10 @@ var route = function (app) {
 
                   if (err) {
                     req.session.error = err;
+                    console.log('cursoData: ', cursoData);
+                    console.log('promocionData: ', promocionData);
                     console.log('Error al registrar usuario');
-                    res.render('registro', {error: req.session.error});
+                    res.render('registro', {error: req.session.error, cursoData: cursoData, promocionData: promocionData});
                     delete res.session.error;
                     return console.log(err);
                   }
