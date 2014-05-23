@@ -105,7 +105,6 @@ var route = function (app) {
                     req.session.error = err;
                     console.log('Error al registrar usuario');
                     res.render('registro', {error: req.session.error, cursoData: cursoData, promocionData: promocionData});
-                    delete res.session.error;
                     return console.log(err);
                   }
                   console.log('Usuario registrado');
