@@ -4,7 +4,8 @@ var Usuario = require('../models/Usuario'),
     async = require('async'),
     user,
     cursoData,
-    promocionData;
+    promocionData,
+    asignaturaData;
 
 var route = function (app) {
 	app.get('/', function (req, res) {
@@ -47,7 +48,6 @@ var route = function (app) {
 
     // Registro
 	app.get('/registro', function (req, res) {
-
         async.series([
             function cursos(callback) {
                 Promocion.find(function (err, data){
@@ -56,10 +56,10 @@ var route = function (app) {
                         cursoData = data;
                         callback();
                     });
+                    // Consulta de asigunaturas
                 });
             }, function resultados(callback) {
-                res.render('registro', {cursoData: 
-                    cursoData, 
+                res.render('registro', {cursoData: cursoData, 
                     promocionData: promocionData});
             }
         ]);

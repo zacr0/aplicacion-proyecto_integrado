@@ -121,7 +121,7 @@ $(function() {
 	// El nombre debe tener 3 o mas letras y puede ser compuesto
 	$.validator.addMethod("nombre", function(value) {
 		//return /^[^\p{L}\s-]{3,}/.test(value);
-		return /^([a-zA-Z]{3,}\s*)+$/.test(value);
+		return /^([a-zA-Z\ \'\u00e1\u00e9\u00ed\u00f3\u00fa\u00c1\u00c9\u00cd\u00d3\u00da\u00f1\u00d1\u00FC\u00DC]{2,}\s*)+$/.test(value);
 	});
 	/*
 		La contraseña debe tener:
