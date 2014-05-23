@@ -21,15 +21,27 @@ block content
         .collapse.navbar-collapse(id="navbar-collapse")
           ul.nav.navbar-nav
             li
-              a(href="salas") Salas
+              a(href="/salas") Salas
             li
-              a(href="anuncios") Anuncios
+              a(href="/anuncios") Anuncios
             li
-              a(href="usuarios") Usuarios
+              a(href="/usuarios") Usuarios
           ul.nav.navbar-nav.navbar-right
             li
-              a(href="perfil/" + usuario)= 'Usuario: ' + usuario
+              a(href="/perfil/" + usuario)= 'Usuario: ' + usuario
             li
               a(href="logout").btn.btn-danger Cerrar sesión
+    p
+    - if ( datosUsuario ) {
+          p #{datosUsuario.usuario}
+          br
+          p #{datosUsuario.nombre} #{datosUsuario.apellidos}
+          br
+          p #{datosUsuario.email}
+          br
+          p #{datosUsuario.fechaNacimiento}
+          br
+          p #{datosUsuario.perfil}
+      - }
 
-block custom-scripts
+  block custom-scripts
