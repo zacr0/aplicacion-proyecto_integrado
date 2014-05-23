@@ -37,14 +37,17 @@ $(function() {
 	$('.visible-alumno').hide();
 	$('.visible-profesor').hide();
 
-	$('input[name=perfil]').click(function () {
+	$('input[name=perfil]').change(function () {
 		if (this.id == "alumno") {
 			$(".visible-alumno").show();
-			$("#alumno").attr('required');
+			$("#alumno").prop('required');
+			$("input[name=asignatura]").prop('checked', false);
 			$(".visible-profesor").hide();
 		} 
 		if (this.id == "profesor") {
 			$(".visible-profesor").show();
+			$("select#promocion :selected").attr('selected', false);
+			$("select#curso :selected").attr('selected', false);
 			$(".visible-alumno").hide();
 		}
 	});

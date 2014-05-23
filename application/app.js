@@ -18,9 +18,9 @@ app.use(favicon());
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
-app.use(cookieParser());
+app.use(cookieParser('t999YE72wJ'));
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(session({ secret: 'keyboard cat', cookie: { maxAge: 60000 }}))
+app.use(session({ secret: 'keyboard cat', cookie: { maxAge: 60 * 60 * 1000 }}))
 
 // Routing
 admin_routes(app);
@@ -58,10 +58,6 @@ app.use(function(err, req, res, next) {
 
 app.listen(3000); // port to listen
 console.log('Server running on localhost:3000');
-
-if (db) {
-    console.log('Conectado a MongoDB');    
-};
-
+console.log('Conectando a MongoDB...');
 
 module.exports = app;

@@ -15,9 +15,17 @@ var route = function (app) {
     // Login
 	app.get('/login', function (req, res) {
         if (req.session.usuario) {
-            res.render('perfil', {usuario: req.session.usuario});
+            res.render('perfil/' + req.session.usuario
+                , {usuario: req.session.usuario});
         } else {
             res.render('login');
+
+            //if (req.cookie.usuario) {
+            //    req.body.usuario = req.cookie.usuario;
+            //};
+            //if (req.cookie.pass) {
+            //    req.body.pass = req.cookie.pass;
+            //};
         };
 	});
 
@@ -35,6 +43,17 @@ var route = function (app) {
                 req.session.perfil = user.perfil;
                 req.session.id_promocion = user.id_promocion;
                 req.session.id_curso = user.id_curso;
+
+                // Guarda cookie que expira en 24 horas
+                // PENDIENTE DE ACABAR
+                if (req.body.remember) {
+                    res.cookie('usuario', req.body.usuario, 
+                        { expires: new Date(Date.now() + 24 * 60 * 60 * 1000) });
+                    console.log(res.cookie.usuario);
+                    res.cookie('pass', req.body.pass, 
+                        { expires: new Date(Date.now() + 24 * 60 * 60 * 1000) });
+                    console.log(res.cookie.pass);
+                };
 
                 res.redirect('/perfil');
             } else {
@@ -71,7 +90,6 @@ var route = function (app) {
 
         async.series([
             function (callback) {
-
                 stream.on('data', function (data) {
                     if (data.usuario === req.body.usuario) {
                         return res.render('registro', 
@@ -92,7 +110,6 @@ var route = function (app) {
                 });
 
             }, function (callback) {
-
                 user = new Usuario();
                 user.usuario = req.body.usuario;
                 user.pass = req.body.pass;
@@ -102,7 +119,6 @@ var route = function (app) {
                 user.fechaNacimiento = req.body.fechanacimiento;
                 user.perfil = req.body.perfil;
                 user.save(function (err) {
-
                   if (err) {
                     req.session.error = err;
                     console.log('Error al registrar usuario');

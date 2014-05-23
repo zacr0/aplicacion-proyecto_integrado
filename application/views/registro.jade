@@ -81,13 +81,25 @@ block content
                       //-select(id='asignaturas', name='asignaturas').form-control
                         option(selected='selected') ¿Qué asignaturas impartes?
                         - each queue in asignaturaData
-                          option(value="#{queue.nombre}") #{queue.nombre}
-                      select(id='asignaturas',name='asignaturas').form-control
-                        option(selected='selected', disabled) ¿Qué asignaturas impartes?
-                        option(value='dwec') Desarrollo Web Entorno Cliente
-                        option(value='dwes') Desarrollo Web Entorno Servidor
-                        option(value='prog') Programación
-                        option(value='diw') Diseño de Aplicaciones Web
+                          input(type='checkbox',name='asignatura,value="#{queue.nombre}") 
+                            #{queue.nombre}
+                      p.lead ¿Qué asignaturas impartes?
+                      .checkbox
+                        label
+                          input(type='checkbox',name='asignatura',value='dwec')
+                        | Desarrollo Web Entorno Cliente
+                      .checkbox
+                        label
+                          input(type='checkbox',name='asignatura',value='dwes')
+                        |  Desarrollo Web Entorno Servidor
+                      .checkbox
+                        label
+                          input(type='checkbox',name='asignatura',value='prog') 
+                        |  Programación
+                      .checkbox
+                        label
+                          input(type='checkbox',name='asignatura',value='diw') 
+                        |  Diseño de Aplicaciones Web
                   hr
                   .form-group
                     .col-md-10.col-md-offset-1
