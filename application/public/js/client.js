@@ -49,17 +49,17 @@ $(function() {
 		}
 	});
 
-	$('select[name=promocion]').click(function(){
+	$('select[name=promocion]').change(function(){
 		// Obtencion del curso de la promocion
-		var valor = $(this).val().split(" ")[0];
+		var curso = $(this).val().split(" ")[0];
 		// Deshabilita los cursos que no corresponden
 		$('select[name=curso] option')
-			.not(':contains(' + valor + ')')
+			.not(':contains(' + curso + ')')
 			.prop('disabled', true)
 			.prop('selected', false)
 			.hide();
 		// Habilita los cursos de la promocion que corresponden
-		$('select[name=curso] option:contains(' + valor + ')')
+		$('select[name=curso] option:contains(' + curso + ')')
 			.prop('disabled', false)
 			.show();
 	});
