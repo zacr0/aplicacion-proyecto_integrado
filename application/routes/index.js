@@ -13,7 +13,11 @@ var route = function (app) {
 
     // Login
 	app.get('/login', function (req, res) {
-		res.render('login');
+        if (req.session.usuario) {
+            res.render('perfil', {usuario: req.session.usuario});
+        } else {
+            res.render('login');
+        };
 	});
 
     app.post('/login', function(req, res) {
@@ -31,19 +35,12 @@ var route = function (app) {
                 req.session.id_promocion = user.id_promocion;
                 req.session.id_curso = user.id_curso;
 
-                console.log('nombre: ' + req.session.nombre +
-                    '\napellidos: ' + req.session.apellidos +
-                    '\nusuario: ' + req.session.usuario +
-                    '\nperfil: ' + req.session.perfil +
-                    '\nPromocion: ' + req.session.id_promocion +
-                    '\nCurso: ' + req.session.id_curso
-                );
-                res.render('perfil');
+                res.redirect('/perfil');
             } else {
                 console.log('El usuario no existe');
                 res.render('login', {error: 'El usuario introducido no existe. ' +
-                    'Compruebe la información que ha introducido e ' +
-                    'inténtelo de nuevo.'});
+                    'Compruebe que la información que ha introducido sea ' +
+                    'correcta e inténtelo de nuevo.'});
             }
         });
     });
@@ -61,7 +58,9 @@ var route = function (app) {
                     });
                 });
             }, function resultados(callback) {
-                res.render('registro', {cursoData: cursoData, promocionData: promocionData});
+                res.render('registro', {cursoData: 
+                    cursoData, 
+                    promocionData: promocionData});
             }
         ]);
 	});
@@ -76,7 +75,10 @@ var route = function (app) {
                 stream.on('data', function (data) {
                     if (data.usuario === req.body.usuario) {
                         return res.render('registro', 
-                            {error: 'Usuario ya existe', cursoData: cursoData, promocionData: promocionData});
+                            {error: 'El nombre de usuario introducido ' +
+                            'ya existe, introduzca otro.', 
+                            cursoData: cursoData, 
+                            promocionData: promocionData});
                     }
                 });
                 
@@ -104,7 +106,9 @@ var route = function (app) {
                   if (err) {
                     req.session.error = err;
                     console.log('Error al registrar usuario');
-                    res.render('registro', {error: req.session.error, cursoData: cursoData, promocionData: promocionData});
+                    res.render('registro', {error: req.session.error, 
+                        cursoData: cursoData, 
+                        promocionData: promocionData});
                     return console.log(err);
                   }
                   console.log('Usuario registrado');
@@ -115,6 +119,12 @@ var route = function (app) {
             } // function
         ]); // async.series
 	});
+
+    // Logout
+    app.get('/logout', function (req, res) {
+        req.session.destroy();
+        res.redirect('/');
+    });
 }
 
 module.exports = route;

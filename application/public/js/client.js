@@ -60,6 +60,7 @@ $(function() {
 		},
 		rules: {
 			usuario: {
+				usuario: true,
 				required: true,
 				rangelength: [3,12]
 			},
@@ -92,6 +93,10 @@ $(function() {
 			// Validacion de promocion/curso/asignaturas:
 		},
 		messages: {
+			usuario: {
+				usuario: "El nombre de usuario sólo puede contener minúsculas \
+					y números, y una longitud 3 a 12 caracteres."
+			},
 			pass: {
 				pwd: "La contraseña debe tener al menos 6 caracteres, \
 					una minúscula, una mayúscula y un número."
@@ -106,13 +111,18 @@ $(function() {
 	});
 	
 	/*
-		El nombre debe tener 3 o mas letras y puede ser compuesto
+		El nombre de usuario debe tener:
+		 - Entre 3 y 12 caracteres.
+		 - Minusculas o numeros, o ambos.
 	*/
+	$.validator.addMethod("usuario", function(value) {
+		return /^[a-z\d_]{3,12}$/.test(value);
+	});
+	// El nombre debe tener 3 o mas letras y puede ser compuesto
 	$.validator.addMethod("nombre", function(value) {
-		//return /^[^\p{L}\s-]{3,}/.test(value)
+		//return /^[^\p{L}\s-]{3,}/.test(value);
 		return /^([a-zA-Z]{3,}\s*)+$/.test(value);
 	});
-
 	/*
 		La contraseña debe tener:
 		 - Al menos 6 caracteres
