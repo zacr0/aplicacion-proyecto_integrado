@@ -63,27 +63,43 @@ block content
                       //- (Este campo aparece solo si el usuario es un alumno, sera obligatorio)
                       //- (Las opciones de este campo son resultado de una consulta a promociones)
                       select(id='promocion',name='promocion').form-control
-                        option(selected='selected') ¿Cuál es tu promoción?
+                        option(selected='selected', disabled) ¿Cuál es tu promoción?
                         - each queue in promocionData
-                          option #{queue.nombre}
+                          option(value="#{queue.nombre}") #{queue.nombre}
                   .form-group.visible-alumno
                     .col-xs-12.col-sm-12.col-md-10.col-md-offset-1
                       //- (Este campo aparece solo si el usuario es un alumno, sera obligatorio)
                       //- (Las opciones de este campo son resultado de una consulta a cursos)
                       select(id='curso',name='curso').form-control
-                        option(selected='selected') ¿Cuál es tu curso?
+                        option(selected='selected', disabled) ¿Cuál es tu curso?
                         - each queue in cursoData
-                          option #{queue.nombre}
+                          option(value="#{queue.nombre}", disabled) #{queue.nombre}
                   .form-group.visible-profesor
                     .col-xs-12.col-sm-12.col-md-10.col-md-offset-1
                       //- (Este campo aparece solo si el usuario es un profesor, sera obligatorio)
                       //- (Las opciones de este campo son resultado de una consulta a asignaturas)
-                      select(id='asignaturas',name='asignaturas').form-control
+                      //-select(id='asignaturas', name='asignaturas').form-control
                         option(selected='selected') ¿Qué asignaturas impartes?
-                        option(value='dwec') Desarrollo Web Entorno Cliente
-                        option(value='dwes') Desarrollo Web Entorno Servidor
-                        option(value='prog') Programación
-                        option(value='diw') Diseño de Aplicaciones Web
+                        - each queue in asignaturaData
+                          input(type='checkbox',name='asignatura,value="#{queue.nombre}") 
+                            #{queue.nombre}
+                      p.lead ¿Qué asignaturas impartes?
+                      .checkbox
+                        label
+                          input(type='checkbox',name='asignatura',value='dwec')
+                        | Desarrollo Web Entorno Cliente
+                      .checkbox
+                        label
+                          input(type='checkbox',name='asignatura',value='dwes')
+                        |  Desarrollo Web Entorno Servidor
+                      .checkbox
+                        label
+                          input(type='checkbox',name='asignatura',value='prog') 
+                        |  Programación
+                      .checkbox
+                        label
+                          input(type='checkbox',name='asignatura',value='diw') 
+                        |  Diseño de Aplicaciones Web
                   hr
                   .form-group
                     .col-md-10.col-md-offset-1
