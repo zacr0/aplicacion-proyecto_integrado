@@ -10,7 +10,10 @@ var route = function (app) {
 
 	});
 
-	/* AQUI FALTA EL APARTADO POST DEL REGISTRO */
+	// Publicación de anuncios
+	app.post('/anuncios', function(req, res) {
+
+	});
 }
 
 module.exports = route;

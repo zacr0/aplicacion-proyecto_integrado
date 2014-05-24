@@ -55,7 +55,7 @@ var route = function (app) {
                     console.log(res.cookie.pass);
                 };
 
-                res.redirect('/perfil');
+                res.redirect('/perfil/' + req.session.usuario);
             } else {
                 console.log('El usuario no existe');
                 res.render('login', {error: 'El usuario introducido no existe. ' +
