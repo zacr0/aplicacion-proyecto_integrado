@@ -65,7 +65,8 @@ var route = function (app) {
             }, function resultados(callback) {
                 console.log('asignaturas' , asignaturaData);
                 res.render('registro', {cursoData: cursoData, 
-                    promocionData: promocionData, asignaturaData: asignaturaData});
+                    promocionData: promocionData,
+                    asignaturaData: asignaturaData});
             }
         ]);
 	});

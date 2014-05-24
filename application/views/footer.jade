@@ -2,68 +2,83 @@ hr
 
 footer
   .row
+    .col-lg-12.text-right
+      a(href="#") 
+        span.glyphicon.glyphicon-arrow-up 
+        |  Volver arriba
+        span.glyphicon.glyphicon-arrow-up 
+
+  .row
     .col-lg-12
-        .col-md-3
-          ul.list-unstyled
+      .col-md-3
+        ul.list-unstyled
+          li
+            | Secciones
             li
-              | GitHub
               li
-                li
-                  a(href='#') About us
-                li
-                  a(href='#') Blog
-                li
-                  a(href='#') Contact & support
-                li
-                  a(href='#') Enterprise
-                li
-                  a(href='#') Site status
-        .col-md-3
-          ul.list-unstyled
+                a(href='/salas') Salas de chat
+              li
+                a(href='/anuncios') Tablón de anuncios
+              li
+                a(href='/usuarios') Listado de usuarios
+              li
+                a(href='/perfil/' + usuario) Perfil de usuario
+              li
+                a(href='/logout') Cerrar sesión
+      .col-md-3
+        ul.list-unstyled
+          li
+            | I.E.S. Gran Capitán
             li
-              | Applications
               li
-                li
-                  a(href='#') Product for Mac
-                li
-                  a(href='#') Product for Windows
-                li
-                  a(href='#') Product for Eclipse
-                li
-                  a(href='#') Product mobile apps
-        .col-md-3
-          ul.list-unstyled
+                a(href='http://www.iesgrancapitan.org/portal/' target="_blank") 
+                  | Portal del centro
+              li
+                a(href='http://www.iesgrancapitan.org/departamento/informatica/' target="_blank")
+                  | Departamento de Informática
+              li
+                a(href='http://www.iesgrancapitan.org/dawblog/' target="_blank")
+                  | DAWBlog
+              li
+                a(href='http://www.iesgrancapitan.org/blog04/' target="_blank")
+                  | SisBlog
+      .col-md-3
+        ul.list-unstyled
+          li
+            | Social
             li
-              | Services
               li
-                li
-                  a(href='#') Web analytics
-                li
-                  a(href='#') Presentations
-                li
-                  a(href='#') Code snippets
-                li
-                  a(href='#') Job board
-        .col-md-3
-          ul.list-unstyled
+                a(href='#' target="_blank") Web analytics
+              li
+                a(href='#' target="_blank") Presentations
+              li
+                a(href='#' target="_blank") Code snippets
+              li
+                a(href='#' target="_blank") Job board
+      .col-md-3
+        ul.list-unstyled
+          li
+            | Documentación
             li
-              | Documentation
               li
-                li
-                  a(href='#') Product Help
-                li
-                  a(href='#') Developer API
-                li
-                  a(href='#') Product Markdown
-                li
-                  a(href='#') Product Pages
+                a(href='http://nodeymongo.wordpress.com/', target="_blank")
+                  | Node.js y MongoDB, blog de desarrollo
+              li
+                a(href='http://nodeymongo.wordpress.com/category/mongodb-2/', target="_blank")
+                  | Aprende MongoDB
+              li
+                a(href='http://nodeymongo.wordpress.com/category/node-js/', target="_blank")
+                  | Aprende Node.js
+              li
+                a(href='http://nodeymongo.wordpress.com/category/tutoriales/', target="_blank")
+                  | Tutoriales de desarrollo
     hr
     .row
       .col-lg-12
         .col-md-6
-          a(href='#') Terms of Service 
-          a(href='#') Privacy 
-          a(href='#') Security 
+          a(href='#') Términos de servicio 
+          a(href='#') Privavidad 
+          a(href='#') Seguridad
         .col-md-6
           p.muted.pull-right.
             ©© 2014 - SocialGCap. Un proyecto conjunto de
