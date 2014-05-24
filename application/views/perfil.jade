@@ -8,29 +8,9 @@ block custom-styles
 
 block content
   .container
-    nav(role="navigation").navbar.navbar-default.navbar-fixed-top
-      div.container
-        .navbar-header
-          button(type="button", data-toggle="collapse", 
-            data-target="#navbar-collapse").navbar-toggle
-            span.sr-only Mostrar navegación
-            span.icon-bar
-            span.icon-bar
-            span.icon-bar
-          a(href="#").navbar-brand SocialGCap
-        .collapse.navbar-collapse(id="navbar-collapse")
-          ul.nav.navbar-nav
-            li
-              a(href="/salas") Salas
-            li
-              a(href="/anuncios") Anuncios
-            li
-              a(href="/usuarios") Usuarios
-          ul.nav.navbar-nav.navbar-right
-            li
-              a(href="/perfil/" + usuario)= 'Usuario: ' + usuario
-            li
-              a(href="/logout").btn.btn-danger Cerrar sesión
+    - var activo = 'perfil';
+    include navbar
+    
     p
     - if ( datosUsuario ) {
           p #{datosUsuario.usuario}
