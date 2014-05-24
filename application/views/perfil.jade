@@ -23,32 +23,42 @@ block content
         .row
           .col-md-12.text-right
             a(href="mailto:zacro.suarez@gmail.com?Subject=Denuncia del perfil de #{datosUsuario.nombre} #{datosUsuario.apellidos}") 
-              | Denunciar perfil 
+              | Denunciar este perfil 
         .row
-          img(src='/img/avatar_default.jpg',
-            alt="Imagen de perfil de #{datosUsuario.nombre}").img-circle
-          hr
-          p
-            strong Nombre: 
-            | #{datosUsuario.nombre} #{datosUsuario.apellidos}
-          p
-            strong Perfil: 
-            | #{datosUsuario.perfil}
-          p
-            strong Email: 
-            a(href="mailto:#{datosUsuario.email}") #{datosUsuario.email}
-          p
-            strong Fecha de nacimiento: 
-            | #{datosUsuario.fechaNacimiento.getDate()} / 
-            | #{datosUsuario.fechaNacimiento.getMonth()+1} / 
-            | #{datosUsuario.fechaNacimiento.getFullYear()} 
-          - if (datosUsuario.perfil === 'alumno')
+          .col-md-6
+            img(src='#{datosUsuario.foto}',
+              alt="Imagen de perfil de #{datosUsuario.nombre}").img-circle
+          //hr
+          .col-md-6.text-left
             p
-              strong Promoción: 
-              | #{datosUsuario.id_promocion}
+              strong Nombre: 
+              | #{datosUsuario.nombre} #{datosUsuario.apellidos}
             p
-              strong Curso: 
-              | #{datosUsuario.id_curso}
+              strong Perfil: 
+              | #{datosUsuario.perfil}
+            p
+              strong Email: 
+              a(href="mailto:#{datosUsuario.email}?Subject=Contacto desde SocialGCap",
+                target="_blank") #{datosUsuario.email}
+            p
+              strong Fecha de nacimiento: 
+              | #{datosUsuario.fechaNacimiento.getDate()} / 
+              | #{datosUsuario.fechaNacimiento.getMonth()+1} / 
+              | #{datosUsuario.fechaNacimiento.getFullYear()} 
+            if (datosUsuario.perfil === 'alumno')
+              p
+                strong Promoción: 
+                | #{datosUsuario.id_promocion}
+              p
+                strong Curso: 
+                | #{datosUsuario.id_curso}
+            if (datosUsuario.perfil === 'profesor')
+              p
+                strong Asignaturas impartidas:
+                - console.log(datosUsuario.asignaturasProfesor)
+                ul
+                  each queue in datosUsuario.asignaturasProfesor
+                    li #{queue}
 
     //-p
     //-- if ( datosUsuario ) {
