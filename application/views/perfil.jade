@@ -8,28 +8,60 @@ block custom-styles
 
 block content
   .container
-    nav(role="navigation").navbar.navbar-default.navbar-fixed-top
-      div.container
-        .navbar-header
-          button(type="button", data-toggle="collapse", 
-            data-target="#navbar-collapse").navbar-toggle
-            span.sr-only Mostrar navegación
-            span.icon-bar
-            span.icon-bar
-            span.icon-bar
-          a(href="#").navbar-brand SocialGCap
-        .collapse.navbar-collapse(id="navbar-collapse")
-          ul.nav.navbar-nav
-            li
-              a(href="salas") Salas
-            li
-              a(href="anuncios") Anuncios
-            li
-              a(href="usuarios") Usuarios
-          ul.nav.navbar-nav.navbar-right
-            li
-              a(href="perfil/" + usuario)= 'Usuario: ' + usuario
-            li
-              a(href="logout").btn.btn-danger Cerrar sesión
+    - var activo = 'perfil';
+    include navbar
+
+    if error
+      .page-header
+        h1= error
+    else
+      .page-header
+        h1 Perfil del #{datosUsuario.perfil}  
+          small #{datosUsuario.nombre}  #{datosUsuario.apellidos}
+
+      .datos.text-center.well
+        .row
+          .col-md-12.text-right
+            a(href="mailto:zacro.suarez@gmail.com?Subject=Denuncia del perfil de #{datosUsuario.nombre} #{datosUsuario.apellidos}") 
+              | Denunciar perfil 
+        .row
+          img(src='/img/avatar_default.jpg',
+            alt="Imagen de perfil de #{datosUsuario.nombre}").img-circle
+          hr
+          p
+            strong Nombre: 
+            | #{datosUsuario.nombre} #{datosUsuario.apellidos}
+          p
+            strong Perfil: 
+            | #{datosUsuario.perfil}
+          p
+            strong Email: 
+            a(href="mailto:#{datosUsuario.email}") #{datosUsuario.email}
+          p
+            strong Fecha de nacimiento: 
+            | #{datosUsuario.fechaNacimiento.getDate()} / 
+            | #{datosUsuario.fechaNacimiento.getMonth()+1} / 
+            | #{datosUsuario.fechaNacimiento.getFullYear()} 
+          - if (datosUsuario.perfil === 'alumno')
+            p
+              strong Promoción: 
+              | #{datosUsuario.id_promocion}
+            p
+              strong Curso: 
+              | #{datosUsuario.id_curso}
+
+    //-p
+    //-- if ( datosUsuario ) {
+    //-      p #{datosUsuario.usuario}
+    //-      br
+    //-      p #{datosUsuario.nombre} #{datosUsuario.apellidos}
+    //-      br
+    //-      p #{datosUsuario.email}
+    //-      br
+    //-      p #{datosUsuario.fechaNacimiento}
+    //-      br
+    //-      p #{datosUsuario.perfil}
+    //-  - }
+    include footer
 
 block custom-scripts

@@ -37,16 +37,34 @@ $(function() {
 	$('.visible-alumno').hide();
 	$('.visible-profesor').hide();
 
-	$('input[name=perfil]').click(function () {
+	$('input[name=perfil]').change(function () {
 		if (this.id == "alumno") {
 			$(".visible-alumno").show();
-			$("#alumno").attr('required');
+			$("#alumno").prop('required');
+			$("input[name=asignatura]").prop('checked', false);
 			$(".visible-profesor").hide();
 		} 
 		if (this.id == "profesor") {
 			$(".visible-profesor").show();
+			$("select#promocion :selected").attr('selected', false);
+			$("select#curso :selected").attr('selected', false);
 			$(".visible-alumno").hide();
 		}
+	});
+
+	$('select[name=promocion]').change(function(){
+		// Obtencion del curso de la promocion
+		var curso = $(this).val().split(" ")[0];
+		// Deshabilita los cursos que no corresponden
+		$('select[name=curso] option')
+			.not(':contains(' + curso + ')')
+			.prop('disabled', true)
+			.prop('selected', false)
+			.hide();
+		// Habilita los cursos de la promocion que corresponden
+		$('select[name=curso] option:contains(' + curso + ')')
+			.prop('disabled', false)
+			.show();
 	});
 
 	registroForm.validate({
@@ -118,10 +136,9 @@ $(function() {
 	$.validator.addMethod("usuario", function(value) {
 		return /^[a-z\d_]{3,12}$/.test(value);
 	});
-	// El nombre debe tener 3 o mas letras y puede ser compuesto
+	// El nombre debe tener 2 o mas letras y puede ser compuesto
 	$.validator.addMethod("nombre", function(value) {
-		//return /^[^\p{L}\s-]{3,}/.test(value);
-		return /^([a-zA-Z]{3,}\s*)+$/.test(value);
+		return /^([a-zA-Z\ \'\u00e1\u00e9\u00ed\u00f3\u00fa\u00c1\u00c9\u00cd\u00d3\u00da\u00f1\u00d1\u00FC\u00DC]{2,}\s*)+$/.test(value);
 	});
 	/*
 		La contraseña debe tener:

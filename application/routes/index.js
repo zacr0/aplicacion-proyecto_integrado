@@ -1,10 +1,12 @@
 var Usuario = require('../models/Usuario'),
     Curso = require('../models/Curso'),
     Promocion = require('../models/Promocion'),
+    Asignatura = require('../models/Asignatura'),
     async = require('async'),
     user,
     cursoData,
-    promocionData;
+    promocionData,
+    asignaturaData;
 
 var route = function (app) {
 	app.get('/', function (req, res) {
@@ -14,7 +16,7 @@ var route = function (app) {
     // Login
 	app.get('/login', function (req, res) {
         if (req.session.usuario) {
-            res.render('perfil', {usuario: req.session.usuario});
+            res.redirect('perfil');
         } else {
             res.render('login');
         };
@@ -35,7 +37,7 @@ var route = function (app) {
                 req.session.id_promocion = user.id_promocion;
                 req.session.id_curso = user.id_curso;
 
-                res.redirect('/perfil');
+                res.redirect('/perfil/' + req.session.usuario);
             } else {
                 console.log('El usuario no existe');
                 res.render('login', {error: 'El usuario introducido no existe. ' +
@@ -47,20 +49,24 @@ var route = function (app) {
 
     // Registro
 	app.get('/registro', function (req, res) {
-
         async.series([
             function cursos(callback) {
                 Promocion.find(function (err, data){
                     promocionData = data;
                     Curso.find(function (err, data){
                         cursoData = data;
-                        callback();
+                        Asignatura.find(function (err, data){
+                            asignaturaData = data;
+                            callback();
+                        });
                     });
+                    // Consulta de asigunaturas
                 });
             }, function resultados(callback) {
-                res.render('registro', {cursoData: 
-                    cursoData, 
-                    promocionData: promocionData});
+                console.log('asignaturas' , asignaturaData);
+                res.render('registro', {cursoData: cursoData, 
+                    promocionData: promocionData,
+                    asignaturaData: asignaturaData});
             }
         ]);
 	});
@@ -71,7 +77,6 @@ var route = function (app) {
 
         async.series([
             function (callback) {
-
                 stream.on('data', function (data) {
                     if (data.usuario === req.body.usuario) {
                         return res.render('registro', 
@@ -92,7 +97,6 @@ var route = function (app) {
                 });
 
             }, function (callback) {
-
                 user = new Usuario();
                 user.usuario = req.body.usuario;
                 user.pass = req.body.pass;
@@ -101,20 +105,34 @@ var route = function (app) {
                 user.email = req.body.email;
                 user.fechaNacimiento = req.body.fechanacimiento;
                 user.perfil = req.body.perfil;
-                user.save(function (err) {
-
-                  if (err) {
-                    req.session.error = err;
-                    console.log('Error al registrar usuario');
-                    res.render('registro', {error: req.session.error, 
-                        cursoData: cursoData, 
-                        promocionData: promocionData});
-                    return console.log(err);
-                  }
-                  console.log('Usuario registrado');
-                  res.render('login', {success: true});
-
-                }); // save
+                async.series([
+                    function (callback){
+                        if(req.body.perfil === 'profesor') {
+                            user.asignaturasProfesor = req.body.asignatura;
+                            callback();
+                        }else{
+                            Promocion.findOne({nombre: req.body.promocion},function (err, data){
+                                user.id_promocion = data.id;
+                                Curso.findOne({nombre: req.body.curso},function (err, data){
+                                    user.id_curso = data.id;
+                                    callback();
+                                }); // curso
+                            }); // promocion
+                        } // else
+                    }, function (callback) {
+                        user.save(function (err) {
+                            if (err) {
+                                req.session.error = err;
+                                console.log('Error al registrar usuario');
+                                res.render('registro', {error: req.session.error, cursoData: cursoData, 
+                                promocionData: promocionData});
+                                return console.log(err);
+                            }
+                            console.log('Usuario registrado');
+                            res.render('login', {success: true});
+                        }); // save
+                    }
+                ]); // async.series
 
             } // function
         ]); // async.series
