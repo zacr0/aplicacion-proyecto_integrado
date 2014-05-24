@@ -10,7 +10,8 @@ var Usuario = new Schema({
   email: {type: String, trim: true},
   perfil: String,
   id_promocion: Schema.ObjectId,
-  id_curso: Schema.ObjectId
+  id_curso: Schema.ObjectId,
+  asignaturasProfesor: [String]
 });
 
 exports = module.exports = mongoose.model('usuario', Usuario);

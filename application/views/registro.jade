@@ -80,7 +80,7 @@ block content
                       //- (Las opciones de este campo son resultado de una consulta a asignaturas)
                       - each queue in asignaturaData
                         label(for="checkbox")
-                          input(type='checkbox',name='asignatura')
+                          input(type='checkbox',name='asignatura', value="#{queue.nombre}")
                           | #{queue.nombre} 
                   hr
                   .form-group

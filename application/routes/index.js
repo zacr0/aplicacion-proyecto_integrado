@@ -104,19 +104,34 @@ var route = function (app) {
                 user.email = req.body.email;
                 user.fechaNacimiento = req.body.fechanacimiento;
                 user.perfil = req.body.perfil;
-                user.save(function (err) {
-                  if (err) {
-                    req.session.error = err;
-                    console.log('Error al registrar usuario');
-                    res.render('registro', {error: req.session.error, 
-                        cursoData: cursoData, 
-                        promocionData: promocionData});
-                    return console.log(err);
-                  }
-                  console.log('Usuario registrado');
-                  res.render('login', {success: true});
-
-                }); // save
+                async.series([
+                    function (callback){
+                        if(req.body.perfil === 'profesor') {
+                            user.asignaturasProfesor = req.body.asignatura;
+                            callback();
+                        }else{
+                            Promocion.findOne({nombre: req.body.promocion},function (err, data){
+                                user.id_promocion = data.id;
+                                Curso.findOne({nombre: req.body.curso},function (err, data){
+                                    user.id_curso = data.id;
+                                    callback();
+                                }); // curso
+                            }); // promocion
+                        } // else
+                    }, function (callback) {
+                        user.save(function (err) {
+                            if (err) {
+                                req.session.error = err;
+                                console.log('Error al registrar usuario');
+                                res.render('registro', {error: req.session.error, cursoData: cursoData, 
+                                promocionData: promocionData});
+                                return console.log(err);
+                            }
+                            console.log('Usuario registrado');
+                            res.render('login', {success: true});
+                        }); // save
+                    }
+                ]); // async.series
 
             } // function
         ]); // async.series
