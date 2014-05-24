@@ -27,7 +27,7 @@ route = function (app) {
             		res.render('perfil', {datosUsuario: user, 
             			usuario: req.session.usuario,
             			error: 'El usuario "' + req.params.usuario 
-            				+ '" no existe'
+            				+ '" no existe en la base de datos.'
             		});
             	}
 			});
