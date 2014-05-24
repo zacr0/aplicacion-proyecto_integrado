@@ -1,6 +1,7 @@
 var Usuario = require('../models/Usuario'),
     Curso = require('../models/Curso'),
     Promocion = require('../models/Promocion'),
+    Asignatura = require('../models/Asignatura'),
     async = require('async'),
     user,
     cursoData,
@@ -54,13 +55,17 @@ var route = function (app) {
                     promocionData = data;
                     Curso.find(function (err, data){
                         cursoData = data;
-                        callback();
+                        Asignatura.find(function (err, data){
+                            asignaturaData = data;
+                            callback();
+                        });
                     });
                     // Consulta de asigunaturas
                 });
             }, function resultados(callback) {
+                console.log('asignaturas' , asignaturaData);
                 res.render('registro', {cursoData: cursoData, 
-                    promocionData: promocionData});
+                    promocionData: promocionData, asignaturaData: asignaturaData});
             }
         ]);
 	});
