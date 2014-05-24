@@ -1,4 +1,8 @@
 var Usuario = require('../models/Usuario'),
+	Curso = require('../models/Curso'),
+	Promocion = require('../models/Promocion'),
+	nombrePromocion,
+	nombreCurso,
 
 route = function (app) {
 	app.get('/perfil', function(req, res) {
@@ -19,17 +23,25 @@ route = function (app) {
                 	console.log('Error al buscar usuario en la BD');
             	}
             	// Control de existencia del usuario
-            	if (user) {
-            		console.log('/perfil/usuario', user.usuario);
-            		res.render('perfil', {datosUsuario: user, 
-            			usuario: req.session.usuario});
-            	} else {
-            		res.render('perfil', {datosUsuario: user, 
-            			usuario: req.session.usuario,
-            			error: 'El usuario "' + req.params.usuario 
-            				+ '" no existe'
-            		});
-            	}
+	           	Promocion.findOne({_id: user.id_promocion}, function (err, promocion) {
+	           		nombrePromocion = promocion.nombre; // Nombre promocion
+	           		Curso.findOne({_id: user.id_curso}, function (err, curso) {
+	           			nombreCurso = curso.nombre; // Nombre curso
+		            	if (user) {
+		            		console.log('/perfil/usuario', user.usuario);
+		            		res.render('perfil', {datosUsuario: user, 
+		            			usuario: req.session.usuario, nombreCurso: nombreCurso,
+		            			nombrePromocion: nombrePromocion});
+		            	} else {
+		            		res.render('perfil', {datosUsuario: user, 
+		            			usuario: req.session.usuario, nombreCurso: nombreCurso,
+		            			nombrePromocion: nombrePromocion,
+		            			error: 'El usuario "' + req.params.usuario 
+		            				+ '" no existe'
+		            		});
+		            	}
+		            });
+	           	});
 			});
 		} else {
 			res.render('login', {error: 'Debes iniciar sesión ' +
