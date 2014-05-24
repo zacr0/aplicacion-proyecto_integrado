@@ -60,10 +60,9 @@ var route = function (app) {
                             callback();
                         });
                     });
-                    // Consulta de asigunaturas
                 });
             }, function resultados(callback) {
-                console.log('asignaturas' , asignaturaData);
+                //console.log('asignaturas' , asignaturaData);
                 res.render('registro', {cursoData: cursoData, 
                     promocionData: promocionData,
                     asignaturaData: asignaturaData});
@@ -100,6 +99,7 @@ var route = function (app) {
                 user = new Usuario();
                 user.usuario = req.body.usuario;
                 user.pass = req.body.pass;
+                user.foto = '/img/avatar_default.jpg';
                 user.nombre = req.body.nombre;
                 user.apellidos = req.body.apellidos;
                 user.email = req.body.email;

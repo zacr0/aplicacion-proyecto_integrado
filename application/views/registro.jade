@@ -78,10 +78,12 @@ block content
                     .col-xs-12.col-sm-12.col-md-10.col-md-offset-1
                       //- (Este campo aparece solo si el usuario es un profesor, sera obligatorio)
                       //- (Las opciones de este campo son resultado de una consulta a asignaturas)
+                      p.lead ¿Qué asignaturas impartes?
                       - each queue in asignaturaData
-                        label(for="checkbox")
+                        label(for="asignatura")
                           input(type='checkbox',name='asignatura', value="#{queue.nombre}")
-                          | #{queue.nombre} 
+                          |  #{queue.nombre}
+                        br
                   hr
                   .form-group
                     .col-md-10.col-md-offset-1

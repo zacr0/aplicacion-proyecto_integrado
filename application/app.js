@@ -20,10 +20,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser('t999YE72wJ'));
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(session({ secret: 'keyboard cat',
+app.use(session({ secret: 'keyboard cat', cookie: {
     maxAge:  new Date(Date.now() + 3600000),
-    expires: new Date(Date.now() + 3600000),
-    cookie: { maxAge: 60000 }}))
+    expires: new Date(Date.now() + 3600000)
+}}))
 
 // Routing
 admin_routes(app);
