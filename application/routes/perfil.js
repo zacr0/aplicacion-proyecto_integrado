@@ -18,9 +18,18 @@ route = function (app) {
 				if (err) {
                 	console.log('Error al buscar usuario en la BD');
             	}
-            	console.log('/perfil/usuario', user.usuario);
-            	res.render('perfil', {datosUsuario: user, 
-            		usuario: req.session.usuario});
+            	// Control de existencia del usuario
+            	if (user) {
+            		console.log('/perfil/usuario', user.usuario);
+            		res.render('perfil', {datosUsuario: user, 
+            			usuario: req.session.usuario});
+            	} else {
+            		res.render('perfil', {datosUsuario: user, 
+            			usuario: req.session.usuario,
+            			error: 'El usuario "' + req.params.usuario 
+            				+ '" no existe'
+            		});
+            	}
 			});
 		} else {
 			res.render('login', {error: 'Debes iniciar sesión ' +

@@ -11,9 +11,22 @@ block content
     - var activo = 'perfil';
     include navbar
 
-    .page-header
-      h1 Perfil del #{datosUsuario.perfil} 
-        small #{datosUsuario.nombre}  #{datosUsuario.apellidos}
+    if error
+      .page-header
+        h1= error
+    else
+      .page-header
+        h1 Perfil del #{datosUsuario.perfil}  
+          small #{datosUsuario.nombre}  #{datosUsuario.apellidos}
+
+      img(src='/img/avatar_default.jpg',
+        alt="Imagen de perfil de #{datosUsuario.nombre}").img-circle
+      strong Nombre:
+      #{datosUsuario.usuario} #{datosUsuario.apellidos} 
+      strong Email:
+      #{datosUsuario.email} 
+      strong Fecha de nacimiento:
+      #{datosUsuario.fechaNacimiento}
 
     //-p
     //-- if ( datosUsuario ) {
@@ -27,5 +40,6 @@ block content
     //-      br
     //-      p #{datosUsuario.perfil}
     //-  - }
+    include footer
 
-  block custom-scripts
+block custom-scripts

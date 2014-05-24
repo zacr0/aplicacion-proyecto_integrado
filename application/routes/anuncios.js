@@ -5,9 +5,9 @@ var route = function (app) {
 			res.render('anuncios', {usuario: req.session.usuario});
 		} else {
 			res.render('login', {error: 'Debes iniciar sesión ' +
-				'para acceder a SocialGcap.'});
+				'para acceder a SocialGCap.'});
 		}
-
+		
 	});
 
 	// Publicación de anuncios
