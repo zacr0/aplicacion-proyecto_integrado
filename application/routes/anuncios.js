@@ -1,20 +1,13 @@
 var Anuncio = require('../models/Anuncio'),
 	Usuario = require('../models/Usuario'),
 	async = require('async'),
-<<<<<<< HEAD
-	anuncio;
-
-var route = function (app) {
-=======
+	anuncio,
 	datosUsuarios = [],
-
-route = function (app) {
->>>>>>> controllers
+	route = function (app) {
 	app.get('/anuncios', function(req, res) {
-
 		var queryAnuncio = Anuncio.find().sort({fecha_publicacion: -1});
 
-		// **** Importante éste código
+		// **** Importante éste codigo
 		if (req.session.usuario) {
 			queryAnuncio.exec( function (err, dataAnuncio) {
 				async.series([
@@ -25,8 +18,9 @@ route = function (app) {
 								+ '\narray: ' + array);*/
 							Usuario.find({_id: elem.id_usuario}, function (err, data) {
 								datosUsuarios.push(data);
-								if( (index+1) === array.length)
+								if( (index + 1) === array.length){
 									callback();
+								}
 							}); // Usuario
 						}); // dataAnuncio
 					}, function (callback) {
@@ -36,9 +30,8 @@ route = function (app) {
 			});
 		} else {
 			res.render('login', {error: 'Debes iniciar sesión ' +
-				'para acceder a SocialGcap.'});
-		}
-		
+				'para acceder a SocialGCap.'});
+		}	
 	});
 
 	// Publicacion de anuncios
@@ -65,7 +58,7 @@ route = function (app) {
 				anuncio.save( function(err) {
 					if (err) {
 						req.session.error = err;
-						console.log('Error al publicar anuncio');
+						console.log('Error al publicar anuncio.');
 						res.render('anuncios', {error: req.session.error});
 						return console.log(err);
 					}

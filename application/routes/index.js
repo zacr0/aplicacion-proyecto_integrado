@@ -103,6 +103,7 @@ var route = function (app) {
                 user = new Usuario();
                 user.usuario = req.body.usuario;
                 user.pass = req.body.pass;
+                // Foto por defecto del usuario
                 user.foto = '/img/avatar_default.jpg';
                 user.nombre = req.body.nombre;
                 user.apellidos = req.body.apellidos;
