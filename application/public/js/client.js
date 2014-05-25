@@ -1,11 +1,9 @@
 $(function() {
-	// PAGINA DE LOGIN
-	var loginForm = $('#form-login');
-
-	$(loginForm).validate({
+// PAGINA DE LOGIN
+	$('#form-login').validate({
 		errorPlacement: function(label, element) {
-			label.addClass('control-label');
 			label.insertAfter(element);
+			label.addClass('control-label');
 			$(element).parent().addClass('has-error');
 		},
 		unhighlight: function (element) {
@@ -21,9 +19,7 @@ $(function() {
 		}
 	});
 
-	// PAGINA DE REGISTRO
-	var registroForm = $('#form-registro');
-
+// PAGINA DE REGISTRO
 	$('#fechanacimiento').datepicker({
 		format: 'mm/dd/yyyy',
 		endDate: new Date($.now()),
@@ -67,10 +63,10 @@ $(function() {
 			.show();
 	});
 
-	registroForm.validate({
+	$('#form-registro').validate({
 		errorPlacement: function(label, element) {
-			label.addClass('control-label');
 			label.insertAfter(element);
+			label.addClass('control-label');
 			$(element).parent().addClass('has-error');
 		},
 		unhighlight: function (element) {
@@ -150,4 +146,40 @@ $(function() {
 	$.validator.addMethod("pwd", function(value) {
 		return /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/.test(value);
 	});
+
+// PAGINA DE SALAS 
+	
+// PAGINA DE ANUNCIOS
+	$('#form-anuncios').validate({
+		errorPlacement: function(label, element) {
+			label.insertAfter(element);
+			label.addClass('control-label');
+			$(element).parent().addClass('has-error');
+		},
+		unhighlight: function (element) {
+			$(element).parent().removeClass('has-error');
+		},
+		rules: {
+			titulo: {
+				required: true,
+				maxlength: 48,
+				nombre: true
+			},
+			cuerpo: {
+				required: true,
+				maxlength: 200,
+				nombre: true
+			}
+		},
+		messages: {
+			titulo: {
+				nombre: "Has introducido carácteres inválidos"
+			},
+			cuerpo: {
+				nombre: "Has introducido carácteres inválidos"
+			}
+		}
+	});
+// PAGINA DE USUARIOS
+
 });
