@@ -4,7 +4,7 @@ var Anuncio = new Schema({
 	id_usuario: Schema.ObjectId,
 	titulo: {type: String, trim: true, required: true},
 	contenido: {type: String, required: true},
-	fechaPublicacion: Date,
+	fechaPublicacion: { type: Date, default: Date.now },
 	fechaEdicion: Date
 });
 
