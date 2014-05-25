@@ -15,16 +15,16 @@ block content
     include navbar
 
     if error
-      .page-header
+      header.page-header
         h1 Usuario inválido
       .text-center.well
         p= error
     else
-      .page-header
+      header.page-header
         h1 Perfil del #{datosUsuario.perfil}  
           small #{datosUsuario.nombre}  #{datosUsuario.apellidos}
 
-      .text-center.well
+      section.text-center.well
         .row
           .col-sm-6.col-md-6.col-sm-6
             img(src='#{datosUsuario.foto}',

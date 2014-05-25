@@ -5,26 +5,34 @@ var Anuncio = require('../models/Anuncio'),
 	datosUsuarios = [],
 	route = function (app) {
 	app.get('/anuncios', function(req, res) {
-		var queryAnuncio = Anuncio.find().sort({fecha_publicacion: -1});
+		var queryAnuncio = Anuncio.find().sort({fechaPublicacion: -1});
 
 		// **** Importante éste codigo
 		if (req.session.usuario) {
-			queryAnuncio.exec( function (err, dataAnuncio) {
-				async.series([
-					function (callback) {
-						dataAnuncio.forEach(function (elem, index, array) {
-							Usuario.find({_id: elem.id_usuario}, function (err, data) {
-								datosUsuarios.push(data);
-								if( (index + 1) === array.length){
-									callback();
-								}
-							}); // Usuario
-						}); // dataAnuncio
-					}, function (callback) {
-						res.send('->' + dataAnuncio + '\n\n ------>' + datosUsuarios);
-						//res.render('anuncios');
-					} // function
-				]); // async.series
+			queryAnuncio.exec( function (err, dataAnuncios) {
+				if (dataAnuncios.length > 0) {
+					async.series([
+						function (callback) {
+							dataAnuncios.forEach(function (elem, index, array) {
+								Usuario.find({_id: elem.id_usuario},
+								{_id: 0, nombre: 1, apellidos: 1}, function (err, data) {
+									datosUsuarios.push(data);
+									if( (index + 1) === array.length){
+										callback();
+									}
+								}); // Usuario
+							}); // dataAnuncios
+						}, function (callback) {
+							//console.log(datosUsuarios);
+							res.render('anuncios', {usuario: req.session.usuario,
+								anuncios: dataAnuncios,
+								usuarios: datosUsuarios});
+						} // function
+					]); // async.series
+				} else {
+					console.log("No hay anuncios");
+					res.render('anuncios', {usuario: req.session.usuario});
+				}
 			});
 		} else {
 			res.render('login', {error: 'Debes iniciar sesión ' +
@@ -63,7 +71,7 @@ var Anuncio = require('../models/Anuncio'),
 							return console.log(err);
 						}
 
-						res.render('anuncios', {success: true});
+						res.redirect('anuncios');
 					}); // save
 				}
 			]); // async.series
