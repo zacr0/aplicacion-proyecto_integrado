@@ -7,13 +7,36 @@ block custom-styles
   link(rel='stylesheet', href='/stylesheets/style.css')
 
 block content
+  #formularioModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='tituloModal', aria-hidden='true')
+    .modal-dialog
+      .modal-content
+        .modal-header
+          button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+          h4#tituloModal.modal-title Publicar nuevo anuncio
+        form(id='form-anuncios',method='POST',action='/anuncios',accept-charset='UTF-8').modal-body
+          .form-group.has-feedback
+            input(id="titulo",name="titulo",type="text",placeholder="Título",maxlength="48",required).form-control
+          .form-group.has-feedback
+            textarea(id="cuerpo",name="cuerpo",type="text",rows="4",maxlength="200",placeholder="Contenido del anuncio",required).form-control
+          .modal-footer
+            button.btn.btn-default(type='button', data-dismiss='modal') Cancelar
+            input.btn.btn-primary(type='submit', value="Publicar")
+
   .container
     - var activo = 'anuncios';
     include navbar
 
-    .page-header
+    .page-header.clearfix
       h1 Tablón de anuncios
+        button(data-toggle="modal",data-target="#formularioModal").btn.btn-success.pull-right + Publicar anuncio
+
+    if error
+      p= error
+    if success
+      p Anuncio publicado con éxito
 
     include footer
 
 block custom-scripts
+  script(src='/js/jquery.validate.min.js')
+  script(src='/js/messages_es.js')

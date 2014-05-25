@@ -1,7 +1,11 @@
 extends layout
 
 block title
-  title SocialGCap - Perfil
+  if error
+    title SocialGCap - Usuario inválido
+  else
+    title SocialGCap - Perfil de #{datosUsuario.nombre}
+    
 
 block custom-styles
   link(rel='stylesheet', href='/stylesheets/style.css')
@@ -23,15 +27,10 @@ block content
 
       .text-center.well
         .row
-          .col-md-12.text-right
-            a(href="mailto:zacro.suarez@gmail.com?Subject=Denuncia del perfil de #{datosUsuario.nombre} #{datosUsuario.apellidos}") 
-              | Denunciar este perfil 
-        .row
-          .col-md-6
+          .col-sm-6.col-md-6.col-sm-6
             img(src='#{datosUsuario.foto}',
               alt="Imagen de perfil de #{datosUsuario.nombre}").img-circle
-          //hr
-          .col-md-6.text-left
+          .col-sm-6.col-md-6.text-left
             p
               strong Nombre: 
               | #{datosUsuario.nombre} #{datosUsuario.apellidos}
@@ -61,6 +60,10 @@ block content
                 ul
                   each queue in datosUsuario.asignaturasProfesor
                     li #{queue}
+        .row
+          .col-md-12.text-right
+            a(href="mailto:zacro.suarez@gmail.com?Subject=Denuncia del perfil de #{datosUsuario.nombre} #{datosUsuario.apellidos}") 
+              | Denunciar este perfil
 
     include footer
 
