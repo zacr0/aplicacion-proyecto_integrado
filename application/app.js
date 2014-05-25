@@ -59,6 +59,9 @@ app.use(function(err, req, res, next) {
     });
 });
 
+// set timezone
+process.env.TZ = 'UTC+2';
+
 app.listen(3000); // port to listen
 console.log('Server running on localhost:3000');
 console.log('Conectando a MongoDB...');

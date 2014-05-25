@@ -37,9 +37,9 @@ var Usuario = require('../models/Usuario'),
 			            			nombreCurso: nombreCurso,
 			            			nombrePromocion: nombrePromocion});
 					            });
-	            			
 				           	});
 	            		} else {
+	            			// Usuario no es alumno
 	            			res.render('perfil', {datosUsuario: user, 
 	            				usuario: req.session.usuario});
 	            		}
@@ -56,6 +56,6 @@ var Usuario = require('../models/Usuario'),
 					'para acceder a SocialGcap.'});
 			}
 		});
-	}
+	};
 
 module.exports = route;
