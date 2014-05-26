@@ -69,9 +69,6 @@ route = function (app) {
 				async.series([
 					function (callback) {
 						dataPromocion.forEach(function (elem, index, array) {
-							/*console.log('elem: ' + elem
-								+ '\nindex: ' + index
-								+ '\narray: ' + array);*/
 							Usuario.find({perfil: 'alumno', id_promocion: elem.id}).exec(function (err, data) {
 								datosUsuarios.push(data);
 								if( (index+1) === array.length)

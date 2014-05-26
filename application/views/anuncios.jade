@@ -42,10 +42,13 @@ block content
         strong 
           | Anuncio publicado con éxito.
 
+    //-each usuario in usuarios
+      | #{usuario[0].nombre} #{usuario[0].apellidos}
+
     if (anuncios)
-      each anuncio, usuario in anuncios, usuarios
+      each anuncio in anuncios
         .col-xs-12.col-sm-6.col-md-4.col-lg-3
-          article.panel.panel-primary
+          article.anuncio.panel.panel-primary
             header.panel-heading
               h3 #{anuncio.titulo}
             .panel-body
@@ -53,8 +56,7 @@ block content
             footer.panel-footer
               span.glyphicon.glyphicon-user 
               //a(href="/perfil/usuario", title="Perfil de usuario")  usuario
-              - console.log(usuario.content)
-              | #{usuario}
+              - console.log(usuarios)
               strong | 
               time(datetime="#{anuncio.fechaPublicacion.getFullYear()}-#{anuncio.fechaPublicacion.getMonth()+1}-#{anuncio.fechaPublicacion.getDate()}").
                 #{anuncio.fechaPublicacion.getDate()}/#{anuncio.fechaPublicacion.getMonth()+1}/#{anuncio.fechaPublicacion.getFullYear()}, 
