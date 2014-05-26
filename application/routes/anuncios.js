@@ -23,7 +23,6 @@ var Anuncio = require('../models/Anuncio'),
 								}); // Usuario
 							}); // dataAnuncios
 						}, function (callback) {
-							//console.log(datosUsuarios);
 							res.render('anuncios', {usuario: req.session.usuario,
 								anuncios: dataAnuncios,
 								usuarios: datosUsuarios});
