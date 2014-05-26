@@ -13,5 +13,22 @@ block content
 
     header.page-header
       h1 Listado de usuarios
-
+    
+    if (usuarios)
+      each usuario in usuarios
+          article.text-center.col-xs-6.col-sm-4.col-md-3.col-lg-2
+              a(href="/perfil/#{usuario.usuario}", title="Perfil de #{usuario.nombre} #{usuario.apellidos}")
+                img(src="#{usuario.foto}", height="100", width="100").img-circle
+                br
+                if usuario.perfil === 'profesor'
+                  span.glyphicon.glyphicon-book
+                else
+                  span.glyphicon.glyphicon-user
+                |  #{usuario.nombre} #{usuario.apellidos}
+    else
+      p.text-center.
+        No hay usuarios en la base de datos.
+    
+    .row.clearfix
+    
     include footer

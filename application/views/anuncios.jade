@@ -44,19 +44,18 @@ block content
 
     if (anuncios)
       each anuncio in anuncios
-        .col-xs-12.col-sm-4.col-md-3.col-lg-3
+        .col-xs-12.col-sm-6.col-md-4.col-lg-3
           article.panel.panel-primary
             header.panel-heading
               h3 #{anuncio.titulo}
             .panel-body
               | #{anuncio.contenido}
             footer.panel-footer
-              strong Publicado por  
-              a(href="/perfil/usuario", title="Perfil de usuario") usuario
-              strong , el 
+              span.glyphicon.glyphicon-user 
+              a(href="/perfil/usuario", title="Perfil de usuario")  usuario
+              strong | 
               time(datetime="#{anuncio.fechaPublicacion.getFullYear()}-#{anuncio.fechaPublicacion.getMonth()+1}-#{anuncio.fechaPublicacion.getDate()}").
-                #{anuncio.fechaPublicacion.getDate()}/#{anuncio.fechaPublicacion.getMonth()+1}/#{anuncio.fechaPublicacion.getFullYear()} 
-              strong a las 
+                #{anuncio.fechaPublicacion.getDate()}/#{anuncio.fechaPublicacion.getMonth()+1}/#{anuncio.fechaPublicacion.getFullYear()}, 
               time(datetime="#{anuncio.fechaPublicacion.getHours()}:#{anuncio.fechaPublicacion.getMinutes()}:#{anuncio.fechaPublicacion.getSeconds()}").
                 #{anuncio.fechaPublicacion.getHours()}:#{anuncio.fechaPublicacion.getMinutes()}:#{anuncio.fechaPublicacion.getSeconds()}
     else

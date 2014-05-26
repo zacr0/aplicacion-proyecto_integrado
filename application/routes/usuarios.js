@@ -6,16 +6,19 @@ var Usuario = require('../models/Usuario'),
 route = function (app) {
 	app.get('/usuarios', function(req, res) {
 
-		query = Usuario.find().sort({nombre: 1, apellidos: 1});
+		query = Usuario.find({},{_id: 0, fechaNacimiento: 0, email: 0, pass: 0, asignaturasProfesor: 0})
+			.sort({nombre: 1, apellidos: 1});
 
 		if (req.session.usuario) {
-			//res.render('usuarios', {usuario: req.session.usuario});
-			query.exec(function (err, user) {
-				res.send('usuarios ->' + user);
+			query.exec(function (err, users) {
+				console.log(users);
+				res.render('usuarios', {usuario: req.session.usuario,
+					usuarios: users
+				});
 			})
 		} else {
 			res.render('login', {error: 'Debes iniciar sesión ' +
-				'para acceder a SocialGcap.'});
+				'para acceder a SocialGCap.'});
 		}
 
 	});
@@ -25,13 +28,14 @@ route = function (app) {
 		query = Usuario.find({perfil: 'alumno'}).sort({nombre: 1, apellidos: 1});
 
 		if (req.session.usuario) {
-			query.exec(function (err, user) {
-				//console.log('usuarios: ' + user);
-				res.send('alumnos ->' + user);
+			query.exec(function (err, users) {
+				res.render('usuarios', {usuario: req.session.usuario,
+					usuarios: users
+				});
 			})
 		} else {
 			res.render('login', {error: 'Debes iniciar sesión ' +
-				'para acceder a SocialGcap.'});
+				'para acceder a SocialGCap.'});
 		}
 
 	});
@@ -41,13 +45,14 @@ route = function (app) {
 		query = Usuario.find({perfil: 'profesor'}).sort({nombre: 1, apellidos: 1});
 
 		if (req.session.usuario) {
-			query.exec(function (err, user) {
-				//console.log('usuarios: ' + user);
-				res.send('profesores ->' + user);
+			query.exec(function (err, users) {
+				res.render('usuarios', {usuario: req.session.usuario,
+					usuarios: users
+				});
 			});
 		} else {
 			res.render('login', {error: 'Debes iniciar sesión ' +
-				'para acceder a SocialGcap.'});
+				'para acceder a SocialGCap.'});
 		}
 
 	});
@@ -80,7 +85,7 @@ route = function (app) {
 			});
 		} else {
 			res.render('login', {error: 'Debes iniciar sesión ' +
-				'para acceder a SocialGcap.'});
+				'para acceder a SocialGCap.'});
 		}
 
 	}); // /usuarios/promociones
