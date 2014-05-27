@@ -8,7 +8,7 @@ var Anuncio = require('../models/Anuncio'),
 		var queryAnuncio = Anuncio.find().sort({fechaPublicacion: -1});
 
 		// **** Importante éste codigo
-		if (req.session.usuario) {
+		if (req.session.usuario != undefined) {
 			queryAnuncio.exec( function (err, dataAnuncios) {
 				if (dataAnuncios.length > 0) {
 					async.series([
@@ -41,12 +41,11 @@ var Anuncio = require('../models/Anuncio'),
 
 	// Publicacion de anuncios
 	app.post('/anuncios', function(req, res) {
-		if (req.session.usuario) {
+		if (req.session.usuario != undefined) {
 			anuncio = new Anuncio();
 			anuncio.titulo = req.body.titulo;
 			anuncio.contenido = req.body.cuerpo;
 			anuncio.fechaPublicacion = new Date();
-			console.log(anuncio.fechaPublicacion);
 			anuncio.fechaEdicion = null;
 
 			async.series([

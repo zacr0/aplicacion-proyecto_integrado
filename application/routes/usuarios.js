@@ -9,9 +9,8 @@ route = function (app) {
 		query = Usuario.find({},{_id: 0, fechaNacimiento: 0, email: 0, pass: 0, asignaturasProfesor: 0})
 			.sort({nombre: 1, apellidos: 1});
 
-		if (req.session.usuario) {
+		if (req.session.usuario != undefined) {
 			query.exec(function (err, users) {
-				console.log(users);
 				res.render('usuarios', {usuario: req.session.usuario,
 					usuarios: users,
 					ver: 'usuarios'
@@ -29,7 +28,7 @@ route = function (app) {
 		query = Usuario.find({perfil: 'alumno'},{_id: 0, fechaNacimiento: 0, email: 0, pass: 0, asignaturasProfesor: 0})
 			.sort({nombre: 1, apellidos: 1});
 
-		if (req.session.usuario) {
+		if (req.session.usuario != undefined) {
 			query.exec(function (err, users) {
 				res.render('usuarios', {usuario: req.session.usuario,
 					usuarios: users,
@@ -48,7 +47,7 @@ route = function (app) {
 		query = Usuario.find({perfil: 'profesor'},{_id: 0, fechaNacimiento: 0, email: 0, pass: 0, asignaturasProfesor: 0})
 			.sort({nombre: 1, apellidos: 1});
 
-		if (req.session.usuario) {
+		if (req.session.usuario != undefined) {
 			query.exec(function (err, users) {
 				res.render('usuarios', {usuario: req.session.usuario,
 					usuarios: users,
@@ -67,7 +66,7 @@ route = function (app) {
 		query = Promocion.find({}, {_id: 0}).sort({nombre: -1});
 		var datosUsuarios = [];
 
-		if (req.session.usuario) {
+		if (req.session.usuario != undefined) {
 			query.exec( function (err, dataPromocion) {
 
 				async.series([

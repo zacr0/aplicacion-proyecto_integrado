@@ -53,7 +53,6 @@ block content
             footer.panel-footer
               span.glyphicon.glyphicon-user 
               //a(href="/perfil/usuario", title="Perfil de usuario")  usuario
-              - console.log(usuarios)
               strong | 
               time(datetime="#{anuncio.fechaPublicacion.getFullYear()}-#{anuncio.fechaPublicacion.getMonth()+1}-#{anuncio.fechaPublicacion.getDate()}").
                 #{anuncio.fechaPublicacion.getDate()}/#{anuncio.fechaPublicacion.getMonth()+1}/#{anuncio.fechaPublicacion.getFullYear()}, 
@@ -69,6 +68,6 @@ block content
 
     .clearfix
       button(data-toggle="modal",data-target="#formularioModal").btn.btn-success.pull-right
-        + Publicar anuncio
+         + Publicar anuncio 
     
     include footer

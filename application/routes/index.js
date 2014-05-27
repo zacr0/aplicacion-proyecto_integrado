@@ -15,7 +15,7 @@ var route = function (app) {
 
     // Login
 	app.get('/login', function (req, res) {
-        if (req.session.usuario) {
+        if (req.session.usuario != undefined) {
             res.redirect('perfil');
         } else {
             res.render('login');
