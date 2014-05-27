@@ -64,30 +64,30 @@ route = function (app) {
 	app.get('/usuarios/promociones', function(req, res) {
 
 		query = Promocion.find({}, {_id: 0}).sort({nombre: -1});
-		var datosUsuarios = [];
 
 		if (req.session.usuario != undefined) {
 			query.exec( function (err, dataPromocion) {
+				res.render('usuarios', {usuario: req.session.usuario,
+					promociones: dataPromocion,
+					ver: 'promociones'});
+			});
+		} else {
+			res.render('login', {error: 'Debes iniciar sesión ' +
+				'para acceder a SocialGCap.'});
+		}
 
-				async.series([
-					function (callback) {
-						dataPromocion.forEach(function (elem, index, array) {
-							Usuario.find({perfil: 'alumno', id_promocion: elem.id}, {nombre: 1}).exec(function (err, data) {
-								datosUsuarios.push(data);
-								if( (index+1) === array.length)
-									callback();
-							}); // Usuario
-						}); // dataPromocion
-					}, function (callback) {
-						console.log(dataPromocion);
-						res.render('usuarios', {usuario: req.session.usuario,
-							promociones: dataPromocion,
-							usuarios: datosUsuarios,
-							ver: 'promociones'
-						});
-						//res.send('->' + dataPromocion + '\n\n ------>' + datosUsuarios);
-					} // function
-				]); // async.series
+	}); // /usuarios/promociones
+
+	// ESTO NO ESTA COMPLETO
+	app.get('/usuarios/promociones/:promocion', function(req, res) {
+
+		query = Promocion.find({}, {_id: 0}).sort({nombre: -1});
+
+		if (req.session.usuario != undefined) {
+			query.exec( function (err, dataPromocion) {
+				res.render('usuarios', {usuario: req.session.usuario,
+					promociones: dataPromocion,
+					ver: 'promociones'});
 			});
 		} else {
 			res.render('login', {error: 'Debes iniciar sesión ' +
