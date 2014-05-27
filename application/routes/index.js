@@ -15,7 +15,7 @@ var route = function (app) {
 
     // Login
 	app.get('/login', function (req, res) {
-        if (req.session.usuario) {
+        if (req.session.usuario != undefined) {
             res.redirect('perfil');
         } else {
             res.render('login');
@@ -147,7 +147,9 @@ var route = function (app) {
     // Logout
     app.get('/logout', function (req, res) {
         req.session.destroy();
+        //req.session = null;
         res.redirect('/');
+        console.log('Sesion borrada');
     });
 }
 

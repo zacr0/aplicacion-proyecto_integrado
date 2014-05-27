@@ -39,6 +39,7 @@ block content
             p
               strong Email: 
               a(href="mailto:#{datosUsuario.email}?Subject=Contacto desde SocialGCap",
+                title="Contactar con #{datosUsuario.nombre} #{datosUsuario.apellidos}",
                 target="_blank") #{datosUsuario.email}
             p
               strong Fecha de nacimiento: 
@@ -65,8 +66,8 @@ block content
         .row
           .col-md-12.text-right
             a(href="mailto:zacro.suarez@gmail.com?Subject=Denuncia del perfil de #{datosUsuario.nombre} #{datosUsuario.apellidos}") 
-              | Denunciar este perfil
+              span.glyphicon.glyphicon-exclamation-sign 
+              |  Denunciar este perfil
+
 
     include footer
-
-block custom-scripts

@@ -3,10 +3,11 @@ var Usuario = require('../models/Usuario'),
 	Promocion = require('../models/Promocion'),
 	nombrePromocion,
 	nombreCurso,
+	perfilPropio = false,
 	route = function (app) {
 		app.get('/perfil', function(req, res) {
 			// Redirige a su perfil si el usuario solo escribe /perfil
-			if (req.session.usuario) {
+			if (req.session.usuario != undefined) {
 				res.redirect('/perfil/' + req.session.usuario);
 			} else {
 				res.render('login', {error: 'Debes iniciar sesión ' +
@@ -16,7 +17,7 @@ var Usuario = require('../models/Usuario'),
 
 		app.get('/perfil/:usuario', function(req, res) {
 			// Busca al usuario especificado en la url
-			if (req.session.usuario) {
+			if (req.session.usuario != undefined) {
 				Usuario.findOne({usuario: req.params.usuario}, function (err, user){
 					if (err) {
 	                	console.log('Error al buscar usuario en la BD');
@@ -24,6 +25,8 @@ var Usuario = require('../models/Usuario'),
 
 					// Control de existencia del usuario
 	            	if (user) {
+	            		console.log('perfilPropio:' + perfilPropio);
+
 	            		// Se obtiene informacion distinta en funcion del perfil
 	            		if (user.perfil === 'alumno') {
 	            			Promocion.findOne({_id: user.id_promocion}, function (err, promocion) {
@@ -35,13 +38,15 @@ var Usuario = require('../models/Usuario'),
 			            		res.render('perfil', {datosUsuario: user, 
 			            			usuario: req.session.usuario,
 			            			nombreCurso: nombreCurso,
-			            			nombrePromocion: nombrePromocion});
+			            			nombrePromocion: nombrePromocion,
+			            			perfilPropio: perfilPropio});
 					            });
 				           	});
 	            		} else {
 	            			// Usuario no es alumno
 	            			res.render('perfil', {datosUsuario: user, 
-	            				usuario: req.session.usuario});
+	            				usuario: req.session.usuario,
+	            				perfilPropio: perfilPropio});
 	            		}
 	            	} else {
 	            		res.render('perfil', {datosUsuario: user, 
@@ -53,7 +58,7 @@ var Usuario = require('../models/Usuario'),
 				});
 			} else {
 				res.render('login', {error: 'Debes iniciar sesión ' +
-					'para acceder a SocialGcap.'});
+					'para acceder a SocialGCap.'});
 			}
 		});
 	};

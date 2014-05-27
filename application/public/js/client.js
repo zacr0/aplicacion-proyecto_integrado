@@ -20,16 +20,18 @@ $(function() {
 	});
 
 // PAGINA DE REGISTRO
-	$('#fechanacimiento').datepicker({
-		format: 'mm/dd/yyyy',
-		endDate: new Date($.now()),
-		startDate: new Date('01/01/1970'),
-		language: 'es',
-		minViewMode: 'days',
-		weekStart: 1,
-		autoclose: true
+	$(function(){
+		$('#fechanacimiento').datepicker({
+			format: 'mm/dd/yyyy',
+			endDate: new Date($.now()),
+			startDate: new Date('01/01/1970'),
+			language: 'es',
+			minViewMode: 'days',
+			weekStart: 1,
+			autoclose: true
+		});
 	});
-
+	
 	$('.visible-alumno').hide();
 	$('.visible-profesor').hide();
 
@@ -162,24 +164,17 @@ $(function() {
 		rules: {
 			titulo: {
 				required: true,
-				maxlength: 48,
-				nombre: true
+				maxlength: 48
 			},
 			cuerpo: {
 				required: true,
-				maxlength: 200,
-				nombre: true
-			}
-		},
-		messages: {
-			titulo: {
-				nombre: "Has introducido carácteres inválidos"
-			},
-			cuerpo: {
-				nombre: "Has introducido carácteres inválidos"
+				maxlength: 200
 			}
 		}
 	});
-// PAGINA DE USUARIOS
 
+// PAGINA DE USUARIOS
+	$('ul.nav li.disabled a').click(function(){
+		return false;
+	});
 });

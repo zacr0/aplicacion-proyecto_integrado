@@ -7,23 +7,27 @@ var Anuncio = require('../models/Anuncio'),
 	app.get('/anuncios', function(req, res) {
 		var queryAnuncio = Anuncio.find().sort({fechaPublicacion: -1});
 
-		// **** Importante éste codigo
-		if (req.session.usuario) {
+		if (req.session.usuario != undefined) {
 			queryAnuncio.exec( function (err, dataAnuncios) {
 				if (dataAnuncios.length > 0) {
 					async.series([
 						function (callback) {
 							dataAnuncios.forEach(function (elem, index, array) {
-								Usuario.find({_id: elem.id_usuario},
-								{_id: 0, nombre: 1, apellidos: 1}, function (err, data) {
-									datosUsuarios.push(data);
+								Usuario.findOne({_id: elem.id_usuario},
+								{_id: 0, usuario: 1, nombre: 1, apellidos: 1}, function (err, data) {
+									datosUsuarios.push(data.usuario + ' ' + data.nombre + ' ' + data.apellidos);
+									console.log(datosUsuarios);
 									if( (index + 1) === array.length){
 										callback();
 									}
+									// Cada vez que entras a la pagina se meten
+									// los usuarios en el array, esta mal
+									//if (datosUsuarios.length === dataAnuncios.length) {
+									//	callback();
+									//};
 								}); // Usuario
 							}); // dataAnuncios
 						}, function (callback) {
-							//console.log(datosUsuarios);
 							res.render('anuncios', {usuario: req.session.usuario,
 								anuncios: dataAnuncios,
 								usuarios: datosUsuarios});
@@ -42,12 +46,11 @@ var Anuncio = require('../models/Anuncio'),
 
 	// Publicacion de anuncios
 	app.post('/anuncios', function(req, res) {
-		if (req.session.usuario) {
+		if (req.session.usuario != undefined) {
 			anuncio = new Anuncio();
 			anuncio.titulo = req.body.titulo;
 			anuncio.contenido = req.body.cuerpo;
 			anuncio.fechaPublicacion = new Date();
-			console.log(anuncio.fechaPublicacion);
 			anuncio.fechaEdicion = null;
 
 			async.series([
