@@ -147,7 +147,9 @@ var route = function (app) {
     // Logout
     app.get('/logout', function (req, res) {
         req.session.destroy();
+        //req.session = null;
         res.redirect('/');
+        console.log('Sesion borrada');
     });
 }
 
