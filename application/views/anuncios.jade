@@ -1,19 +1,76 @@
 extends layout
-
+ 
 block title
   title SocialGCap - Anuncios
-
+ 
 block custom-styles
   link(rel='stylesheet', href='/stylesheets/style.css')
-
+ 
 block content
+  #formularioModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='tituloModal', aria-hidden='true')
+    .modal-dialog
+      .modal-content
+        .modal-header
+          button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+          h4#tituloModal.modal-title Publicar nuevo anuncio
+        form(id='form-anuncios',method='POST',action='/anuncios',accept-charset='UTF-8').modal-body
+          .form-group.has-feedback
+            input(id="titulo",name="titulo",type="text",placeholder="Título",maxlength="48",required).form-control
+          .form-group.has-feedback
+            textarea(id="cuerpo",name="cuerpo",type="text",rows="4",maxlength="200",placeholder="Contenido del anuncio",required).form-control
+          .modal-footer
+            button.btn.btn-default(type='button', data-dismiss='modal') Cancelar
+            input.btn.btn-primary(type='submit', value="Publicar")
+ 
   .container
     - var activo = 'anuncios';
     include navbar
-
-    .page-header
+ 
+    header.page-header.clearfix
       h1 Tablón de anuncios
-
+        button(data-toggle="modal",data-target="#formularioModal").btn.btn-success.pull-right + Publicar anuncio
+ 
+    if error
+      .alert.alert-danger.alert-dismissable
+        button(type="button",data-dismiss="alert",aria-hidden="true").close
+          | &times;
+        strong= error
+    if success
+      .alert.alert-success.alert-dismissable
+        button(type="button",data-dismiss="alert",aria-hidden="true").close
+          | &times;
+        strong
+          | Anuncio publicado con éxito.
+ 
+    if (anuncios)
+      - var j = 0;
+      each anuncio,j in anuncios
+        .col-xs-12.col-sm-6.col-md-4.col-lg-3
+          article.panel.panel-primary
+            header.panel-heading
+              h3(style="word-break:break-all;") #{anuncio.titulo}
+            p(style="word-break:break-all;") #{anuncio.contenido}
+            footer.panel-footer
+              span.glyphicon.glyphicon-user
+              //a(href="/perfil/usuario", title="Perfil de usuario")  usuario
+              //- console.log(usuarios[usuario])
+              strong #{usuarios[j]}
+              time(datetime="#{anuncio.fechaPublicacion.getFullYear()}-#{anuncio.fechaPublicacion.getMonth()+1}-#{anuncio.fechaPublicacion.getDate()}").
+                #{anuncio.fechaPublicacion.getDate()}/#{anuncio.fechaPublicacion.getMonth()+1}/#{anuncio.fechaPublicacion.getFullYear()},
+              time(datetime="#{anuncio.fechaPublicacion.getHours()}:#{anuncio.fechaPublicacion.getMinutes()}:#{anuncio.fechaPublicacion.getSeconds()}").
+                #{anuncio.fechaPublicacion.getHours()}:#{anuncio.fechaPublicacion.getMinutes()}:#{anuncio.fechaPublicacion.getSeconds()}
+    else
+      p.text-center.
+        Parece que no hay anuncios todavía, ¿por qué no
+        <a href="" data-toggle="modal" data-target="#formularioModal">
+        publicas</a> uno?
+ 
+    .row
+      .clearfix
+      button(data-toggle="modal",data-target="#formularioModal").btn.btn-success.pull-right + Publicar anuncio
+   
     include footer
-
+ 
 block custom-scripts
+  script(src='/js/jquery.validate.min.js')
+  script(src='/js/messages_es.js')
