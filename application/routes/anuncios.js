@@ -17,9 +17,9 @@ var Anuncio = require('../models/Anuncio'),
 								{_id: 0, usuario: 1, nombre: 1, apellidos: 1}, function (err, data) {
 									datosUsuarios.push(data.usuario + ' ' + data.nombre + ' ' + data.apellidos);
 									console.log(datosUsuarios);
-									//if( (index + 1) === array.length){
-									//	callback();
-									//}
+									if( (index + 1) === array.length){
+										callback();
+									}
 									// Cada vez que entras a la pagina se meten
 									// los usuarios en el array, esta mal
 									//if (datosUsuarios.length === dataAnuncios.length) {
