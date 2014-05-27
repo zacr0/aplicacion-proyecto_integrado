@@ -43,7 +43,10 @@ block content
           | Anuncio publicado con éxito.
 
     if (anuncios)
-      each anuncio in anuncios
+      - var j = 0;
+      each anuncio, j in anuncios
+        if j % 4 == 0
+          .row
         .col-xs-12.col-sm-6.col-md-4.col-lg-3
           article.anuncio.panel.panel-primary
             header.panel-heading
@@ -51,11 +54,10 @@ block content
             .panel-body
               | #{anuncio.contenido}
             footer.panel-footer
-              span.glyphicon.glyphicon-user 
-              //a(href="/perfil/usuario", title="Perfil de usuario")  usuario
-              strong | 
+              span.glyphicon.glyphicon-user  
+              a(href="/perfil/#{usuarios[j]}", title="Perfil de #{usuarios[j]}")  #{usuarios[j]}
               time(datetime="#{anuncio.fechaPublicacion.getFullYear()}-#{anuncio.fechaPublicacion.getMonth()+1}-#{anuncio.fechaPublicacion.getDate()}").
-                #{anuncio.fechaPublicacion.getDate()}/#{anuncio.fechaPublicacion.getMonth()+1}/#{anuncio.fechaPublicacion.getFullYear()}, 
+               | #{anuncio.fechaPublicacion.getDate()}/#{anuncio.fechaPublicacion.getMonth()+1}/#{anuncio.fechaPublicacion.getFullYear()}, 
               time(datetime="#{anuncio.fechaPublicacion.getHours()}:#{anuncio.fechaPublicacion.getMinutes()}:#{anuncio.fechaPublicacion.getSeconds()}").
                 #{anuncio.fechaPublicacion.getHours()}:#{anuncio.fechaPublicacion.getMinutes()}:#{anuncio.fechaPublicacion.getSeconds()}
     else
@@ -68,6 +70,6 @@ block content
 
     .clearfix
       button(data-toggle="modal",data-target="#formularioModal").btn.btn-success.pull-right
-         + Publicar anuncio 
+        | + Publicar anuncio 
     
     include footer
