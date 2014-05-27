@@ -22,6 +22,18 @@ block content
             button.btn.btn-default(type='button', data-dismiss='modal') Cancelar
             input.btn.btn-primary(type='submit', value="Publicar")
 
+  #formularioConfirmar.modal.fade(tabindex='-1', role='dialog', aria-labelledby='tituloConfirmar', aria-hidden='true')
+    .modal-dialog
+      .modal-content
+        .modal-header
+          button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+          h4#tituloConfirmar.modal-title Eliminar anuncio
+        p.modal-body
+          | Vas a <strong>eliminar</strong> este anuncio, ¿estás seguro?
+        .modal-footer
+          button.btn.btn-default(type='button', data-dismiss='modal') Cancelar
+          button.btn.btn-primary(type='button', id="btnConfirmar") Confirmar
+
   .container
     - var activo = 'anuncios';
     include navbar
@@ -51,7 +63,7 @@ block content
               h3 #{anuncio.titulo}
             form(id="eliminar",method='post', action='/anuncios/#{anuncio._id}/eliminar')
               input(name='_id', type='hidden', value='#{anuncio._id}')
-              button(type='submit').close
+              button(type='button', data-toggle='modal',data-target='#formularioConfirmar').close
                 | &times;
             .panel-body
               | #{anuncio.contenido}

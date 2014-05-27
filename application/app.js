@@ -7,8 +7,8 @@ var express = require('express'),
     session = require('express-session'),
     app = express(),
     mongoose = require('mongoose'),
-    db = mongoose.connect('mongodb://pablo:pablo@ds043388.mongolab.com:43388/proyectointegrado'),
-    //db = mongoose.connect('mongodb://localhost:27017/proyectointegrado'),
+    //db = mongoose.connect('mongodb://pablo:pablo@ds043388.mongolab.com:43388/proyectointegrado'),
+    db = mongoose.connect('mongodb://localhost:27017/proyectointegrado'),
     admin_routes = require('./routes/admin_routes'); // Module for routing
 
 // view engine setup

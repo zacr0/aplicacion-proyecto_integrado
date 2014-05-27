@@ -174,13 +174,19 @@ $(function() {
 	});
 
 	// Confirmacion para eliminar anuncios
-	$('#eliminar').submit(function(event){
+	/*$('#eliminar').submit(function(event){
 		if (!confirm("Vas a eliminar este mensaje, ¿estás seguro?")) {
 			event.preventDefault();
 		} else {
 			// Recarga la pagina
 			location.reload();
 		}
+	});*/
+
+	$('#btnConfirmar').click(function(event){
+		alert($(this).parent.target.id);
+		//$('#eliminar').submit();
+		return false;
 	});
 
 // PAGINA DE USUARIOS

@@ -91,10 +91,13 @@ var Anuncio = require('../models/Anuncio'),
 				if (err) {
 					return console.log(err);
 				};
-				console.log('Va a eliminar el anuncio:' + anuncio);
-				anuncio.remove();
-				console.log('Anuncio eliminado');
-				res.redirect('anuncios');
+
+				if (anuncio) {
+					console.log('Va a eliminar el anuncio:' + anuncio);
+					anuncio.remove();
+					console.log('Anuncio eliminado');
+					res.redirect('/anuncios');
+				};
 			});
 		} else {
 			res.render('login', {error: 'Debes iniciar sesión ' +
