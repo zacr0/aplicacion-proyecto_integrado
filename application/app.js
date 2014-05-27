@@ -8,6 +8,7 @@ var express = require('express'),
     app = express(),
     mongoose = require('mongoose'),
     db = mongoose.connect('mongodb://pablo:pablo@ds043388.mongolab.com:43388/proyectointegrado'),
+    //db = mongoose.connect('mongodb://localhost:27017/proyectointegrado'),
     admin_routes = require('./routes/admin_routes'); // Module for routing
 
 // view engine setup
@@ -20,10 +21,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser('t999YE72wJ'));
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(session({ secret: 'keyboard cat',
-    maxAge:  new Date(Date.now() + 3600000),
-    expires: new Date(Date.now() + 3600000),
-    cookie: { maxAge: 60000 }}))
+// Duracion de la sesion = 2 horas
+app.use(session({ secret: 'keyboard cat', cookie: {
+    maxAge:  2 * 3600000
+}}))
 
 // Routing
 admin_routes(app);
@@ -58,6 +59,9 @@ app.use(function(err, req, res, next) {
         error: {}
     });
 });
+
+// set timezone
+process.env.TZ = 'UTC+2';
 
 app.listen(3000); // port to listen
 console.log('Server running on localhost:3000');

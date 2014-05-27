@@ -2,3 +2,9 @@
 body {
 	padding-top: 30px;
 }
+#cuerpo {
+	resize: none;	
+}
+.anuncio {
+	word-wrap: break-word;
+}

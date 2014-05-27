@@ -15,7 +15,7 @@ var route = function (app) {
 
     // Login
 	app.get('/login', function (req, res) {
-        if (req.session.usuario) {
+        if (req.session.usuario != undefined) {
             res.redirect('perfil');
         } else {
             res.render('login');
@@ -48,6 +48,9 @@ var route = function (app) {
     });
 
     // Registro
+    var queryAsignaturas = Asignatura.find()
+        .sort( { "nombre": 1 } );
+
 	app.get('/registro', function (req, res) {
         async.series([
             function cursos(callback) {
@@ -55,15 +58,15 @@ var route = function (app) {
                     promocionData = data;
                     Curso.find(function (err, data){
                         cursoData = data;
-                        Asignatura.find(function (err, data){
+                        queryAsignaturas.exec(function (err, data){
                             asignaturaData = data;
                             callback();
                         });
+
                     });
-                    // Consulta de asigunaturas
                 });
             }, function resultados(callback) {
-                console.log('asignaturas' , asignaturaData);
+                //console.log('asignaturas' , asignaturaData);
                 res.render('registro', {cursoData: cursoData, 
                     promocionData: promocionData,
                     asignaturaData: asignaturaData});
@@ -100,20 +103,23 @@ var route = function (app) {
                 user = new Usuario();
                 user.usuario = req.body.usuario;
                 user.pass = req.body.pass;
+                // Foto por defecto del usuario
+                user.foto = '/img/avatar_default.jpg';
                 user.nombre = req.body.nombre;
                 user.apellidos = req.body.apellidos;
                 user.email = req.body.email;
                 user.fechaNacimiento = req.body.fechanacimiento;
                 user.perfil = req.body.perfil;
+
                 async.series([
                     function (callback){
-                        if(req.body.perfil === 'profesor') {
+                        if (req.body.perfil === 'profesor') {
                             user.asignaturasProfesor = req.body.asignatura;
                             callback();
-                        }else{
-                            Promocion.findOne({nombre: req.body.promocion},function (err, data){
+                        } else{
+                            Promocion.findOne({nombre: req.body.promocion}, function (err, data){
                                 user.id_promocion = data.id;
-                                Curso.findOne({nombre: req.body.curso},function (err, data){
+                                Curso.findOne({nombre: req.body.curso}, function (err, data){
                                     user.id_curso = data.id;
                                     callback();
                                 }); // curso
@@ -141,7 +147,9 @@ var route = function (app) {
     // Logout
     app.get('/logout', function (req, res) {
         req.session.destroy();
+        //req.session = null;
         res.redirect('/');
+        console.log('Sesion borrada');
     });
 }
 

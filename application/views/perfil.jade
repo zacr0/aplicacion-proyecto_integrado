@@ -1,8 +1,11 @@
 extends layout
 
 block title
-  title SocialGCap - Perfil
-
+  if error
+    title SocialGCap - Usuario inválido
+  else
+    title SocialGCap - Perfil de #{datosUsuario.nombre}
+    
 block custom-styles
   link(rel='stylesheet', href='/stylesheets/style.css')
 
@@ -12,56 +15,59 @@ block content
     include navbar
 
     if error
-      .page-header
-        h1= error
+      header.page-header
+        h1 Usuario inválido
+      .text-center.well
+        p= error
     else
-      .page-header
+      header.page-header
         h1 Perfil del #{datosUsuario.perfil}  
           small #{datosUsuario.nombre}  #{datosUsuario.apellidos}
 
-      .datos.text-center.well
+      section.text-center.well
+        .row
+          .col-sm-6.col-md-6.col-sm-6
+            img(src='#{datosUsuario.foto}',
+              alt="Imagen de perfil de #{datosUsuario.nombre}").img-circle
+          .col-sm-6.col-md-6.text-left
+            p
+              strong Nombre: 
+              | #{datosUsuario.nombre} #{datosUsuario.apellidos}
+            p
+              strong Perfil: 
+              | #{datosUsuario.perfil}
+            p
+              strong Email: 
+              a(href="mailto:#{datosUsuario.email}?Subject=Contacto desde SocialGCap",
+                title="Contactar con #{datosUsuario.nombre} #{datosUsuario.apellidos}",
+                target="_blank") #{datosUsuario.email}
+            p
+              strong Fecha de nacimiento: 
+              | #{datosUsuario.fechaNacimiento.getDate()} / 
+              | #{datosUsuario.fechaNacimiento.getMonth()+1} / 
+              | #{datosUsuario.fechaNacimiento.getFullYear()} 
+            if (datosUsuario.perfil === 'alumno')
+              p
+                strong Promoción: 
+                | #{nombrePromocion}
+              p
+                strong Curso: 
+                | #{nombreCurso}
+            if (datosUsuario.perfil === 'profesor')
+              p
+                strong Asignaturas impartidas:
+                - console.log()
+                if (datosUsuario.asignaturasProfesor.length > 0)
+                  ul
+                    each queue in datosUsuario.asignaturasProfesor
+                      li #{queue}.
+                else
+                  |  no indicadas.
         .row
           .col-md-12.text-right
             a(href="mailto:zacro.suarez@gmail.com?Subject=Denuncia del perfil de #{datosUsuario.nombre} #{datosUsuario.apellidos}") 
-              | Denunciar perfil 
-        .row
-          img(src='/img/avatar_default.jpg',
-            alt="Imagen de perfil de #{datosUsuario.nombre}").img-circle
-          hr
-          p
-            strong Nombre: 
-            | #{datosUsuario.nombre} #{datosUsuario.apellidos}
-          p
-            strong Perfil: 
-            | #{datosUsuario.perfil}
-          p
-            strong Email: 
-            a(href="mailto:#{datosUsuario.email}") #{datosUsuario.email}
-          p
-            strong Fecha de nacimiento: 
-            | #{datosUsuario.fechaNacimiento.getDate()} / 
-            | #{datosUsuario.fechaNacimiento.getMonth()+1} / 
-            | #{datosUsuario.fechaNacimiento.getFullYear()} 
-          - if (datosUsuario.perfil === 'alumno')
-            p
-              strong Promoción: 
-              | #{nombrePromocion}
-            p
-              strong Curso: 
-              | #{nombreCurso}
+              span.glyphicon.glyphicon-exclamation-sign 
+              |  Denunciar este perfil
 
-    //-p
-    //-- if ( datosUsuario ) {
-    //-      p #{datosUsuario.usuario}
-    //-      br
-    //-      p #{datosUsuario.nombre} #{datosUsuario.apellidos}
-    //-      br
-    //-      p #{datosUsuario.email}
-    //-      br
-    //-      p #{datosUsuario.fechaNacimiento}
-    //-      br
-    //-      p #{datosUsuario.perfil}
-    //-  - }
+
     include footer
-
-block custom-scripts

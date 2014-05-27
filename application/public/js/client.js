@@ -1,11 +1,9 @@
 $(function() {
-	// PAGINA DE LOGIN
-	var loginForm = $('#form-login');
-
-	$(loginForm).validate({
+// PAGINA DE LOGIN
+	$('#form-login').validate({
 		errorPlacement: function(label, element) {
-			label.addClass('control-label');
 			label.insertAfter(element);
+			label.addClass('control-label');
 			$(element).parent().addClass('has-error');
 		},
 		unhighlight: function (element) {
@@ -21,33 +19,33 @@ $(function() {
 		}
 	});
 
-	// PAGINA DE REGISTRO
-	var registroForm = $('#form-registro');
-
-	$('#fechanacimiento').datepicker({
-		format: 'mm/dd/yyyy',
-		endDate: new Date($.now()),
-		startDate: new Date('01/01/1970'),
-		language: 'es',
-		minViewMode: 'days',
-		weekStart: 1,
-		autoclose: true
+// PAGINA DE REGISTRO
+	$(function(){
+		$('#fechanacimiento').datepicker({
+			format: 'mm/dd/yyyy',
+			endDate: new Date($.now()),
+			startDate: new Date('01/01/1970'),
+			language: 'es',
+			minViewMode: 'days',
+			weekStart: 1,
+			autoclose: true
+		});
 	});
-
+	
 	$('.visible-alumno').hide();
 	$('.visible-profesor').hide();
 
-	$('input[name=perfil]').change(function () {
-		if (this.id == "alumno") {
+	$('input[name=perfil]').click(function () {
+		if (this.checked && this.id == "alumno") {
 			$(".visible-alumno").show();
 			$("#alumno").prop('required');
 			$("input[name=asignatura]").prop('checked', false);
 			$(".visible-profesor").hide();
 		} 
-		if (this.id == "profesor") {
+		if (this.checked && this.id == "profesor") {
 			$(".visible-profesor").show();
-			$("select#promocion :selected").attr('selected', false);
-			$("select#curso :selected").attr('selected', false);
+			$("select#promocion :selected").removeAttr("selected");
+			$("select#curso :selected").removeAttr("selected");
 			$(".visible-alumno").hide();
 		}
 	});
@@ -67,10 +65,10 @@ $(function() {
 			.show();
 	});
 
-	registroForm.validate({
+	$('#form-registro').validate({
 		errorPlacement: function(label, element) {
-			label.addClass('control-label');
 			label.insertAfter(element);
+			label.addClass('control-label');
 			$(element).parent().addClass('has-error');
 		},
 		unhighlight: function (element) {
@@ -149,5 +147,34 @@ $(function() {
 	*/
 	$.validator.addMethod("pwd", function(value) {
 		return /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/.test(value);
+	});
+
+// PAGINA DE SALAS 
+	
+// PAGINA DE ANUNCIOS
+	$('#form-anuncios').validate({
+		errorPlacement: function(label, element) {
+			label.insertAfter(element);
+			label.addClass('control-label');
+			$(element).parent().addClass('has-error');
+		},
+		unhighlight: function (element) {
+			$(element).parent().removeClass('has-error');
+		},
+		rules: {
+			titulo: {
+				required: true,
+				maxlength: 48
+			},
+			cuerpo: {
+				required: true,
+				maxlength: 200
+			}
+		}
+	});
+
+// PAGINA DE USUARIOS
+	$('ul.nav li.disabled a').click(function(){
+		return false;
 	});
 });
