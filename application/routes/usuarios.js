@@ -13,7 +13,8 @@ route = function (app) {
 			query.exec(function (err, users) {
 				console.log(users);
 				res.render('usuarios', {usuario: req.session.usuario,
-					usuarios: users
+					usuarios: users,
+					ver: 'todos'
 				});
 			})
 		} else {
@@ -25,12 +26,14 @@ route = function (app) {
 
 	app.get('/usuarios/alumnos', function(req, res) {
 
-		query = Usuario.find({perfil: 'alumno'}).sort({nombre: 1, apellidos: 1});
+		query = Usuario.find({perfil: 'alumno'},{_id: 0, fechaNacimiento: 0, email: 0, pass: 0, asignaturasProfesor: 0})
+			.sort({nombre: 1, apellidos: 1});
 
 		if (req.session.usuario) {
 			query.exec(function (err, users) {
 				res.render('usuarios', {usuario: req.session.usuario,
-					usuarios: users
+					usuarios: users,
+					ver: 'alumnos'
 				});
 			})
 		} else {
@@ -42,12 +45,14 @@ route = function (app) {
 
 	app.get('/usuarios/profesores', function(req, res) {
 
-		query = Usuario.find({perfil: 'profesor'}).sort({nombre: 1, apellidos: 1});
+		query = Usuario.find({perfil: 'profesor'},{_id: 0, fechaNacimiento: 0, email: 0, pass: 0, asignaturasProfesor: 0})
+			.sort({nombre: 1, apellidos: 1});
 
 		if (req.session.usuario) {
 			query.exec(function (err, users) {
 				res.render('usuarios', {usuario: req.session.usuario,
-					usuarios: users
+					usuarios: users,
+					ver: 'profesores'
 				});
 			});
 		} else {
@@ -59,24 +64,29 @@ route = function (app) {
 
 	app.get('/usuarios/promociones', function(req, res) {
 
-		query = Promocion.find().sort({nombre: -1});
+		query = Promocion.find({}, {_id: 0}).sort({nombre: -1});
 		var datosUsuarios = [];
 
-		// **** Importante éste código
 		if (req.session.usuario) {
 			query.exec( function (err, dataPromocion) {
 
 				async.series([
 					function (callback) {
 						dataPromocion.forEach(function (elem, index, array) {
-							Usuario.find({perfil: 'alumno', id_promocion: elem.id}).exec(function (err, data) {
+							Usuario.find({perfil: 'alumno', id_promocion: elem.id}, {nombre: 1}).exec(function (err, data) {
 								datosUsuarios.push(data);
 								if( (index+1) === array.length)
 									callback();
 							}); // Usuario
 						}); // dataPromocion
 					}, function (callback) {
-						res.send('->' + dataPromocion + '\n\n ------>' + datosUsuarios);
+						console.log(dataPromocion);
+						res.render('usuarios', {usuario: req.session.usuario,
+							promociones: dataPromocion,
+							usuarios: datosUsuarios,
+							ver: 'promociones'
+						});
+						//res.send('->' + dataPromocion + '\n\n ------>' + datosUsuarios);
 					} // function
 				]); // async.series
 			});
