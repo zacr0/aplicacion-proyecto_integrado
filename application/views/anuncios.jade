@@ -1,11 +1,11 @@
 extends layout
- 
+
 block title
   title SocialGCap - Anuncios
- 
+
 block custom-styles
   link(rel='stylesheet', href='/stylesheets/style.css')
- 
+
 block content
   #formularioModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='tituloModal', aria-hidden='true')
     .modal-dialog
@@ -21,19 +21,7 @@ block content
           .modal-footer
             button.btn.btn-default(type='button', data-dismiss='modal') Cancelar
             input.btn.btn-primary(type='submit', value="Publicar")
-<<<<<<< HEAD
- 
-  .container
-    - var activo = 'anuncios';
-    include navbar
- 
-    header.page-header.clearfix
-      h1 Tablón de anuncios
-        button(data-toggle="modal",data-target="#formularioModal").btn.btn-success.pull-right + Publicar anuncio
- 
-    if error
-      .alert.alert-danger.alert-dismissable
-        button(type="button",data-dismiss="alert",aria-hidden="true").close
+
   .container
     - var activo = 'anuncios';
     include navbar
@@ -44,27 +32,11 @@ block content
 
     if error
       .alert.alert-danger.alert-dismissable
-        button(type="button",data-dismiss="alert",aria-hidden="true").close
+        button(type="button",data-dismiss="alert",aria-hidden="true").close 
           | &times;
-        strong
-          | Anuncio publicado con éxito.
- 
-    if (anuncios)
-      - var j = 0;
-      each anuncio,j in anuncios
-        .col-xs-12.col-sm-6.col-md-4.col-lg-3
-          article.panel.panel-primary
-            header.panel-heading
-              h3(style="word-break:break-all;") #{anuncio.titulo}
-            p(style="word-break:break-all;") #{anuncio.contenido}
-            footer.panel-footer
-              span.glyphicon.glyphicon-user
-              //a(href="/perfil/usuario", title="Perfil de usuario")  usuario
-              //- console.log(usuarios[usuario])
-              strong #{usuarios[j]}
-              time(datetime="#{anuncio.fechaPublicacion.getFullYear()}-#{anuncio.fechaPublicacion.getMonth()+1}-#{anuncio.fechaPublicacion.getDate()}").
-                #{anuncio.fechaPublicacion.getDate()}/#{anuncio.fechaPublicacion.getMonth()+1}/#{anuncio.fechaPublicacion.getFullYear()},
-=======
+        strong= error
+    if success
+      .alert.alert-success.alert-dismissable
         button(type="button",data-dismiss="alert",aria-hidden="true").close 
           | &times;
         strong 
@@ -81,10 +53,9 @@ block content
               | #{anuncio.contenido}
             footer.panel-footer
               span.glyphicon.glyphicon-user  
-              a(href="/perfil/#{usuarios[j]}", title="Perfil de #{usuarios[j]}")  #{usuarios[j]}
+              a(href="/perfil/#{anuncio.autor[j].usuario}", title="Perfil de #{anuncio.autor[j].usuario}") #{anuncio.autor[j].nombre} #{anuncio.autor[j].apellidos}
               time(datetime="#{anuncio.fechaPublicacion.getFullYear()}-#{anuncio.fechaPublicacion.getMonth()+1}-#{anuncio.fechaPublicacion.getDate()}").
                | #{anuncio.fechaPublicacion.getDate()}/#{anuncio.fechaPublicacion.getMonth()+1}/#{anuncio.fechaPublicacion.getFullYear()}, 
->>>>>>> vistas
               time(datetime="#{anuncio.fechaPublicacion.getHours()}:#{anuncio.fechaPublicacion.getMinutes()}:#{anuncio.fechaPublicacion.getSeconds()}").
                 #{anuncio.fechaPublicacion.getHours()}:#{anuncio.fechaPublicacion.getMinutes()}:#{anuncio.fechaPublicacion.getSeconds()}
     else
@@ -92,18 +63,6 @@ block content
         Parece que no hay anuncios todavía, ¿por qué no
         <a href="" data-toggle="modal" data-target="#formularioModal">
         publicas</a> uno?
-<<<<<<< HEAD
- 
-    .row
-      .clearfix
-      button(data-toggle="modal",data-target="#formularioModal").btn.btn-success.pull-right + Publicar anuncio
-   
-    include footer
- 
-block custom-scripts
-  script(src='/js/jquery.validate.min.js')
-  script(src='/js/messages_es.js')
-=======
     
     .row
 
@@ -112,4 +71,3 @@ block custom-scripts
         | + Publicar anuncio 
     
     include footer
->>>>>>> vistas

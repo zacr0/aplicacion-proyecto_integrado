@@ -1,38 +1,18 @@
 var Anuncio = require('../models/Anuncio'),
 	Usuario = require('../models/Usuario'),
 	async = require('async'),
-	anuncio,
-	datosUsuarios = [],
 	route = function (app) {
 	app.get('/anuncios', function(req, res) {
 		var queryAnuncio = Anuncio.find().sort({fechaPublicacion: -1});
 
-		if (req.session.usuario != undefined) {
+		// **** Importante éste codigo
+		if (req.session.usuario) {
 			queryAnuncio.exec( function (err, dataAnuncios) {
 				if (dataAnuncios.length > 0) {
-					async.series([
-						function (callback) {
-							dataAnuncios.forEach(function (elem, index, array) {
-								Usuario.findOne({_id: elem.id_usuario},
-								{_id: 0, usuario: 1, nombre: 1, apellidos: 1}, function (err, data) {
-									datosUsuarios.push(data.usuario + ' ' + data.nombre + ' ' + data.apellidos);
-									console.log(datosUsuarios);
-									if( (index + 1) === array.length){
-										callback();
-									}
-									// Cada vez que entras a la pagina se meten
-									// los usuarios en el array, esta mal
-									//if (datosUsuarios.length === dataAnuncios.length) {
-									//	callback();
-									//};
-								}); // Usuario
-							}); // dataAnuncios
-						}, function (callback) {
-							res.render('anuncios', {usuario: req.session.usuario,
-								anuncios: dataAnuncios,
-								usuarios: datosUsuarios});
-						} // function
-					]); // async.series
+					console.log('Datos' + dataAnuncios[0].autor[0].usuario);
+					console.log('Datos 2: ' + dataAnuncios);
+					res.render('anuncios', {usuario: req.session.usuario,
+						anuncios: dataAnuncios });
 				} else {
 					console.log("No hay anuncios");
 					res.render('anuncios', {usuario: req.session.usuario});
@@ -46,11 +26,12 @@ var Anuncio = require('../models/Anuncio'),
 
 	// Publicacion de anuncios
 	app.post('/anuncios', function(req, res) {
-		if (req.session.usuario != undefined) {
+		if (req.session.usuario) {
 			anuncio = new Anuncio();
 			anuncio.titulo = req.body.titulo;
 			anuncio.contenido = req.body.cuerpo;
 			anuncio.fechaPublicacion = new Date();
+			console.log(anuncio.fechaPublicacion);
 			anuncio.fechaEdicion = null;
 
 			async.series([
