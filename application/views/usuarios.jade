@@ -12,20 +12,12 @@ block content
     include navbar
 
     header.page-header
-      case ver
-        when 'todos'
-          h1 Listado de usuarios
-        when 'alumnos'
-          h1 Listado de alumnos
-        when 'profesores'
-          h1 Listado de profesores
-        when 'promociones'
-          h1 Listado de promociones
+          h1= 'Listado de ' + ver
 
     .clearfix
       .pull-right
         ul.nav.nav-pills
-          li(class=(ver==='todos' ? 'active disabled' : ''))
+          li(class=(ver==='usuarios' ? 'active disabled' : ''))
             a(href="/usuarios", title="Listado de usuarios")
               | Todos
           li(class=(ver==='alumnos' ? 'active disabled' : ''))

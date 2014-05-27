@@ -14,7 +14,7 @@ route = function (app) {
 				console.log(users);
 				res.render('usuarios', {usuario: req.session.usuario,
 					usuarios: users,
-					ver: 'todos'
+					ver: 'usuarios'
 				});
 			})
 		} else {
