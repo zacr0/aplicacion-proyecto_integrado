@@ -46,8 +46,9 @@ block content
                 |  #{usuario.nombre} #{usuario.apellidos}
       else
         if (promociones)
-          each promocion in promociones
+          each promocion, usuario in promociones, usuarios
             | #{promocion}
+            | #{usuario}
     else
       p.text-center.
         No hay usuarios en la base de datos.
