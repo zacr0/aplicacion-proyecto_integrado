@@ -1,7 +1,7 @@
 var mongoose = require('mongoose'), Schema = mongoose.Schema;
 
 var Anuncio = new Schema({
-  	autor: {type: Array},
+  	autor: {type: {}},
 	titulo: {type: String, trim: true, required: true},
 	contenido: {type: String, required: true},
 	fechaPublicacion: { type: Date, default: Date.now },
