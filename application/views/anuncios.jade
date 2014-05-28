@@ -69,7 +69,7 @@ block content
               | #{anuncio.contenido}
             footer.panel-footer
               span.glyphicon.glyphicon-user  
-              a(href="/perfil/#{usuarios[j]}", title="Perfil de #{usuarios[j]}")  #{usuarios[j]}
+              a(href="/perfil/#{anuncio.autor[j].usuario}", title="Perfil de #{anuncio.autor[j].usuario}") #{anuncio.autor[j].nombre} #{anuncio.autor[j].apellidos}
               time(datetime="#{anuncio.fechaPublicacion.getFullYear()}-#{anuncio.fechaPublicacion.getMonth()+1}-#{anuncio.fechaPublicacion.getDate()}").
                | #{anuncio.fechaPublicacion.getDate()}/#{anuncio.fechaPublicacion.getMonth()+1}/#{anuncio.fechaPublicacion.getFullYear()}, 
               time(datetime="#{anuncio.fechaPublicacion.getHours()}:#{anuncio.fechaPublicacion.getMinutes()}:#{anuncio.fechaPublicacion.getSeconds()}").
