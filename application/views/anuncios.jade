@@ -61,10 +61,11 @@ block content
           article.anuncio.panel.panel-primary
             header.panel-heading
               h3 #{anuncio.titulo}
-            form(id="eliminar",method='post', action='/anuncios/#{anuncio._id}/eliminar')
-              input(name='_id', type='hidden', value='#{anuncio._id}')
-              button(type='button', data-toggle='modal',data-target='#formularioConfirmar').close
-                | &times;
+            if anuncio.autor.usuario === usuario
+              form(id="eliminar",method='post', action='/anuncios/#{anuncio._id}/eliminar')
+                input(name='_id', type='hidden', value='#{anuncio._id}')
+                button(type='button', data-toggle='modal',data-target='#formularioConfirmar').close
+                  | &times;
             .panel-body
               | #{anuncio.contenido}
             footer.panel-footer
