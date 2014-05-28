@@ -38,21 +38,31 @@ block content
     hr
     .row
 
-    if (usuarios.length > 0)
+    if (usuarios && usuarios.length > 0)
       each usuario in usuarios
         article.text-center.col-xs-6.col-sm-4.col-md-3.col-lg-3
             a(href="/perfil/#{usuario.usuario}", title="Perfil de #{usuario.nombre} #{usuario.apellidos}")
               img(src="#{usuario.foto}", height="100", width="100").img-circle
-              br
+              p
               if usuario.perfil === 'profesor'
                 span.glyphicon.glyphicon-book
               else
                 span.glyphicon.glyphicon-pencil
               |  #{usuario.nombre} #{usuario.apellidos}
     else
-      p.text-center.
-        No se han encontrado usuarios en la base de datos que coincidan
-        con la búsqueda introducida.
+      if (promociones && promociones.length > 0)
+        each promocion in promociones
+          article.text-center.col-xs-6.col-sm-4.col-md-3.col-lg-3
+            a(href='/usuarios/promociones/#{promocion.nombre}', title='Ver usuarios de la promoción #{promocion.nombre}')
+              img(src='/img/diploma.jpg', height="100", width="100").img-circle
+              p
+              | #{promocion.nombre}
+      else
+        p.text-center.
+          No se han encontrado usuarios en la base de datos que coincidan
+          con la búsqueda introducida.
+
+    
     
     .row.clearfix
     

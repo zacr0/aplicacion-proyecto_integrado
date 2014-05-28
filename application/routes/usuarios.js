@@ -65,12 +65,16 @@ route = function (app) {
 
 		if (req.session.usuario != undefined) {
 			query = Promocion.find({}, {_id: 0}).sort({nombre: -1});
-			var datosUsuarios = [];
 
 			query.exec( function (err, dataPromocion) {
-				res.render('usuarios', {usuario: req.session.usuario,
-					promociones: dataPromocion,
-					ver: 'promociones'});
+				if (err) {
+					return console.log(err);
+				} else {
+					console.log(dataPromocion);
+					res.render('usuarios', {usuario: req.session.usuario,
+						promociones: dataPromocion,
+						ver: 'promociones'});
+				}
 			});
 		} else {
 			res.render('login', {error: 'Debes iniciar sesión ' +

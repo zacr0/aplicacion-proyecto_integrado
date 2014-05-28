@@ -54,7 +54,7 @@ block content
         strong 
           | Anuncio publicado con éxito.
 
-    if (anuncios)
+    if (anuncios && anuncios.length > 0)
       - var j = 0;
       each anuncio, j in anuncios
         .col-xs-12.col-sm-6.col-md-4.col-lg-3
@@ -69,7 +69,7 @@ block content
               | #{anuncio.contenido}
             footer.panel-footer
               span.glyphicon.glyphicon-user  
-              a(href="/perfil/#{anuncio.autor[j].usuario}", title="Perfil de #{anuncio.autor[j].usuario}") #{anuncio.autor[j].nombre} #{anuncio.autor[j].apellidos}
+              a(href="/perfil/#{anuncio.autor[j].usuario}", title="Perfil de #{anuncio.autor[j].usuario}")  #{anuncio.autor[j].nombre} #{anuncio.autor[j].apellidos}
               time(datetime="#{anuncio.fechaPublicacion.getFullYear()}-#{anuncio.fechaPublicacion.getMonth()+1}-#{anuncio.fechaPublicacion.getDate()}").
                | #{anuncio.fechaPublicacion.getDate()}/#{anuncio.fechaPublicacion.getMonth()+1}/#{anuncio.fechaPublicacion.getFullYear()}, 
               time(datetime="#{anuncio.fechaPublicacion.getHours()}:#{anuncio.fechaPublicacion.getMinutes()}:#{anuncio.fechaPublicacion.getSeconds()}").
