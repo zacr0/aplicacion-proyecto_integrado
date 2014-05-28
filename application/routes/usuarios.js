@@ -1,6 +1,7 @@
 var Usuario = require('../models/Usuario'),
 	Promocion = require('../models/Promocion'),
 	async = require('async'),
+	url = require('url'),
 	query,
 
 route = function (app) {
@@ -87,14 +88,19 @@ route = function (app) {
 	app.get('/usuarios/promociones/:promocion', function(req, res) {
 
 		if (req.session.usuario != undefined) {
-			query = Promocion.find({"nombre": req.params.promocion})
-							.sort({nombre: -1});
+			query = Promocion.findOne({"nombre": req.params.promocion});
 
 			query.exec(function (err, dataPromocion) {
-				console.log(dataPromocion);
-				res.render('usuarios', {usuario: req.session.usuario,
-					promociones: dataPromocion,
-					ver: 'promociones'});
+				if(err){
+                  return console.log(err);
+				}
+				Usuario.find({"id_promocion": dataPromocion}, function (err, dataUsers) {
+					/*res.render('usuarios', {usuario: req.session.usuario,
+						promociones: dataPromocion,
+						usuarios: dataUsers,
+						ver: 'promociones'});*/
+					res.send('VAMOS ALLA: ' + dataUsers);
+				})
 			});
 		} else {
 			res.render('login', {error: 'Debes iniciar sesión ' +
