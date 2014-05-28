@@ -30,14 +30,15 @@ block content
               | Promociones
           li
             form(id='form-buscador', method="post", action="/usuarios/buscar",accept-charset='UTF-8').input-group
-              input(name='buscador',type='search', placeholder='Buscar usuario...', pattern=".{3,}", required).form-control
+              input(name='buscador',type='search', placeholder='Buscar usuario...', 
+                pattern=".{3,}", required, title="Inserte al menos 3 caracteres").form-control
               span.input-group-btn
                 button(type="submit").btn.btn-default   
                   span.glyphicon.glyphicon-search
     hr
     .row
 
-    if (usuarios)
+    if (usuarios.length > 0)
       each usuario in usuarios
         article.text-center.col-xs-6.col-sm-4.col-md-3.col-lg-2
             a(href="/perfil/#{usuario.usuario}", title="Perfil de #{usuario.nombre} #{usuario.apellidos}")

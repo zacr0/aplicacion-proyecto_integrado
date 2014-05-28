@@ -84,22 +84,9 @@ var Anuncio = require('../models/Anuncio'),
 		}
 	});
 	
-	app.post('/anuncios/:id/eliminar', function(req, res){
+	app.post('/anuncios/:id/eliminar', function (req, res){
 
 		if (req.session.usuario != undefined) {
-			console.log('Param:' + req.params.id);
-			/*Anuncio.findById(req.params.id, function(err, anuncio){
-				if (err) {
-					return console.log(err);
-				};
-
-				if (anuncio) {
-					console.log('Va a eliminar el anuncio:' + anuncio);
-					anuncio.remove();
-					console.log('Anuncio eliminado');
-					res.redirect('/anuncios');
-				};
-			});*/
 			Anuncio.findByIdAndRemove(req.params.id, function (err, anuncio) {
 				console.log('Va a eliminar el anuncio:' + anuncio);
 
@@ -107,7 +94,7 @@ var Anuncio = require('../models/Anuncio'),
 					return console.log(err);
 				} else {
 					console.log('Anuncio eliminado');
-					res.rediret('/anuncios');
+					res.redirect('/anuncios');
 				}
 			})
 		} else {

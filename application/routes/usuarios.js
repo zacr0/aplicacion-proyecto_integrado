@@ -96,10 +96,13 @@ route = function (app) {
 
 	}); // /usuarios/promociones
 
-	app.post('/usuarios', function(req, req) {
-
+	app.post('/usuarios/buscar', function (req, res) {
+		
 		if (req.session.usuario != undefined) {
 			query = Usuario.find({},{_id: 0, fechaNacimiento: 0, email: 0, pass: 0, asignaturasProfesor: 0})
+							.or([{'usuario': {$regex: new RegExp(req.body.buscador, "i")}}, 
+								{'nombre': {$regex: new RegExp(req.body.buscador, "i")}}, 
+								{'apellidos': { $regex: new RegExp(req.body.buscador, "i")}}])
 							.sort({nombre: 1, apellidos: 1});
 
 			query.exec(function (err, users) {
