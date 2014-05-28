@@ -33,7 +33,10 @@ var Anuncio = require('../models/Anuncio'),
 			anuncio.fechaPublicacion = new Date();
 			console.log(anuncio.fechaPublicacion);
 			anuncio.fechaEdicion = null;
-			anuncio.autor = { 'usuario': req.session.usuario, 'nombre': req.session.nombre, 'apellidos': req.session.apellidos };
+			anuncio.autor = { 'usuario': req.session.usuario,
+							  'nombre': req.session.nombre,
+							  'apellidos': req.session.apellidos
+							};
 
 			async.series([
 				function(callback){
