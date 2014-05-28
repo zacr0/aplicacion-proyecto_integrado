@@ -22,6 +22,18 @@ block content
             button.btn.btn-default(type='button', data-dismiss='modal') Cancelar
             input.btn.btn-primary(type='submit', value="Publicar")
 
+  #formularioConfirmar.modal.fade(tabindex='-1', role='dialog', aria-labelledby='tituloConfirmar', aria-hidden='true')
+    .modal-dialog
+      .modal-content
+        .modal-header
+          button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+          h4#tituloConfirmar.modal-title Eliminar anuncio
+        p.modal-body
+          | Vas a <strong>eliminar</strong> este anuncio, ¿estás seguro?
+        .modal-footer
+          button.btn.btn-default(type='button', data-dismiss='modal') Cancelar
+          button.btn.btn-primary(type='button', id="btnConfirmar") Confirmar
+
   .container
     - var activo = 'anuncios';
     include navbar
@@ -42,18 +54,23 @@ block content
         strong 
           | Anuncio publicado con éxito.
 
-    if (anuncios)
+    if (anuncios && anuncios.length > 0)
       - var j = 0;
       each anuncio, j in anuncios
         .col-xs-12.col-sm-6.col-md-4.col-lg-3
           article.anuncio.panel.panel-primary
             header.panel-heading
               h3 #{anuncio.titulo}
+            if anuncio.autor.usuario === usuario
+              form(id="eliminar",method='post', action='/anuncios/#{anuncio._id}/eliminar')
+                input(name='_id', type='hidden', value='#{anuncio._id}')
+                button(type='button', data-toggle='modal',data-target='#formularioConfirmar').close
+                  | &times;
             .panel-body
               | #{anuncio.contenido}
             footer.panel-footer
               span.glyphicon.glyphicon-user  
-              a(href="/perfil/#{usuarios[j]}", title="Perfil de #{usuarios[j]}")  #{usuarios[j]}
+              a(href="/perfil/#{anuncio.autor.usuario}", title="Perfil de #{anuncio.autor.usuario}")  #{anuncio.autor.nombre} #{anuncio.autor.apellidos}
               time(datetime="#{anuncio.fechaPublicacion.getFullYear()}-#{anuncio.fechaPublicacion.getMonth()+1}-#{anuncio.fechaPublicacion.getDate()}").
                | #{anuncio.fechaPublicacion.getDate()}/#{anuncio.fechaPublicacion.getMonth()+1}/#{anuncio.fechaPublicacion.getFullYear()}, 
               time(datetime="#{anuncio.fechaPublicacion.getHours()}:#{anuncio.fechaPublicacion.getMinutes()}:#{anuncio.fechaPublicacion.getSeconds()}").

@@ -172,6 +172,22 @@ $(function() {
 			}
 		}
 	});
+	
+	$('#formularioConfirmar').on('show.bs.modal', function (e) {
+		$message = $(e.relatedTarget).attr('data-message');
+		$(this).find('.modal-body p').text($message);
+		$title = $(e.relatedTarget).attr('data-title');
+		$(this).find('.modal-title').text($title);
+
+		// Envia referencia al formulario que lo llama
+		var form = $(e.relatedTarget).closest('form');
+		$(this).find('.modal-footer #btnConfirmar').data('form', form);
+	});
+
+	$('#formularioConfirmar').find('.modal-footer #btnConfirmar')
+	.on('click', function(){
+		$(this).data('form').submit();
+	});
 
 // PAGINA DE USUARIOS
 	$('ul.nav li.disabled a').click(function(){

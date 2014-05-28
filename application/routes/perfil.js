@@ -3,7 +3,6 @@ var Usuario = require('../models/Usuario'),
 	Promocion = require('../models/Promocion'),
 	nombrePromocion,
 	nombreCurso,
-	perfilPropio = false,
 	route = function (app) {
 		app.get('/perfil', function(req, res) {
 			// Redirige a su perfil si el usuario solo escribe /perfil
@@ -25,7 +24,6 @@ var Usuario = require('../models/Usuario'),
 
 					// Control de existencia del usuario
 	            	if (user) {
-	            		console.log('perfilPropio:' + perfilPropio);
 
 	            		// Se obtiene informacion distinta en funcion del perfil
 	            		if (user.perfil === 'alumno') {
@@ -38,15 +36,13 @@ var Usuario = require('../models/Usuario'),
 			            		res.render('perfil', {datosUsuario: user, 
 			            			usuario: req.session.usuario,
 			            			nombreCurso: nombreCurso,
-			            			nombrePromocion: nombrePromocion,
-			            			perfilPropio: perfilPropio});
+			            			nombrePromocion: nombrePromocion});
 					            });
 				           	});
 	            		} else {
 	            			// Usuario no es alumno
 	            			res.render('perfil', {datosUsuario: user, 
-	            				usuario: req.session.usuario,
-	            				perfilPropio: perfilPropio});
+	            				usuario: req.session.usuario});
 	            		}
 	            	} else {
 	            		res.render('perfil', {datosUsuario: user, 

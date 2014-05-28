@@ -12,8 +12,7 @@ block content
     include navbar
 
     header.page-header
-          h1= 'Listado de ' + ver
-
+      h1= 'Listado de ' + ver
     .clearfix
       .pull-right
         ul.nav.nav-pills
@@ -29,28 +28,39 @@ block content
           li(class=(ver==='promociones' ? 'active disabled' : ''))
             a(href="/usuarios/promociones", title="Listado de promociones")
               | Promociones
-
+          li
+            form(id='form-buscador', method="post", action="/usuarios/buscar",accept-charset='UTF-8').input-group
+              input(name='buscador',type='search', placeholder='Buscar usuario...', 
+                pattern=".{3,}", required, title="Inserte al menos 3 caracteres").form-control
+              span.input-group-btn
+                button(type="submit").btn.btn-default   
+                  span.glyphicon.glyphicon-search
+    hr
     .row
 
-    if (usuarios)
-      if (!promociones)
-        each usuario in usuarios
-          article.text-center.col-xs-6.col-sm-4.col-md-3.col-lg-2
-              a(href="/perfil/#{usuario.usuario}", title="Perfil de #{usuario.nombre} #{usuario.apellidos}")
-                img(src="#{usuario.foto}", height="100", width="100").img-circle
-                br
-                if usuario.perfil === 'profesor'
-                  span.glyphicon.glyphicon-book
-                else
-                  span.glyphicon.glyphicon-pencil
-                |  #{usuario.nombre} #{usuario.apellidos}
-      else
-        if (promociones)
-          each promocion in promociones
-            | #{promocion}
+    if (usuarios && usuarios.length > 0)
+      each usuario in usuarios
+        article.text-center.col-xs-6.col-sm-4.col-md-3.col-lg-3
+            a(href="/perfil/#{usuario.usuario}", title="Perfil de #{usuario.nombre} #{usuario.apellidos}")
+              img(src="#{usuario.foto}", height="100", width="100").img-circle
+              p
+              if usuario.perfil === 'profesor'
+                span.glyphicon.glyphicon-book
+              else
+                span.glyphicon.glyphicon-pencil
+              |  #{usuario.nombre} #{usuario.apellidos}
     else
-      p.text-center.
-        No hay usuarios en la base de datos.
+      if (promociones && promociones.length > 0)
+        each promocion in promociones
+          article.text-center.col-xs-6.col-sm-4.col-md-3.col-lg-3
+            a(href='/usuarios/promociones/#{promocion.nombre}', title='Ver usuarios de la promoción #{promocion.nombre}')
+              img(src='/img/diploma.jpg', height="100", width="100").img-circle
+              p
+              | #{promocion.nombre}
+      else
+        p.text-center.
+          No se han encontrado usuarios en la base de datos que coincidan
+          con la búsqueda introducida.
     
     .row.clearfix
     
