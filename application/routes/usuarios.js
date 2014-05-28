@@ -6,10 +6,10 @@ var Usuario = require('../models/Usuario'),
 route = function (app) {
 	app.get('/usuarios', function(req, res) {
 
-		query = Usuario.find({},{_id: 0, fechaNacimiento: 0, email: 0, pass: 0, asignaturasProfesor: 0})
-			.sort({nombre: 1, apellidos: 1});
-
 		if (req.session.usuario != undefined) {
+			query = Usuario.find({},{_id: 0, fechaNacimiento: 0, email: 0, pass: 0, asignaturasProfesor: 0})
+							.sort({nombre: 1, apellidos: 1});
+
 			query.exec(function (err, users) {
 				res.render('usuarios', {usuario: req.session.usuario,
 					usuarios: users,
@@ -21,14 +21,14 @@ route = function (app) {
 				'para acceder a SocialGCap.'});
 		}
 
-	});
+	}); // /usuarios
 
 	app.get('/usuarios/alumnos', function(req, res) {
 
-		query = Usuario.find({perfil: 'alumno'},{_id: 0, fechaNacimiento: 0, email: 0, pass: 0, asignaturasProfesor: 0})
-			.sort({nombre: 1, apellidos: 1});
-
 		if (req.session.usuario != undefined) {
+			query = Usuario.find({perfil: 'alumno'},{_id: 0, fechaNacimiento: 0, email: 0, pass: 0, asignaturasProfesor: 0})
+							.sort({nombre: 1, apellidos: 1});
+
 			query.exec(function (err, users) {
 				res.render('usuarios', {usuario: req.session.usuario,
 					usuarios: users,
@@ -40,14 +40,14 @@ route = function (app) {
 				'para acceder a SocialGCap.'});
 		}
 
-	});
+	}); // /usuarios/alumnos
 
 	app.get('/usuarios/profesores', function(req, res) {
 
-		query = Usuario.find({perfil: 'profesor'},{_id: 0, fechaNacimiento: 0, email: 0, pass: 0, asignaturasProfesor: 0})
-			.sort({nombre: 1, apellidos: 1});
-
 		if (req.session.usuario != undefined) {
+			query = Usuario.find({perfil: 'profesor'},{_id: 0, fechaNacimiento: 0, email: 0, pass: 0, asignaturasProfesor: 0})
+							.sort({nombre: 1, apellidos: 1});
+
 			query.exec(function (err, users) {
 				res.render('usuarios', {usuario: req.session.usuario,
 					usuarios: users,
@@ -59,14 +59,14 @@ route = function (app) {
 				'para acceder a SocialGCap.'});
 		}
 
-	});
+	}); // /usuarios/profesores
 
 	app.get('/usuarios/promociones', function(req, res) {
 
-		query = Promocion.find({}, {_id: 0}).sort({nombre: -1});
-		var datosUsuarios = [];
-
 		if (req.session.usuario != undefined) {
+			query = Promocion.find({}, {_id: 0}).sort({nombre: -1});
+			var datosUsuarios = [];
+
 			query.exec( function (err, dataPromocion) {
 
 				async.series([
@@ -95,6 +95,36 @@ route = function (app) {
 		}
 
 	}); // /usuarios/promociones
+
+	app.post('/usuarios', function(req, req) {
+
+		if (req.session.usuario != undefined) {
+			query = Usuario.find({},{_id: 0, fechaNacimiento: 0, email: 0, pass: 0, asignaturasProfesor: 0})
+							.sort({nombre: 1, apellidos: 1});
+
+			query.exec(function (err, users) {
+				if (err) {
+					return console.log(err);
+				}
+
+				if (users) {
+					res.render('usuarios', {
+						usuario: req.session.usuario,
+						usuarios: users,
+						ver: 'usuarios encontrados'
+					});
+				} else {
+					res.render('usuarios', {
+						usuario: req.session.usuario,
+						ver: 'usuarios encontrados'
+					});
+				}
+			});
+		} else {
+			res.render('login', {error: 'Debes iniciar sesión ' +
+				'para acceder a SocialGCap.'});
+		}
+	}); // /usuarios/buscador
 }
 
 module.exports = route;

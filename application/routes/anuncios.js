@@ -85,9 +85,10 @@ var Anuncio = require('../models/Anuncio'),
 	});
 	
 	app.post('/anuncios/:id/eliminar', function(req, res){
+
 		if (req.session.usuario != undefined) {
 			console.log('Param:' + req.params.id);
-			Anuncio.findById(req.params.id, function(err, anuncio){
+			/*Anuncio.findById(req.params.id, function(err, anuncio){
 				if (err) {
 					return console.log(err);
 				};
@@ -98,7 +99,17 @@ var Anuncio = require('../models/Anuncio'),
 					console.log('Anuncio eliminado');
 					res.redirect('/anuncios');
 				};
-			});
+			});*/
+			Anuncio.findByIdAndRemove(req.params.id, function (err, anuncio) {
+				console.log('Va a eliminar el anuncio:' + anuncio);
+
+				if (err) {
+					return console.log(err);
+				} else {
+					console.log('Anuncio eliminado');
+					res.rediret('/anuncios');
+				}
+			})
 		} else {
 			res.render('login', {error: 'Debes iniciar sesión ' +
 				'para acceder a SocialGCap.'});

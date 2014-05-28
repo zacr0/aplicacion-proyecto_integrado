@@ -184,7 +184,7 @@ $(function() {
 	});*/
 
 	$('#btnConfirmar').click(function(event){
-		//$('#eliminar').submit();
+		$('#eliminar').submit();
 		return false;
 	});
 
