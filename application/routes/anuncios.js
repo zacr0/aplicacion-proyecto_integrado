@@ -8,7 +8,7 @@ var Anuncio = require('../models/Anuncio'),
 		if (req.session.usuario != undefined) {
 			queryAnuncio.exec( function (err, dataAnuncios) {
 				if (dataAnuncios.length > 0) {
-					console.log('Datos' + dataAnuncios[0].autor[0].usuario);
+					console.log('Datos' + dataAnuncios[0].autor.usuario);
 					console.log('Datos 2: ' + dataAnuncios);
 					res.render('anuncios', {usuario: req.session.usuario,
 						anuncios: dataAnuncios });
@@ -33,6 +33,10 @@ var Anuncio = require('../models/Anuncio'),
 			anuncio.fechaPublicacion = new Date();
 			console.log(anuncio.fechaPublicacion);
 			anuncio.fechaEdicion = null;
+			anuncio.autor = { 'usuario': req.session.usuario,
+							  'nombre': req.session.nombre,
+							  'apellidos': req.session.apellidos
+							};
 
 			async.series([
 				function (callback){
