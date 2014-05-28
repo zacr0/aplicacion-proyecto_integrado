@@ -12,8 +12,7 @@ block content
     include navbar
 
     header.page-header
-          h1= 'Listado de ' + ver
-
+      h1= 'Listado de ' + ver
     .clearfix
       .pull-right
         ul.nav.nav-pills
@@ -29,7 +28,12 @@ block content
           li(class=(ver==='promociones' ? 'active disabled' : ''))
             a(href="/usuarios/promociones", title="Listado de promociones")
               | Promociones
-
+          li
+            form().input-group.input-group
+              input(type="text", placeholder="Buscar usuario").form-control
+              span.input-group-btn
+                button(type="button").btn.btn-default Buscar  
+    hr
     .row
 
     if (usuarios)

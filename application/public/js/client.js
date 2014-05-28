@@ -184,10 +184,13 @@ $(function() {
 	});*/
 
 	$('#btnConfirmar').click(function(event){
-		alert($(this).parent.target.id);
 		//$('#eliminar').submit();
 		return false;
 	});
+
+	//$('#your-modal').on('show.bs.modal', function (e) {
+  	//	var $invoker = $(e.relatedTarget);
+	//});
 
 // PAGINA DE USUARIOS
 	$('ul.nav li.disabled a').click(function(){
