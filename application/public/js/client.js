@@ -173,6 +173,25 @@ $(function() {
 		}
 	});
 
+	// Confirmacion para eliminar anuncios
+	/*$('#eliminar').submit(function(event){
+		if (!confirm("Vas a eliminar este mensaje, ¿estás seguro?")) {
+			event.preventDefault();
+		} else {
+			// Recarga la pagina
+			location.reload();
+		}
+	});*/
+
+	$('#btnConfirmar').click(function(event){
+		$('#eliminar').submit();
+		return false;
+	});
+
+	//$('#your-modal').on('show.bs.modal', function (e) {
+  	//	var $invoker = $(e.relatedTarget);
+	//});
+
 // PAGINA DE USUARIOS
 	$('ul.nav li.disabled a').click(function(){
 		return false;

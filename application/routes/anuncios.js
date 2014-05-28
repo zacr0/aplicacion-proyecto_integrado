@@ -39,7 +39,7 @@ var Anuncio = require('../models/Anuncio'),
 							};
 
 			async.series([
-				function(callback){
+				function (callback){
 					Usuario.findOne({'usuario': req.session.usuario}, {_id: 1},
 						function (err, usuario) {
 							if (err) {
@@ -50,7 +50,7 @@ var Anuncio = require('../models/Anuncio'),
 								callback();
 							}
 						});
-				}, function(callback) {
+				}, function (callback) {
 					anuncio.save( function(err) {
 						// Pendiente de introducir los cambios nuevos
 						if (err) {
