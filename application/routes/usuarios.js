@@ -87,9 +87,11 @@ route = function (app) {
 	app.get('/usuarios/promociones/:promocion', function(req, res) {
 
 		if (req.session.usuario != undefined) {
-			query = Promocion.find({}, {_id: 0}).sort({nombre: -1});
+			query = Promocion.find({"nombre": req.params.promocion})
+							.sort({nombre: -1});
 
-			query.exec( function (err, dataPromocion) {
+			query.exec(function (err, dataPromocion) {
+				console.log(dataPromocion);
 				res.render('usuarios', {usuario: req.session.usuario,
 					promociones: dataPromocion,
 					ver: 'promociones'});
