@@ -6,7 +6,6 @@ var app = require('express')(),
 
 			if (req.session.usuario != undefined) {
 				res.render('salas', {usuario: req.session.usuario});
-
 			} else {
 				res.render('login', {error: 'Debes iniciar sesión ' +
 					'para acceder a SocialGCap.'});
