@@ -84,7 +84,6 @@ route = function (app) {
 
 	}); // /usuarios/promociones
 
-	// ESTO NO ESTA COMPLETO
 	app.get('/usuarios/promociones/:promocion', function(req, res) {
 
 		if (req.session.usuario != undefined) {
@@ -93,14 +92,16 @@ route = function (app) {
 			query.exec(function (err, dataPromocion) {
 				if(err){
                   return console.log(err);
+				} else {
+					Usuario.find({"id_promocion": dataPromocion},
+									{_id: 0, fechaNacimiento: 0, email: 0, pass: 0, asignaturasProfesor: 0},
+									function (err, dataUsers) {
+						res.render('usuarios', {usuario: req.session.usuario,
+							promociones: dataPromocion,
+							usuarios: dataUsers,
+							ver: req.params.promocion});
+					});
 				}
-				Usuario.find({"id_promocion": dataPromocion}, function (err, dataUsers) {
-					/*res.render('usuarios', {usuario: req.session.usuario,
-						promociones: dataPromocion,
-						usuarios: dataUsers,
-						ver: 'promociones'});*/
-					res.send('VAMOS ALLA: ' + dataUsers);
-				})
 			});
 		} else {
 			res.render('login', {error: 'Debes iniciar sesión ' +

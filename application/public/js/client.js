@@ -172,25 +172,22 @@ $(function() {
 			}
 		}
 	});
+	
+	$('#formularioConfirmar').on('show.bs.modal', function (e) {
+		$message = $(e.relatedTarget).attr('data-message');
+		$(this).find('.modal-body p').text($message);
+		$title = $(e.relatedTarget).attr('data-title');
+		$(this).find('.modal-title').text($title);
 
-	// Confirmacion para eliminar anuncios
-	/*$('#eliminar').submit(function(event){
-		if (!confirm("Vas a eliminar este mensaje, ¿estás seguro?")) {
-			event.preventDefault();
-		} else {
-			// Recarga la pagina
-			location.reload();
-		}
-	});*/
-
-	$('#btnConfirmar').click(function(event){
-		$('#eliminar').submit();
-		return false;
+		// Envia referencia al formulario que lo llama
+		var form = $(e.relatedTarget).closest('form');
+		$(this).find('.modal-footer #btnConfirmar').data('form', form);
 	});
 
-	//$('#your-modal').on('show.bs.modal', function (e) {
-  	//	var $invoker = $(e.relatedTarget);
-	//});
+	$('#formularioConfirmar').find('.modal-footer #btnConfirmar')
+	.on('click', function(){
+		$(this).data('form').submit();
+	});
 
 // PAGINA DE USUARIOS
 	$('ul.nav li.disabled a').click(function(){
