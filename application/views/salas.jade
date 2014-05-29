@@ -15,38 +15,38 @@ block content
       h1 Salas de chat
 
     section#chat-container
-      .row
-        #sala
-          //-Aqui se carga el nombre de la sala actual
-          strong Estás en la sala: 
-          span "nombresala"
-      .row
-        #chat.col-xs-10.col-sm-10.col-md-10.well.well-sm(style='height:400px;')
-          //-Aqui saldrian los mensajes enviados dentro de la sala
-        #lista-salas.col-xs-2.col-sm-2.col-md-2.well.well-sm(style='height:400px;')
-          strong Salas:
-          //-Aqui se cargarian las salas existentes
-          //- Posiblemente, si entras a una sala se reemplazaria
-          //- por la lista de usuarios dentro de la sala
-          ul.list-unstyled
-            li 
-              a(href="", title="Entrar al chat de la sala nombresala") DAW 2012-2014
-            li 
-              a(href="", title="Entrar al chat de la sala nombresala") DAW 2013-2015
-            li 
-              a(href="", title="Entrar al chat de la sala nombresala") ASIR 2012-2014
-            li
-              a(href="", title="Entrar al chat de la sala nombresala") ASIR 2013-2015
-            li
-              a(href="", title="Entrar al chat de la sala nombresala") Programación
-            li
-              a(href="", title="Entrar al chat de la sala nombresala") Bases de datos
-      .row
-        form(id='#form-mensaje', method="post", action="/salas/enviar",accept-charset='UTF-8',role='form').form-inline
-        .col-xs-10.col-sm-10.col-md-10
-          textarea(id="mensaje",name="mensaje",type="text",rows="1",maxlength="200",placeholder="Escriba su mensaje...",required).form-control
-        .col-xs-2.col-sm-2.col-md-2
-          input.btn.btn-block.btn-success(type='submit', value="Enviar")
-
+      .container-fluid
+        .row
+          #sala
+            //-Aqui se carga el nombre de la sala actual
+            strong Estás en la sala: 
+            span "nombresala"
+        .row
+          #chat.col-xs-8.col-sm-10.col-md-10.col-lg-10.well.well-sm(style='height:400px;')
+            //-Aqui saldrian los mensajes enviados dentro de la sala
+          #lista-salas.col-xs-4.col-sm-2.col-md-2.col-lg-2(style='height:400px;')
+            strong Salas:
+            //-Aqui se cargarian las salas existentes
+            //- Posiblemente, si entras a una sala se reemplazaria
+            //- por la lista de usuarios dentro de la sala
+            ul.list-unstyled
+              li 
+                a(href="", title="Entrar al chat de la sala nombresala") DAW 2012-2014
+              li 
+                a(href="", title="Entrar al chat de la sala nombresala") DAW 2013-2015
+              li 
+                a(href="", title="Entrar al chat de la sala nombresala") ASIR 2012-2014
+              li
+                a(href="", title="Entrar al chat de la sala nombresala") ASIR 2013-2015
+              li
+                a(href="", title="Entrar al chat de la sala nombresala") Programación
+              li
+                a(href="", title="Entrar al chat de la sala nombresala") Bases de datos
+        .row
+          form(id='#form-mensaje', method="post", action="/salas/enviar",accept-charset='UTF-8',role='form').form-inline
+            .col-xs-10.col-sm-10.col-md-10.col-lg-10
+              textarea(id="mensaje",name="mensaje",type="text",rows="1",maxlength="200",placeholder="Escriba su mensaje...",required).form-control
+            .col-xs-2.col-sm-2.col-md-2.col-lg-2
+              input.btn.btn-block.btn-success(type='submit', value="Enviar")
 
     include footer
