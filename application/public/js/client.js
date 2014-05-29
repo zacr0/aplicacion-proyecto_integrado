@@ -150,7 +150,19 @@ $(function() {
 	});
 
 // PAGINA DE SALAS 
-	
+	var socket = io.connect('http://localhost');
+
+	$('#submitmessage').click(function (e) {
+		console.log('entra aqui ' +  $('#mensaje').val());
+		socket.emit('message', $('#mensaje').val() );
+
+		socket.on('message', function (message) {
+			console.log('ENTRO EN message');
+			$('#chat').append($('<li>' + message + '</li>'));
+		})
+	});
+
+
 // PAGINA DE ANUNCIOS
 	$('#form-anuncios').validate({
 		errorPlacement: function(label, element) {
