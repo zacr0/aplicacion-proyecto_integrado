@@ -150,7 +150,7 @@ $(function() {
 	});
 
 // PAGINA DE SALAS 
-	var socket = io.connect('http://localhost');
+	var socket = io();
 
 	$('#form-mensaje').submit(function (e) {
 		console.log('entra aqui ' +  $('#mensaje').val());

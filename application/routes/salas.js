@@ -5,13 +5,6 @@ var app = require('express')(),
 		app.get('/salas', function(req, res) {
 
 			if (req.session.usuario != undefined) {
-				
-				//io.sockets.on('connection', function (socket) {
-				//	socket.on('message', function (message) {
-				//		io.sockets.emit('message', message);
-				//	});
-				//});
-
 				res.render('salas', {usuario: req.session.usuario});
 
 			} else {
