@@ -152,15 +152,18 @@ $(function() {
 // PAGINA DE SALAS 
 	var socket = io.connect('http://localhost');
 
-	$('#submitmessage').click(function (e) {
+	$('#form-mensaje').submit(function (e) {
 		console.log('entra aqui ' +  $('#mensaje').val());
 		socket.emit('message', $('#mensaje').val() );
-
-		socket.on('message', function (message) {
-			console.log('ENTRO EN message');
-			$('#chat').append($('<li>' + message + '</li>'));
-		})
+		$('#mensaje').val('');
+		$('#chat').animate({ scrollTop: $("#chat").scrollTop() }, 1000);
+		return false;
 	});
+	socket.on('message', function (message) {
+		console.log('ENTRO EN message');
+		$('#chat').append($('<li>' + message + '</li>'));
+		$('#chat').animate({ scrollTop: $("#chat").scrollTop() }, 1000);
+	});		
 
 
 // PAGINA DE ANUNCIOS

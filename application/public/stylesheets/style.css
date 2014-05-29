@@ -2,9 +2,15 @@
 body {
 	padding-top: 30px;
 }
-#cuerpo {
+.no-resize {
 	resize: none;	
 }
 .anuncio {
 	word-wrap: break-word;
+}
+#chat, #lista {
+	overflow: auto;
+	overflow-x: hidden;
+	word-wrap: break-word;
+	height: 400px;
 }
