@@ -156,13 +156,13 @@ $(function() {
 		console.log('entra aqui ' +  $('#mensaje').val());
 		socket.emit('message', $('#mensaje').val() );
 		$('#mensaje').val('');
-		$('#chat').animate({ scrollTop: $("#chat").scrollTop() }, 1000);
+		$('#chat').animate({ scrollTop: $(document).height() }, 1000);
 		return false;
 	});
 	socket.on('message', function (message) {
 		console.log('ENTRO EN message');
 		$('#chat').append($('<li>' + message + '</li>'));
-		$('#chat').animate({ scrollTop: $("#chat").scrollTop() }, 1000);
+		$('#chat').animate({ scrollTop: $(document).height() }, 1000);
 	});		
 
 
