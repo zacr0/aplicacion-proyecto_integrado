@@ -28,13 +28,13 @@ block content
           li(class=(ver==='promociones' ? 'active disabled' : ''))
             a(href="/usuarios/promociones", title="Listado de promociones")
               | Promociones
-          li
-            form(id='form-buscador', method="post", action="/usuarios/buscar",accept-charset='UTF-8').input-group
-              input(name='buscador',type='search', placeholder='Buscar usuario...', 
-                pattern=".{3,}", required, title="Inserte al menos 3 caracteres").form-control
-              span.input-group-btn
-                button(type="submit").btn.btn-default   
-                  span.glyphicon.glyphicon-search
+          form(id='form-buscador', method="post", action="/usuarios/buscar",accept-charset='UTF-8').input-group
+            input(name='buscador',type='search', placeholder='Buscar usuario...', 
+              pattern=".{3,}", required, title="Inserte al menos 3 caracteres").form-control
+            span.input-group-btn
+              button(type="submit").btn.btn-default   
+                span.glyphicon.glyphicon-search
+          
     hr
     .row
 
