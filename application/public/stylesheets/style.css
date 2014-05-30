@@ -14,6 +14,7 @@ body {
 	word-wrap: break-word;
 	height: 400px;
 }
-.msg {
-	padding: 3px 10px;
+.msg,
+.msgPropio {
+	padding: 0 10px;
 }

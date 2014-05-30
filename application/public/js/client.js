@@ -161,11 +161,19 @@ $(function() {
 		$('#chat').animate({ scrollTop: $(document).height() }, 1000);
 		return false;
 	});
-	
+
 	socket.on('message', function (nickname, message) {
-		console.log('ENTRO EN message');
-		$('#chat').append($('<p class="msg"><strong>' + nickname 
-							+ '</strong>' + message + '</p>'));
+		var nickPropio = $('#perfilusuario').text()
+						.substr(9, $('#perfilusuario').text().length);
+		
+		if (nickname === nickPropio) {
+			$('#chat').append($('<p class="msgPropio"><strong>' + nickname 
+								+ ': </strong>' + message + '</p>'));
+		} else {
+			$('#chat').append($('<p class="msg"><strong>' + nickname 
+								+ ': </strong>' + message + '</p>'));
+		}
+		
 		$('#chat').animate({ scrollTop: $(document).height() }, 1000);
 	});		
 

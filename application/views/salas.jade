@@ -31,12 +31,12 @@ block content
             //- por la lista de usuarios dentro de la sala
             ul.list-unstyled
               li 
-                a(href="", title="Entrar al chat de la sala nombresala") DAW 2012-2014
+                a(href="", title="Entrar a la sala") DAW 2012-2014
               li 
-                a(href="", title="Entrar al chat de la sala nombresala") DAW 2013-2015
+                a(href="", title="Entrar a la sala") DAW 2013-2015
               each asignatura in asignaturas
                 li 
-                  a(href="", title="Entrar al chat de la sala nombresala") #{asignatura.nombre}
+                  a(href="", title="Entrar a la sala #{asignatura.nombre}") - #{asignatura.nombre}
         .row
           form(id='form-mensaje',method="post",accept-charset='UTF-8',role='form').form-inline
             .col-xs-8.col-sm-8.col-md-8.col-lg-8
