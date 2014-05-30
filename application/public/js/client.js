@@ -194,13 +194,22 @@ $(function() {
 	// Recepcion de salas
 	socket.on('rooms', function (rooms) {
 		$.each(rooms, function(index, room) {
-			$('#lista-salas ul').append($('<li> - ' + room + '</li>'));
+			$('#lista-salas ul').append($('<li> - <a href="#" ' 
+				+ 'title="Entrar a la sala ' + room +'">' + room + '</a></li>'));
 		});
 	});
 
 	// Sala actual
 	socket.on('currentroom', function (room) {
-		$('#nombresala').text(room);
+		$('#nombre-sala').text(room);
+	});
+
+	// Cambio de salas al hacer click
+	$('#lista-salas').on("click", "a", function() {
+		$('#chat').empty();
+		socket.emit('switchroom', $(this).text());
+		console.log('Cambio de sala');
+		return false;
 	});
 
 
