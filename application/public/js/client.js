@@ -153,15 +153,19 @@ $(function() {
 	var socket = io();
 
 	$('#form-mensaje').submit(function (e) {
+		var nickname = $('#perfilusuario').text()
+						.substr(9, $('#perfilusuario').text().length);
 		console.log('entra aqui ' +  $('#mensaje').val());
-		socket.emit('message', $('#mensaje').val() );
+		socket.emit('message', nickname, $('#mensaje').val() );
 		$('#mensaje').val('');
 		$('#chat').animate({ scrollTop: $(document).height() }, 1000);
 		return false;
 	});
-	socket.on('message', function (message) {
+	
+	socket.on('message', function (nickname, message) {
 		console.log('ENTRO EN message');
-		$('#chat').append($('<p class="msg">' + message + '</p>'));
+		$('#chat').append($('<p class="msg"><strong>' + nickname 
+							+ '</strong>' + message + '</p>'));
 		$('#chat').animate({ scrollTop: $(document).height() }, 1000);
 	});		
 

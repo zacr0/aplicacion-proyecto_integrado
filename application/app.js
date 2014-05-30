@@ -63,9 +63,9 @@ app.use(function(err, req, res, next) {
 });
 
 io.sockets.on('connection', function (socket) {
-    socket.on('message', function (message) {
-        console.log('Servidor: ' + message);
-        io.sockets.emit('message', message);
+    socket.on('message', function (nickname, message) {
+        //console.log('nickname: ' + message);
+        io.sockets.emit('message', nickname, message);
     });
 });
 
