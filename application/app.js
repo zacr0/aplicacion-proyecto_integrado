@@ -62,10 +62,9 @@ app.use(function(err, req, res, next) {
     });
 });
 
-io.sockets.on('connection', function (socket) {
+io.on('connection', function (socket) {
     socket.on('message', function (nickname, message) {
-        //console.log('nickname: ' + message);
-        io.sockets.emit('message', nickname, message);
+        io.emit('message', nickname, message);
     });
 });
 

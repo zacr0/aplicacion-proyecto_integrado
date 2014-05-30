@@ -16,8 +16,14 @@ body {
 }
 .msg,
 .msgPropio {
-	padding: 0 10px;
+	padding: 10px 10px;
+	word-wrap: break-word;
+}
+.msg {
+	float: left;
+	clear: both;
 }
 .msgPropio {
-	text-align: right;
+	float: right;
+	clear: both;
 }

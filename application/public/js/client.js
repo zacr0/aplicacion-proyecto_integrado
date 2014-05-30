@@ -167,10 +167,10 @@ $(function() {
 						.substr(9, $('#perfilusuario').text().length);
 		
 		if (nickname === nickPropio) {
-			$('#chat').append($('<p class="msgPropio"><strong>' + nickname 
+			$('#chat').append($('<p class="msgPropio bg-success"><strong>' + nickname 
 								+ ': </strong>' + message + '</p>'));
 		} else {
-			$('#chat').append($('<p class="msg"><strong>' + nickname 
+			$('#chat').append($('<p class="msg bg-info"><strong>' + nickname 
 								+ ': </strong>' + message + '</p>'));
 		}
 		
