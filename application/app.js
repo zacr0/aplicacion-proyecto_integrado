@@ -11,6 +11,9 @@ var express = require('express'),
     mongoose = require('mongoose'),
     db = mongoose.connect('mongodb://pablo:pablo@ds043388.mongolab.com:43388/proyectointegrado'),
     //db = mongoose.connect('mongodb://localhost:27017/proyectointegrado'),
+    Promocion = require('./models/Promocion'),
+    //Asignatura = require('./models/Asignatura'),
+    async = require('async'),
     admin_routes = require('./routes/admin_routes'); // Module for routing
 
 // view engine setup
@@ -62,10 +65,46 @@ app.use(function(err, req, res, next) {
     });
 });
 
-// socket.io
+// socket.io (seria apropiado exportar a otro fichero)
 var users = [];
 var rooms = ['Pasillo',
-    'DAW 2012-2014'];
+    'Sala de profesores',
+    'La Chaty'];
+
+// Obtencion e insercion de salas de promociones
+var query = Promocion.find({}, {_id: 0});   
+
+query.exec(function (err, promociones) {
+    if (err) {
+        return console.log(err);
+    } else {
+        if (promociones.length > 0) {
+            for (var i = promociones.length - 1; i >= 0; i--) {
+                rooms.push(promociones[i].nombre);
+            };
+        } else {
+            console.log("No hay promociones");
+        }
+    }
+});
+// Obtencion e insercion de salas de asignaturas
+// COMENTADO PORQUE CREA UN ARRAY DEMASIADO GRANDE PARA EL NAVEGADOR
+/*var query = Asignatura.find({}, {_id: 0, "id_curso": 0}).sort({"nombre": 1});
+
+query.exec(function (err, asignaturas) {
+    if (err) {
+        return console.log(err);
+    } else {
+        if (asignaturas.length > 0) {
+            for (var i = asignaturas.length - 1; i >= 0; i--) {
+                rooms.push(asignaturas[i].nombre);
+            };
+            console.log(rooms);
+        } else {
+            console.log("No hay asignaturas");
+        }
+    }
+});*/
 
 io.on('connection', function (socket) {
     // Introducimos al usuario en la sala por defecto
@@ -80,7 +119,7 @@ io.on('connection', function (socket) {
         }
     });
 
-    // Introduce la id del usuario en un array
+    // Introduce la id del usuario en el array de usuarios
     users.push(socket);
     var user = users.indexOf(socket);
     console.log('Usuario: ' + socket.id + ' conectado a '
