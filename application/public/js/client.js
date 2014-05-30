@@ -161,7 +161,7 @@ $(function() {
 	});
 	socket.on('message', function (message) {
 		console.log('ENTRO EN message');
-		$('#chat').append($('<p>' + message + '</p>'));
+		$('#chat').append($('<p class="msg">' + message + '</p>'));
 		$('#chat').animate({ scrollTop: $(document).height() }, 1000);
 	});		
 
