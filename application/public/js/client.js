@@ -152,16 +152,18 @@ $(function() {
 // PAGINA DE SALAS 
 	var socket = io();
 
+	// Envio de mensajes
 	$('#form-mensaje').submit(function (e) {
 		var nickname = $('#perfilusuario').text()
 						.substr(9, $('#perfilusuario').text().length);
-		console.log('entra aqui ' +  $('#mensaje').val());
+
 		socket.emit('message', nickname, $('#mensaje').val() );
 		$('#mensaje').val('');
 		$('#chat').animate({ scrollTop: $(document).height() }, 1000);
 		return false;
 	});
 
+	// Recepcion de mensajes
 	socket.on('message', function (nickname, message) {
 		var nickPropio = $('#perfilusuario').text()
 						.substr(9, $('#perfilusuario').text().length);
@@ -175,7 +177,13 @@ $(function() {
 		}
 		
 		$('#chat').animate({ scrollTop: $(document).height() }, 1000);
-	});		
+	});
+
+	// Mensajes de informacion
+	socket.on('info', function (message) {
+		$('#chat').append($('<p class="text-success"><strong>' + message 
+								+ '</strong>'));
+	});
 
 
 // PAGINA DE ANUNCIOS

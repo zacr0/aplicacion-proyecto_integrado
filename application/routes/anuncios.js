@@ -31,7 +31,6 @@ var Anuncio = require('../models/Anuncio'),
 			anuncio.titulo = req.body.titulo;
 			anuncio.contenido = req.body.cuerpo;
 			anuncio.fechaPublicacion = new Date();
-			console.log(anuncio.fechaPublicacion);
 			anuncio.fechaEdicion = null;
 			anuncio.autor = { 'usuario': req.session.usuario,
 							  'nombre': req.session.nombre,

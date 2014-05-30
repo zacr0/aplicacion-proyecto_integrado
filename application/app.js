@@ -62,10 +62,36 @@ app.use(function(err, req, res, next) {
     });
 });
 
+// socket.io
+var clients = [];
+var rooms = [];
+
 io.on('connection', function (socket) {
+    // Introduce la id del cliente en un array
+    clients.push(socket.id);
+    console.log('Usuario conectado: ' + socket.id);
+    console.log(clients);
+
+    io.emit('info', 'Te has conectado al chat.');
+
     socket.on('message', function (nickname, message) {
         io.emit('message', nickname, message);
     });
+
+    socket.on('connect_error', function (message) {
+        io.emit();
+    });
+
+    socket.on('reconnect', function (message) {
+        io.emit();
+    });
+
+    socket.on('disconnect', function() {
+        console.log('Usuario conectado: ' + socket.id);
+
+        var i = clients.indexOf(socket);
+        delete clients[i];
+   });
 });
 
 // set timezone
