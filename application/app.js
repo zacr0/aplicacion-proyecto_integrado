@@ -63,35 +63,37 @@ app.use(function(err, req, res, next) {
 });
 
 // socket.io
-var clients = [];
+var users = [];
 var rooms = [];
 
 io.on('connection', function (socket) {
-    // Introduce la id del cliente en un array
-    clients.push(socket);
-    var client = clients.indexOf(socket);
+    // Introducimos al usuario en la sala por defecto
+    socket.join('Pasillo');
+    // Introduce la id del usuario en un array
+    users.push(socket);
+    var user = users.indexOf(socket);
     console.log('Usuario conectado: ' + socket.id);
-    //console.log(clients);
+    //console.log(users);
 
     // Informa al usuario que se ha conectado
-    clients[client].emit('info', 'Te has conectado al chat.');
+    users[user].emit('info', 'Te has conectado al chat.');
 
     socket.on('message', function (nickname, message) {
         io.emit('message', nickname, message);
     });
 
     socket.on('connect_error', function (message) {
-        clients[client].emit('info', 'Error al conectar al chat.');
+        users[user].emit('info', 'Error al conectar al chat.');
     });
 
     socket.on('reconnect', function (message) {
-        clients[client].emit('info', 'Te has reconectado al chat.');
+        users[user].emit('info', 'Te has reconectado al chat.');
     });
 
     socket.on('disconnect', function() {
         // Elimina al usuario del array al desconectarse
         console.log('Usuario desconectado: ' + socket.id);
-        delete clients[client];
+        users.splice(user, 1);
    });
 });
 
