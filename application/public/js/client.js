@@ -153,12 +153,13 @@ $(function() {
 	var socket = io.connect('http://localhost');
 
 	$('#submitmessage').click(function (e) {
-		console.log('entra aqui ' +  $('#mensaje').val());
-		socket.emit('message', $('#mensaje').val() );
+		var nickname = $('#perfilusuario').text().substr(9, $('#perfilusuario').text().length);
+		console.log('entra aqui ' +  nickname );
+		socket.emit('message', nickname, $('#mensaje').val() );
 
-		socket.on('message', function (message) {
+		socket.on('message', function (nickname, message) {
 			console.log('ENTRO EN message');
-			$('#chat').append($('<li>' + message + '</li>'));
+			$('#chat').append($('<li>' + nickname + ' : ' + message + '</li>'));
 		})
 	});
 
