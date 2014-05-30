@@ -68,29 +68,30 @@ var rooms = [];
 
 io.on('connection', function (socket) {
     // Introduce la id del cliente en un array
-    clients.push(socket.id);
+    clients.push(socket);
+    var client = clients.indexOf(socket);
     console.log('Usuario conectado: ' + socket.id);
-    console.log(clients);
+    //console.log(clients);
 
-    io.emit('info', 'Te has conectado al chat.');
+    // Informa al usuario que se ha conectado
+    clients[client].emit('info', 'Te has conectado al chat.');
 
     socket.on('message', function (nickname, message) {
         io.emit('message', nickname, message);
     });
 
     socket.on('connect_error', function (message) {
-        io.emit();
+        clients[client].emit('info', 'Error al conectar al chat.');
     });
 
     socket.on('reconnect', function (message) {
-        io.emit();
+        clients[client].emit('info', 'Te has reconectado al chat.');
     });
 
     socket.on('disconnect', function() {
-        console.log('Usuario conectado: ' + socket.id);
-
-        var i = clients.indexOf(socket);
-        delete clients[i];
+        // Elimina al usuario del array al desconectarse
+        console.log('Usuario desconectado: ' + socket.id);
+        delete clients[client];
    });
 });
 

@@ -181,7 +181,7 @@ $(function() {
 
 	// Mensajes de informacion
 	socket.on('info', function (message) {
-		$('#chat').append($('<p class="text-success"><strong>' + message 
+		$('#chat').append($('<p class="msg text-success"><strong>' + message 
 								+ '</strong>'));
 	});
 
