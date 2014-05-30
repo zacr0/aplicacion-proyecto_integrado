@@ -64,32 +64,51 @@ app.use(function(err, req, res, next) {
 
 // socket.io
 var users = [];
-var rooms = [];
+var rooms = ['Pasillo',
+    'DAW 2012-2014'];
 
 io.on('connection', function (socket) {
     // Introducimos al usuario en la sala por defecto
-    socket.join('Pasillo');
+    socket.room = rooms[0];
+
+    // Conexion del usuario a la sala por defecto
+    socket.join(socket.room, function (err) {
+        if (err) {
+            users[user].emit('error', 'Error al conectar a la sala.');
+        } else {
+            users[user].emit('currentroom', socket.room);
+        }
+    });
+
     // Introduce la id del usuario en un array
     users.push(socket);
     var user = users.indexOf(socket);
-    console.log('Usuario conectado: ' + socket.id);
+    console.log('Usuario: ' + socket.id + ' conectado a '
+        + 'la sala ' + socket.room);
     //console.log(users);
 
     // Informa al usuario que se ha conectado
-    users[user].emit('info', 'Te has conectado al chat.');
+    users[user].emit('info', 'Conectado al chat.');
 
+    // Envia las salas existentes
+    users[user].emit('rooms', rooms);
+
+    // Envio de mensajes
     socket.on('message', function (nickname, message) {
         io.emit('message', nickname, message);
     });
 
+    // Error de conexion
     socket.on('connect_error', function (message) {
-        users[user].emit('info', 'Error al conectar al chat.');
+        users[user].emit('error', 'Error al conectar al chat.');
     });
 
+    // Reconexion
     socket.on('reconnect', function (message) {
         users[user].emit('info', 'Te has reconectado al chat.');
     });
 
+    // Desconexion
     socket.on('disconnect', function() {
         // Elimina al usuario del array al desconectarse
         console.log('Usuario desconectado: ' + socket.id);

@@ -10,7 +10,9 @@ var app = require('express')(),
 		app.get('/salas', function(req, res) {
 
 			if (req.session.usuario != undefined) {
-				if (req.session.perfil == 'alumno') {
+				res.render('salas', {usuario: req.session.usuario
+							});
+				/*if (req.session.perfil == 'alumno') {
 					// Esto solo se cumple si el usuario es alumno, de
 					// lo contrario, peta
 					// Tenemos almacenado el el curso del usuario
@@ -75,11 +77,12 @@ var app = require('express')(),
 							});
 						}
 					});	
+					
 				} else {
 					// Si el usuario es profesor
 					
 					// PENDIENTE DE ACABAR
-				}
+				}*/
 			} else {
 				res.render('login', {error: 'Debes iniciar sesión ' +
 					'para acceder a SocialGCap.'});

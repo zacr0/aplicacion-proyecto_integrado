@@ -185,6 +185,24 @@ $(function() {
 								+ '</strong>'));
 	});
 
+	// Mensajes de errores
+	socket.on('error', function (message) {
+		$('#chat').append($('<p class="msg text-danger"><strong>' + message 
+								+ '</strong>'));
+	});
+
+	// Recepcion de salas
+	socket.on('rooms', function (rooms) {
+		$.each(rooms, function(index, room) {
+			$('#lista-salas ul').append($('<li> - ' + room + '</li>'));
+		});
+	});
+
+	// Sala actual
+	socket.on('currentroom', function (room) {
+		$('#nombresala').text(room);
+	});
+
 
 // PAGINA DE ANUNCIOS
 	$('#form-anuncios').validate({

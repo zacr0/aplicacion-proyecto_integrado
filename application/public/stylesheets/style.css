@@ -18,12 +18,11 @@ body {
 .msgPropio {
 	padding: 10px 10px;
 	word-wrap: break-word;
+	clear: both;
 }
 .msg {
 	float: left;
-	clear: both;
 }
 .msgPropio {
 	float: right;
-	clear: both;
 }
