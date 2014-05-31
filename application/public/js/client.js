@@ -150,7 +150,9 @@ $(function() {
 	});
 
 // PAGINA DE SALAS 
-	var socket = io();
+	var socket = io(),
+		nickPropio = $('#perfilusuario').text()
+			.substr(9, $('#perfilusuario').text().length);
 
 	// Envio de mensajes
 	$('#form-mensaje').submit(function (e) {
@@ -163,10 +165,10 @@ $(function() {
 		return false;
 	});
 
+	socket.emit('nickname', nickPropio);
+
 	// Recepcion de mensajes
 	socket.on('message', function (nickname, message) {
-		var nickPropio = $('#perfilusuario').text()
-						.substr(9, $('#perfilusuario').text().length);
 		
 		if (nickname === nickPropio) {
 			$('#chat').append($('<p class="msgPropio bg-success"><strong>' + nickname 
