@@ -113,7 +113,6 @@ io.on('connection', function (socket) {
     // Introduce la id del usuario en el array de usuarios
     users.push(socket);
     var user = users.indexOf(socket);
-    //socket.nickname = '';
     console.log('Usuario: ' + socket.id + ' conectado a '
         + 'la sala ' +  socket.room);
 
@@ -132,12 +131,17 @@ io.on('connection', function (socket) {
     // Envia las salas existentes al cliente
     users[user].emit('rooms', rooms);
 
-    // Informa a la sala de la conexion
-    socket.broadcast.to(socket.room).emit('info', 'Se ha conectado un usuario.');
-
     // Envio de mensajes a la sala del usuario
-    socket.on('message', function (nickname, message) {
-        io.in(socket.room).emit('message', nickname, message);
+    socket.on('message', function (message) {
+        io.in(socket.room).emit('message', socket.nickname, message);
+    });
+
+    // Nombre de usuario
+    socket.on('nickname', function(nickname) {
+        socket.nickname = nickname;
+        // Informa a la sala de la conexion
+        socket.broadcast.to(socket.room).emit('info', socket.nickname + ' se ha conectado.');
+        console.log('Nombre de usuario: ' + socket.nickname);
     });
 
     // Cambio de sala
@@ -145,18 +149,18 @@ io.on('connection', function (socket) {
         var user = users.indexOf(socket);
         // Desconecta al usuario de la sala actual
         socket.leave(socket.room);
-        io.in(socket.room).emit('info', 'Un usuario ha cambiado de sala.');
+        io.in(socket.room).emit('info', socket.nickname + ' ha cambiado de sala.');
         // Conecta al usuario a la nueva sala
         socket.room = room;
         socket.join(room, function (err) {
             if (err) {
                 users[user].emit('error', 'Error al conectar a la sala.');
             } else {
-                console.log('Usuario: ' + socket.id + ' cambia a la sala '
+                console.log('Usuario: ' + socket.nickname + ' cambia a la sala '
                      + room);
                 users[user].emit('currentroom', socket.room);
                 users[user].emit('info', 'Has cambiado a la sala ' + room + '.');
-                io.in(socket.room).emit('info', 'Un usuario ha entrado a la sala.');
+                socket.broadcast.to(socket.room).emit('info', socket.nickname + ' ha entrado a la sala.');
             }
         })
     });
@@ -178,7 +182,7 @@ io.on('connection', function (socket) {
         var user = users.indexOf(socket);
         // Elimina al usuario del array al desconectarse
         console.log('Usuario desconectado: ' + socket.id);
-        io.in(socket.room).emit('info', 'Un usuario se ha desconectado.');
+        io.in(socket.room).emit('info', socket.nickname + ' se ha desconectado.');
         users.splice(user, 1);
    });
 });
