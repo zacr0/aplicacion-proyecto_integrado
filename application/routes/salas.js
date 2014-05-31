@@ -1,7 +1,4 @@
-var app = require('express')(),
-    server = require('http').Server(app),
-    io = require('socket.io')(server),
-    Promocion = require('../models/Promocion'),
+var Promocion = require('../models/Promocion'),
     Curso = require('../models/Curso'),
     Asignatura = require('../models/Asignatura'),
     Usuario = require('../models/Usuario'),

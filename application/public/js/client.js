@@ -149,7 +149,6 @@ $(function() {
 		return /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/.test(value);
 	});
 
-// PAGINA DE SALAS 
 	// En salas.js
 
 
