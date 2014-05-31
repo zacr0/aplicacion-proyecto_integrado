@@ -1,11 +1,12 @@
 module.exports = function(io) {
     var users = [],
-    Promocion = require('./models/Promocion'),
-    Asignatura = require('./models/Asignatura'),
-    sanitizeHtml = require('sanitize-html'),
-    rooms = ['Pasillo',
-    'Sala de profesores',
-    'La Chaty'];
+        userNames = [],
+        Promocion = require('./models/Promocion'),
+        Asignatura = require('./models/Asignatura'),
+        sanitizeHtml = require('sanitize-html'),
+        rooms = ['Pasillo',
+        'Sala de profesores',
+        'La Chaty'];
 
     // Obtencion e insercion de salas de promociones
     var query = Promocion.find({}, {_id: 0});   
@@ -86,9 +87,11 @@ io.on('connection', function (socket) {
         // Nombre de usuario
         socket.on('nickname', function(nickname) {
             socket.nickname = nickname;
+            userNames.push([socket.nickname, socket.room]);
             // Informa a la sala de la conexion
             socket.broadcast.to(socket.room).emit('info', socket.nickname + ' se ha conectado.');
             console.log('Nombre de usuario: ' + socket.nickname);
+            console.log(userNames);
         });
 
         // Cambio de sala
