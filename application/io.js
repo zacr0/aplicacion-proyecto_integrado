@@ -9,7 +9,7 @@ module.exports = function(io) {
         'Sala de profesores',
         'La Chaty'];
 
-    // Obtencion e insercion de salas de promociones
+        // Obtencion e insercion de salas de promociones
     var query = Promocion.find({}, {_id: 0});   
 
     query.exec(function (err, promociones) {
