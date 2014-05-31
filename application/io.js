@@ -2,6 +2,7 @@ module.exports = function(io) {
     var users = [],
     Promocion = require('./models/Promocion'),
     Asignatura = require('./models/Asignatura'),
+    sanitizeHtml = require('sanitize-html'),
     rooms = ['Pasillo',
     'Sala de profesores',
     'La Chaty'];
@@ -68,7 +69,18 @@ io.on('connection', function (socket) {
 
         // Envio de mensajes a la sala del usuario
         socket.on('message', function (message) {
-            io.in(socket.room).emit('message', socket.nickname, message);
+            /* Limpia el contenido del mensaje recibido, permitiendo
+                unicamente etiquetas de enfasis y enlaces
+            */
+            var cleanMessage =  sanitizeHtml(message, {
+                allowedTags: [ 'b', 'i', 'em', 'strong', 'a' ],
+                allowedAttributes: {
+                    'a': [ 'href' ]
+                }
+            });
+
+            // Manda el mensaje limpio
+            io.in(socket.room).emit('message', socket.nickname, cleanMessage);
         });
 
         // Nombre de usuario
@@ -93,9 +105,10 @@ io.on('connection', function (socket) {
                 } else {
                     console.log('Usuario: ' + socket.nickname + ' cambia a la sala '
                        + room);
+                    console.log(socket.rooms);
                     users[user].emit('currentroom', socket.room);
                     users[user].emit('info', 'Has cambiado a la sala ' + room + '.');
-                    socket.broadcast.to(socket.room).emit('info', socket.nickname + ' ha entrado a la sala.');
+                    socket.broadcast.to(socket.room).emit('info', socket.nickname + ' ha entrado en la sala.');
                 }
             })
         });
@@ -117,7 +130,7 @@ io.on('connection', function (socket) {
             var user = users.indexOf(socket);
             // Elimina al usuario del array al desconectarse
             console.log('Usuario desconectado: ' + socket.id);
-            io.in(socket.room).emit('info', socket.nickname + ' se ha desconectado.');
+            io.in(socket.room).emit('info', 'Se ha desconectado un usuario.');
             users.splice(user, 1);
         });
     });

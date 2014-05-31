@@ -190,6 +190,10 @@ $(function() {
 		$(this).data('form').submit();
 	});
 
+	// Convierte los posibles enlaces en links clickables
+	 Autolinker.link($('.panel-body'));
+	
+
 // PAGINA DE USUARIOS
 	$('ul.nav li.disabled a').click(function(){
 		return false;
