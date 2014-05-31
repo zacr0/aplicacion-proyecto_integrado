@@ -34,8 +34,8 @@ var route = function (app) {
                 req.session.apellidos = user.apellidos;
                 req.session.usuario = user.usuario;
                 req.session.perfil = user.perfil;
-                //req.session.id_promocion = user.id_promocion;
-                //req.session.id_curso = user.id_curso;
+                req.session.id_promocion = user.id_promocion;
+                req.session.id_curso = user.id_curso;
 
                 res.redirect('/perfil/' + req.session.usuario);
             } else {

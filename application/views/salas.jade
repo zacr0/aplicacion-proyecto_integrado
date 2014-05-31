@@ -15,34 +15,29 @@ block content
       h1 Salas de chat
 
     section#chat-container
-      .row
-        #sala
-          //-Aqui se carga el nombre de la sala actual
-          strong Estás en la sala: 
-          span "nombresala"
-      .row
-        #chat.col-xs-10.col-sm-10.col-md-10.well.well-sm(style='height:400px;')
-          ul
-          //-Aqui saldrian los mensajes enviados dentro de la sala
-        #lista-salas.col-xs-2.col-sm-2.col-md-2.well.well-sm(style='height:400px;')
-          strong Salas:
-          //-Aqui se cargarian las salas existentes
-          //- Posiblemente, si entras a una sala se reemplazaria
-          //- por la lista de usuarios dentro de la sala
-          ul.list-unstyled
-            li 
-              a(href="", title="Entrar al chat de la sala nombresala") #{results}
-            li 
-              a(href="", title="Entrar al chat de la sala nombresala") #{results2}
-            each asignaturas in results3
-              li 
-                a(href="", title="Entrar al chat de la sala nombresala") #{asignaturas.nombre}
-      .row
-        form(id='#form-mensaje', method="post", action="/salas/enviar",accept-charset='UTF-8',role='form').form-inline
-        .col-xs-10.col-sm-10.col-md-10
-          textarea(id="mensaje",name="mensaje",type="text",rows="1",maxlength="200",placeholder="Escriba su mensaje...",required).form-control
-        .col-xs-2.col-sm-2.col-md-2
-          input.btn.btn-block.btn-success#submitmessage(type='submit', value="Enviar")
-
+      .container-fluid
+        .row
+          #sala-actual
+            //-Aqui se carga el nombre de la sala actual
+            strong Estás en la sala: 
+            span#nombre-sala 
+        .row
+          #chat.col-xs-8.col-sm-10.col-md-10.col-lg-10.well.well-sm
+            //-Aqui saldrian los mensajes enviados dentro de la sala
+          #lista-salas.col-xs-4.col-sm-2.col-md-2.col-lg-2
+            strong Salas:
+            //-Aqui se cargarian las salas existentes
+            //- Posiblemente, si entras a una sala se reemplazaria
+            //- por la lista de usuarios dentro de la sala
+            ul.list-unstyled
+              //-each asignatura in asignaturas
+                li 
+                  a(href="", title="Entrar a la sala #{asignatura.nombre}") - #{asignatura.nombre}
+        .row
+          form(id='form-mensaje',method="post",accept-charset='UTF-8',role='form').form-inline
+            .col-xs-8.col-sm-8.col-md-8.col-lg-8
+              input(id="mensaje",name="mensaje",type="text",maxlength="200",placeholder="Escriba su mensaje",required,style="width:100%").form-control.no-resize
+            .col-xs-2.col-sm-2.col-md-2.col-lg-2
+              input.btn.btn-block.btn-success(type='submit', value="Enviar")
 
     include footer

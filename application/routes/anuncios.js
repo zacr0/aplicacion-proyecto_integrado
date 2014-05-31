@@ -8,8 +8,8 @@ var Anuncio = require('../models/Anuncio'),
 		if (req.session.usuario != undefined) {
 			queryAnuncio.exec( function (err, dataAnuncios) {
 				if (dataAnuncios.length > 0) {
-					console.log('Datos' + dataAnuncios[0].autor.usuario);
-					console.log('Datos 2: ' + dataAnuncios);
+					//console.log('Datos' + dataAnuncios[0].autor.usuario);
+					//console.log('Datos 2: ' + dataAnuncios);
 					res.render('anuncios', {usuario: req.session.usuario,
 						anuncios: dataAnuncios });
 				} else {
@@ -31,7 +31,6 @@ var Anuncio = require('../models/Anuncio'),
 			anuncio.titulo = req.body.titulo;
 			anuncio.contenido = req.body.cuerpo;
 			anuncio.fechaPublicacion = new Date();
-			console.log(anuncio.fechaPublicacion);
 			anuncio.fechaEdicion = null;
 			anuncio.autor = { 'usuario': req.session.usuario,
 							  'nombre': req.session.nombre,
@@ -52,7 +51,6 @@ var Anuncio = require('../models/Anuncio'),
 						});
 				}, function (callback) {
 					anuncio.save( function(err) {
-						// Pendiente de introducir los cambios nuevos
 						if (err) {
 							req.session.error = err;
 							console.log('Error al publicar anuncio.');

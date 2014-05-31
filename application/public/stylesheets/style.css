@@ -2,9 +2,27 @@
 body {
 	padding-top: 30px;
 }
-#cuerpo {
+.no-resize {
 	resize: none;	
 }
 .anuncio {
 	word-wrap: break-word;
+}
+#chat, #lista {
+	overflow: auto;
+	overflow-x: hidden;
+	word-wrap: break-word;
+	height: 400px;
+}
+.msg,
+.msgPropio {
+	padding: 10px 10px;
+	word-wrap: break-word;
+	clear: both;
+}
+.msg {
+	float: left;
+}
+.msgPropio {
+	float: right;
 }

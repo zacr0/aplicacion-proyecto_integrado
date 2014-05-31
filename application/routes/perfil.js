@@ -24,7 +24,6 @@ var Usuario = require('../models/Usuario'),
 
 					// Control de existencia del usuario
 	            	if (user) {
-
 	            		// Se obtiene informacion distinta en funcion del perfil
 	            		if (user.perfil === 'alumno') {
 	            			Promocion.findOne({_id: user.id_promocion}, function (err, promocion) {
