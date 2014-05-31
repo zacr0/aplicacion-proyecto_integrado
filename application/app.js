@@ -6,9 +6,14 @@ var express = require('express'),
     bodyParser = require('body-parser'),
     session = require('express-session'),
     app = express(),
+    server = require('http').Server(app),
+    io = require('socket.io')(server),
     mongoose = require('mongoose'),
     db = mongoose.connect('mongodb://pablo:pablo@ds043388.mongolab.com:43388/proyectointegrado'),
     //db = mongoose.connect('mongodb://localhost:27017/proyectointegrado'),
+    Promocion = require('./models/Promocion'),
+    //Asignatura = require('./models/Asignatura'),
+    async = require('async'),
     admin_routes = require('./routes/admin_routes'); // Module for routing
 
 // view engine setup
@@ -60,10 +65,12 @@ app.use(function(err, req, res, next) {
     });
 });
 
+require('./io')(io);
+
 // set timezone
 process.env.TZ = 'UTC+2';
-
-app.listen(3000); // port to listen
+server.listen(3000);
+//app.listen(3000); // port to listen
 console.log('Server running on localhost:3000');
 console.log('Conectando a MongoDB...');
 

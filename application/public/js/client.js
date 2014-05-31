@@ -149,8 +149,9 @@ $(function() {
 		return /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/.test(value);
 	});
 
-// PAGINA DE SALAS 
-	
+	// En salas.js
+
+
 // PAGINA DE ANUNCIOS
 	$('#form-anuncios').validate({
 		errorPlacement: function(label, element) {
