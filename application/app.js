@@ -113,6 +113,8 @@ io.on('connection', function (socket) {
     // Introduce la id del usuario en el array de usuarios
     users.push(socket);
     var user = users.indexOf(socket);
+    socket.nickname = 'Paco';
+    console.log(socket.nickname);
     console.log('Usuario: ' + socket.id + ' conectado a '
         + 'la sala ' +  socket.room);
 
@@ -154,7 +156,7 @@ io.on('connection', function (socket) {
                 console.log('Usuario: ' + socket.id + ' cambia a la sala '
                      + room);
                 users[user].emit('currentroom', socket.room);
-                users[user].emit('info', 'Te has cambiado a la sala ' + room + '.');
+                users[user].emit('info', 'Has cambiado a la sala ' + room + '.');
             }
         })
     });
