@@ -145,7 +145,7 @@ io.on('connection', function (socket) {
         var user = users.indexOf(socket);
         // Desconecta al usuario de la sala actual
         socket.leave(socket.room);
-        io.in(socket.room).emit('info', 'Un usuario se ha desconectado.');
+        io.in(socket.room).emit('info', 'Un usuario ha cambiado de sala.');
         // Conecta al usuario a la nueva sala
         socket.room = room;
         socket.join(room, function (err) {
