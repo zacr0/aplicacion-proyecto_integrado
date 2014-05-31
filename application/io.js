@@ -1,15 +1,12 @@
 module.exports = function(io) {
-
-    // socket.io (seria apropiado exportar a otro fichero)
-    // socket.io (seria apropiado exportar a otro fichero)
     var users = [],
-        Promocion = require('./models/Promocion'),
-        Asignatura = require('./models/Asignatura'),
-        rooms = ['Pasillo',
-        'Sala de profesores',
-        'La Chaty'];
+    Promocion = require('./models/Promocion'),
+    Asignatura = require('./models/Asignatura'),
+    rooms = ['Pasillo',
+    'Sala de profesores',
+    'La Chaty'];
 
-        // Obtencion e insercion de salas de promociones
+    // Obtencion e insercion de salas de promociones
     var query = Promocion.find({}, {_id: 0});   
 
     query.exec(function (err, promociones) {
@@ -44,7 +41,7 @@ module.exports = function(io) {
         }
     });*/
 
-    io.on('connection', function (socket) {
+io.on('connection', function (socket) {
         // Introducimos al usuario en la sala por defecto
         socket.room = rooms[0];
 
@@ -95,7 +92,7 @@ module.exports = function(io) {
                     users[user].emit('error', 'Error al conectar a la sala.');
                 } else {
                     console.log('Usuario: ' + socket.nickname + ' cambia a la sala '
-                         + room);
+                       + room);
                     users[user].emit('currentroom', socket.room);
                     users[user].emit('info', 'Has cambiado a la sala ' + room + '.');
                     socket.broadcast.to(socket.room).emit('info', socket.nickname + ' ha entrado a la sala.');
@@ -122,6 +119,6 @@ module.exports = function(io) {
             console.log('Usuario desconectado: ' + socket.id);
             io.in(socket.room).emit('info', socket.nickname + ' se ha desconectado.');
             users.splice(user, 1);
-       });
+        });
     });
 }

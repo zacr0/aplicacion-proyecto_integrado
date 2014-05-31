@@ -65,6 +65,7 @@ app.use(function(err, req, res, next) {
     });
 });
 
+// socket.io logic file
 require('./io')(io);
 
 // set timezone
