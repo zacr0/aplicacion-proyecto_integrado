@@ -69,6 +69,8 @@ require('./io')(io);
 
 // set timezone
 process.env.TZ = 'UTC+2';
+
+// Starts server
 server.listen(3000);
 //app.listen(3000); // port to listen
 console.log('Server running on localhost:3000');
