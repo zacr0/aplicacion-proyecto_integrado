@@ -105,7 +105,6 @@ io.on('connection', function (socket) {
                 } else {
                     console.log('Usuario: ' + socket.nickname + ' cambia a la sala '
                        + room);
-                    console.log(socket.rooms);
                     users[user].emit('currentroom', socket.room);
                     users[user].emit('info', 'Has cambiado a la sala ' + room + '.');
                     socket.broadcast.to(socket.room).emit('info', socket.nickname + ' ha entrado en la sala.');

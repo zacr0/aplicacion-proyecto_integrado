@@ -1,5 +1,6 @@
 var Anuncio = require('../models/Anuncio'),
 	Usuario = require('../models/Usuario'),
+	sanitizeHtml = require('sanitize-html'),
 	async = require('async'),
 	route = function (app) {
 	app.get('/anuncios', function(req, res) {
@@ -25,9 +26,23 @@ var Anuncio = require('../models/Anuncio'),
 	app.post('/anuncios', function(req, res) {
 
 		if (req.session.usuario != undefined) {
+			// Limpieza del contenido introducido
+			var cleanTitulo =  sanitizeHtml(req.body.titulo, {
+				allowedTags: [ 'b', 'i', 'em', 'strong', 'a' ],
+				allowedAttributes: {
+					'a': [ 'href' ]
+				}
+			});
+			var cleanCuerpo =  sanitizeHtml(req.body.cuerpo, {
+				allowedTags: [ 'b', 'i', 'em', 'strong', 'a' ],
+				allowedAttributes: {
+					'a': [ 'href' ]
+				}
+			});
+
 			anuncio = new Anuncio();
-			anuncio.titulo = req.body.titulo;
-			anuncio.contenido = req.body.cuerpo;
+			anuncio.titulo = cleanTitulo;
+			anuncio.contenido = cleanCuerpo;
 			anuncio.fechaPublicacion = new Date();
 			anuncio.fechaEdicion = null;
 			anuncio.autor = { 'usuario': req.session.usuario,
