@@ -156,6 +156,7 @@ io.on('connection', function (socket) {
                      + room);
                 users[user].emit('currentroom', socket.room);
                 users[user].emit('info', 'Has cambiado a la sala ' + room + '.');
+                io.in(socket.room).emit('info', 'Un usuario ha entrado a la sala.');
             }
         })
     });
