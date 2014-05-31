@@ -113,8 +113,7 @@ io.on('connection', function (socket) {
     // Introduce la id del usuario en el array de usuarios
     users.push(socket);
     var user = users.indexOf(socket);
-    socket.nickname = 'Paco';
-    console.log(socket.nickname);
+    //socket.nickname = '';
     console.log('Usuario: ' + socket.id + ' conectado a '
         + 'la sala ' +  socket.room);
 
@@ -178,6 +177,7 @@ io.on('connection', function (socket) {
         var user = users.indexOf(socket);
         // Elimina al usuario del array al desconectarse
         console.log('Usuario desconectado: ' + socket.id);
+        io.in(socket.room).emit('info', 'Un usuario se ha desconectado.');
         users.splice(user, 1);
    });
 });
