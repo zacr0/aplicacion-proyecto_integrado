@@ -69,15 +69,18 @@ var Usuario = require('../models/Usuario'),
 
 		app.post('/perfil/editar/:usuario', function(req, res) {
 			if (req.session.usuario !== undefined) {
-                // IMPORTANTE EN EL app.js donde ponga: NUEVO
-                // TODAVIA NO ESTA FINIQUITADO
-                console.log(req.files.image.size);
-                if(req.files.image.size >= 204800){
-                	console.log('ES MAYOR');
+				console.log(req.files.image.mimetype);
+                if (req.files.image.mimetype != 'image/png' && 
+            	req.files.image.mimetype != 'image/jpeg' &&
+            	req.files.image.mimetype != 'image/gif') {
+            		// Validacion de tipo de fichero
+                	res.redirect('/perfil');
+                	res.send(500, 'El fichero subido debe ser una imagen. <a href="/perfil">Volver</a>');
+                } else if (req.files.image.size >= 204800){
+                	// Validacion de tamaño del fichero
                 	res.redirect('/perfil');
                 	res.send(500, 'La imagen debe pesar menos de 200KB. <a href="/perfil">Volver</a>');
-                }else{
-                	console.log('ES MENOR');
+                } else {
                 	fs.readFile(req.files.image.path, function (err, data) {
                 		var newPath = __dirname + '/../public/img/' + req.session.usuario + '.' + req.files.image.extension;
                 		console.log('data: ' + data.length);

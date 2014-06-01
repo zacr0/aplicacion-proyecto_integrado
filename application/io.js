@@ -1,48 +1,12 @@
 module.exports = function(io) {
-
     var users = [],
-    Promocion = require('./models/Promocion'),
-    Asignatura = require('./models/Asignatura'),
-    sanitizeHtml = require('sanitize-html'),
-    rooms = ['Pasillo',
-    'Sala de profesores',
-    'La Chaty'];
-
-    // Obtencion e insercion de salas de promociones
-    var query = Promocion.find({}, {_id: 0});   
-
-    query.exec(function (err, promociones) {
-        if (err) {
-            return console.log(err);
-        } else {
-            if (promociones.length > 0) {
-                for (var i = promociones.length - 1; i >= 0; i--) {
-                    rooms.push(promociones[i].nombre);
-                };
-            } else {
-                console.log("No hay promociones");
-            }
-        }
-    });
-
-    // Obtencion e insercion de salas de asignaturas
-    // COMENTADO PORQUE CREA UN ARRAY DEMASIADO GRANDE PARA EL NAVEGADOR
-    /*var query = Asignatura.find({}, {_id: 0, "id_curso": 0}).sort({"nombre": 1});
-
-    query.exec(function (err, asignaturas) {
-        if (err) {
-            return console.log(err);
-        } else {
-            if (asignaturas.length > 0) {
-                for (var i = asignaturas.length - 1; i >= 0; i--) {
-                    rooms.push(asignaturas[i].nombre);
-                };
-                console.log(rooms);
-            } else {
-                console.log("No hay asignaturas");
-            }
-        }
-    });*/
+        usersRooms = [],
+        Promocion = require('./models/Promocion'),
+        Asignatura = require('./models/Asignatura'),
+        sanitizeHtml = require('sanitize-html'),
+        rooms = ['Pasillo',
+        'Sala de profesores',
+        'La Chaty'];
 
 io.on('connection', function (socket) {
         // Introducimos al usuario en la sala por defecto
@@ -69,6 +33,7 @@ io.on('connection', function (socket) {
         // Envia las salas existentes al cliente
         users[user].emit('rooms', rooms);
 
+
         // Envio de mensajes a la sala del usuario
         socket.on('message', function (message) {
             /* Limpia el contenido del mensaje recibido, permitiendo
@@ -88,30 +53,49 @@ io.on('connection', function (socket) {
         // Nombre de usuario
         socket.on('nickname', function(nickname) {
             socket.nickname = nickname;
+            // Introduce el nickname en el array de usuario / sala
+            usersRooms.push([socket.nickname, socket.room]);
             // Informa a la sala de la conexion
             socket.broadcast.to(socket.room).emit('info', socket.nickname + ' se ha conectado.');
             console.log('Nombre de usuario: ' + socket.nickname);
+            console.log(usersRooms);
+            // Manda la lista de los usuarios a la sala anterior
+            io.in(socket.room).emit('userlist', getUsersInRoom(socket.room));
         });
 
         // Cambio de sala
         socket.on('switchroom', function (room) {
             var user = users.indexOf(socket);
+            var previousRoom = socket.room;
+            // Informa a los usuarios de la sala anterior
+            socket.broadcast.to(socket.room).emit('info', socket.nickname + ' ha cambiado de sala.');
             // Desconecta al usuario de la sala actual
             socket.leave(socket.room);
-            io.in(socket.room).emit('info', socket.nickname + ' ha cambiado de sala.');
-            // Conecta al usuario a la nueva sala
+            // Establece la nueva sala
             socket.room = room;
+            // Conecta a la nueva sala
             socket.join(room, function (err) {
                 if (err) {
                     users[user].emit('error', 'Error al conectar a la sala.');
                 } else {
                     console.log('Usuario: ' + socket.nickname + ' cambia a la sala '
                        + room);
+                    console.log(getUsersInRoom(socket.room));
+                    // Actualiza la sala del usuario en el array
+                    usersRooms[user][1] = room;
+                    // Manda la lista de usuarios en la sala
+                    io.in(room).emit('userlist', getUsersInRoom(room));
+                    console.log(getUsersInRoom(socket.room));
+                    // Manda la lista de los usuarios a la sala anterior
+                    io.in(previousRoom).emit('userlist', getUsersInRoom(previousRoom));
+                    //console.log('Esta en ' + socket.room + ' manda a ' + previousRoom);
+                    //console.log('Manda ' + getUsersInRoom(previousRoom));
+                    // Informa a los usuarios
                     users[user].emit('currentroom', socket.room);
                     users[user].emit('info', 'Has cambiado a la sala ' + room + '.');
                     socket.broadcast.to(socket.room).emit('info', socket.nickname + ' ha entrado en la sala.');
                 }
-            })
+            });
         });
 
         // Error de conexion
@@ -131,8 +115,23 @@ io.on('connection', function (socket) {
             var user = users.indexOf(socket);
             // Elimina al usuario del array al desconectarse
             console.log('Usuario desconectado: ' + socket.id);
-            io.in(socket.room).emit('info', 'Se ha desconectado un usuario.');
+            io.in(socket.room).emit('info', socket.nickname + ' se ha desconectado.');
+            // Actualize los arrays
             users.splice(user, 1);
+            usersRooms.splice(user,1);
+            // Manda la lista de los usuarios a la sala anterior
+            io.in(socket.room).emit('userlist', getUsersInRoom(socket.room));
         });
     });
+    
+    // Obtiene los usuarios en una sala
+    function getUsersInRoom(room) {
+        var userList = [];
+        for (var i = 0; i < usersRooms.length; i++) { 
+            if (usersRooms[i][1] === room) {
+                userList.push(usersRooms[i][0]);
+            }
+        };
+        return userList;
+    }
 }

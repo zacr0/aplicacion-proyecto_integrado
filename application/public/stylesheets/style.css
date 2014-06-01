@@ -5,14 +5,29 @@ body {
 .no-resize {
 	resize: none;	
 }
+/* Anuncios */
 .anuncio {
 	word-wrap: break-word;
 }
-#chat, #lista {
+/* Salas de chat */
+#chat, #lista-salas {
 	overflow: auto;
 	overflow-x: hidden;
 	word-wrap: break-word;
+}
+#chat {
 	height: 400px;
+}
+#lista-salas {
+	height: 250px;
+	margin-bottom: 5px;
+	border-bottom: 1px solid black;
+}
+#lista-usuarios {
+	height: 150px;
+}
+#mensaje {
+	width: 100%;
 }
 .msg,
 .msgPropio {
