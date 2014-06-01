@@ -123,9 +123,8 @@ io.on('connection', function (socket) {
                     console.log(getUsersInRoom(socket.room));
                     // Manda la lista de los usuarios a la sala anterior
                     io.in(previousRoom).emit('userlist', getUsersInRoom(previousRoom));
-                    console.log('Esta en ' + socket.room + ' manda a ' + previousRoom);
-                    // >>>>FALLO: aun no ha salido de la sala anterior
-                    console.log('Manda ' + getUsersInRoom(previousRoom));
+                    //console.log('Esta en ' + socket.room + ' manda a ' + previousRoom);
+                    //console.log('Manda ' + getUsersInRoom(previousRoom));
                     // Informa a los usuarios
                     users[user].emit('currentroom', socket.room);
                     users[user].emit('info', 'Has cambiado a la sala ' + room + '.');
