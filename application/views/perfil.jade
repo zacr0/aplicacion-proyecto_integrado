@@ -68,6 +68,9 @@ block content
             a(href="mailto:zacro.suarez@gmail.com?Subject=Denuncia del perfil de #{datosUsuario.nombre} #{datosUsuario.apellidos}") 
               span.glyphicon.glyphicon-exclamation-sign 
               |  Denunciar este perfil
+            form(action="/perfil/editar/#{datosUsuario.usuario}" method="post", enctype="multipart/form-data")
+              input(type="file", name="image")
+              input(type="submit" value="Modificar imagen image")
 
 
     include footer

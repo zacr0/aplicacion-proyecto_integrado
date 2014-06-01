@@ -21,10 +21,10 @@ $(function() {
 		
 		if (nickname === nickPropio) {
 			$('#chat').append($('<p class="msgPropio bg-success"><strong>' + nickname 
-								+ ': </strong>' + message + '</p>'));
+								+ ': </strong>' + Autolinker.link(message) + '</p>'));
 		} else {
 			$('#chat').append($('<p class="msg bg-info"><strong>' + nickname 
-								+ ': </strong>' + message + '</p>'));
+								+ ': </strong>' + Autolinker.link(message) + '</p>'));
 		}
 		
 		$('#chat').animate({ scrollTop: $(document).height() }, 1000);

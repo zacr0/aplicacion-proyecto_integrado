@@ -1,15 +1,13 @@
 module.exports = function(io) {
-
-    // socket.io (seria apropiado exportar a otro fichero)
-    // socket.io (seria apropiado exportar a otro fichero)
     var users = [],
-        Promocion = require('./models/Promocion'),
-        Asignatura = require('./models/Asignatura'),
-        rooms = ['Pasillo',
-        'Sala de profesores',
-        'La Chaty'];
+    Promocion = require('./models/Promocion'),
+    Asignatura = require('./models/Asignatura'),
+    sanitizeHtml = require('sanitize-html'),
+    rooms = ['Pasillo',
+    'Sala de profesores',
+    'La Chaty'];
 
-        // Obtencion e insercion de salas de promociones
+    // Obtencion e insercion de salas de promociones
     var query = Promocion.find({}, {_id: 0});   
 
     query.exec(function (err, promociones) {
@@ -44,7 +42,7 @@ module.exports = function(io) {
         }
     });*/
 
-    io.on('connection', function (socket) {
+io.on('connection', function (socket) {
         // Introducimos al usuario en la sala por defecto
         socket.room = rooms[0];
 
@@ -71,7 +69,18 @@ module.exports = function(io) {
 
         // Envio de mensajes a la sala del usuario
         socket.on('message', function (message) {
-            io.in(socket.room).emit('message', socket.nickname, message);
+            /* Limpia el contenido del mensaje recibido, permitiendo
+                unicamente etiquetas de enfasis y enlaces
+            */
+            var cleanMessage =  sanitizeHtml(message, {
+                allowedTags: [ 'b', 'i', 'em', 'strong', 'a' ],
+                allowedAttributes: {
+                    'a': [ 'href' ]
+                }
+            });
+
+            // Manda el mensaje limpio
+            io.in(socket.room).emit('message', socket.nickname, cleanMessage);
         });
 
         // Nombre de usuario
@@ -95,10 +104,10 @@ module.exports = function(io) {
                     users[user].emit('error', 'Error al conectar a la sala.');
                 } else {
                     console.log('Usuario: ' + socket.nickname + ' cambia a la sala '
-                         + room);
+                       + room);
                     users[user].emit('currentroom', socket.room);
                     users[user].emit('info', 'Has cambiado a la sala ' + room + '.');
-                    socket.broadcast.to(socket.room).emit('info', socket.nickname + ' ha entrado a la sala.');
+                    socket.broadcast.to(socket.room).emit('info', socket.nickname + ' ha entrado en la sala.');
                 }
             })
         });
@@ -120,8 +129,8 @@ module.exports = function(io) {
             var user = users.indexOf(socket);
             // Elimina al usuario del array al desconectarse
             console.log('Usuario desconectado: ' + socket.id);
-            io.in(socket.room).emit('info', socket.nickname + ' se ha desconectado.');
+            io.in(socket.room).emit('info', 'Se ha desconectado un usuario.');
             users.splice(user, 1);
-       });
+        });
     });
 }
