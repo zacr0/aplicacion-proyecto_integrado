@@ -30,7 +30,13 @@ block content
             //- Posiblemente, si entras a una sala se reemplazaria
             //- por la lista de usuarios dentro de la sala
             ul.list-unstyled
-              //-each asignatura in asignaturas
+              each promocion in promociones
+                li 
+                  a(href="", title="Entrar a la sala #{promocion.nombre}") - #{promocion.nombre}
+              each curso in cursos
+                li 
+                  a(href="", title="Entrar a la sala #{curso.nombre}") - #{curso.nombre}
+              each asignatura in asignaturas
                 li 
                   a(href="", title="Entrar a la sala #{asignatura.nombre}") - #{asignatura.nombre}
         .row
