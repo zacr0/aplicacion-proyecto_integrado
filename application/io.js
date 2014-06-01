@@ -87,6 +87,7 @@ io.on('connection', function (socket) {
         // Nombre de usuario
         socket.on('nickname', function(nickname) {
             socket.nickname = nickname;
+            // Introduce el nickname en el array de usuario / sala
             userNames.push([socket.nickname, socket.room]);
             // Informa a la sala de la conexion
             socket.broadcast.to(socket.room).emit('info', socket.nickname + ' se ha conectado.');
@@ -96,7 +97,6 @@ io.on('connection', function (socket) {
 
         // Cambio de sala
         socket.on('switchroom', function (room) {
-            var user = users.indexOf(socket);
             // Desconecta al usuario de la sala actual
             socket.leave(socket.room);
             io.in(socket.room).emit('info', socket.nickname + ' ha cambiado de sala.');
@@ -108,6 +108,9 @@ io.on('connection', function (socket) {
                 } else {
                     console.log('Usuario: ' + socket.nickname + ' cambia a la sala '
                        + room);
+                    // Actualiza la sala del usuario en el array
+                    userNames[user][1] = room;
+                    // Informa a los usuarios
                     users[user].emit('currentroom', socket.room);
                     users[user].emit('info', 'Has cambiado a la sala ' + room + '.');
                     socket.broadcast.to(socket.room).emit('info', socket.nickname + ' ha entrado en la sala.');
@@ -134,6 +137,8 @@ io.on('connection', function (socket) {
             console.log('Usuario desconectado: ' + socket.id);
             io.in(socket.room).emit('info', 'Se ha desconectado un usuario.');
             users.splice(user, 1);
+            userNames.splice(user,1);
+            console.log(userNames);
         });
     });
 }
