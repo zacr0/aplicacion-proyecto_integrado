@@ -8,11 +8,19 @@ body {
 .anuncio {
 	word-wrap: break-word;
 }
-#chat, #lista {
+#chat, #lista-salas {
 	overflow: auto;
 	overflow-x: hidden;
 	word-wrap: break-word;
+}
+#chat {
 	height: 400px;
+}
+#lista-salas {
+	height: 200px;
+}
+#lista-usuarios {
+	height: 200px;
 }
 .msg,
 .msgPropio {

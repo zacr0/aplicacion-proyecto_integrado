@@ -63,4 +63,12 @@ $(function() {
 		socket.emit('switchroom', $(this).text());
 		return false;
 	});
+
+	// Listado de usuarios en la sala actual
+	socket.on('userlist'. function (userlist) {
+		$.each(userlist, function (index, user) {
+			$('#lista-usuarios ul').append($('<li> - <a href="#" ' 
+				+ 'title="Ir al perfil de ' + user +'" target="_blank">' + user + '</a></li>'));
+		});
+	});
 });
