@@ -64,10 +64,12 @@ var Usuario = require('../models/Usuario'),
 				// TODAVIA NO ESTA FINIQUITADO
 				console.log(req.files.image.size);
 				if(req.files.image.size >= 204800){
-					console.log('ES MENOR');
-					res.render('/perfil/' + req.session.usuario, {error: 'Debes iniciar sesión para acceder a SocialGCap.'});
-				}else{
 					console.log('ES MAYOR');
+					res.redirect('/perfil/' + req.params.usuario);
+					error = 'Error al subir la foto';
+					res.send(error);
+				}else{
+					console.log('ES MENOR');
 					fs.readFile(req.files.image.path, function (err, data) {
 						var newPath = __dirname + '/../public/img/' + req.session.usuario + '.' + req.files.image.extension;
 						console.log('data: ' + data.length);
