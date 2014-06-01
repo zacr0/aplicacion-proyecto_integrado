@@ -65,9 +65,10 @@ var Usuario = require('../models/Usuario'),
 				// TODAVIA NO ESTA FINIQUITADO
 				console.log(req.files);
 				fs.readFile(req.files.image.path, function (err, data) {
-					var newPath = __dirname + req.files.image.name;
+					var newPath = __dirname + '/../public/img/' + req.session.usuario + '.' + req.files.image.extension;
+					console.log('data: ' + data);
 				  	fs.writeFile(newPath, data, function (err) {
-				  		Usuario.update({usuario: req.session.usuario}, {$set: {foto: '/img/' + req.files.image.name}}, function (err, data) {
+				  		Usuario.update({usuario: req.session.usuario}, {$set: {foto: '/img/' + req.session.usuario + '.' + req.files.image.extension}}, function (err, data) {
 				  			if(err) { throw err;}
 				    		res.redirect('/perfil/' + req.session.usuario);
 				  		}); // Usuario
