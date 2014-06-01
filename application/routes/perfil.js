@@ -2,7 +2,6 @@ var Usuario = require('../models/Usuario'),
 	Curso = require('../models/Curso'),
 	Promocion = require('../models/Promocion'),
 	fs = require('fs'),
-	formidable = require('formidable'),
 	nombrePromocion,
 	nombreCurso,
 	route = function (app) {
@@ -60,20 +59,26 @@ var Usuario = require('../models/Usuario'),
 		});
 
 		app.post('/perfil/editar/:usuario', function(req, res) {
-			if (req.session.usuario != undefined) {
+			if (req.session.usuario !== undefined) {
 				// IMPORTANTE EN EL app.js donde ponga: NUEVO
 				// TODAVIA NO ESTA FINIQUITADO
-				console.log(req.files);
-				fs.readFile(req.files.image.path, function (err, data) {
-					var newPath = __dirname + '/../public/img/' + req.session.usuario + '.' + req.files.image.extension;
-					console.log('data: ' + data);
-				  	fs.writeFile(newPath, data, function (err) {
-				  		Usuario.update({usuario: req.session.usuario}, {$set: {foto: '/img/' + req.session.usuario + '.' + req.files.image.extension}}, function (err, data) {
-				  			if(err) { throw err;}
-				    		res.redirect('/perfil/' + req.session.usuario);
-				  		}); // Usuario
-				  	}); // writeFIle
-				});
+				console.log(req.files.image.size);
+				if(req.files.image.size >= 204800){
+					console.log('ES MENOR');
+					res.render('/perfil/' + req.session.usuario, {error: 'Debes iniciar sesión para acceder a SocialGCap.'});
+				}else{
+					console.log('ES MAYOR');
+					fs.readFile(req.files.image.path, function (err, data) {
+						var newPath = __dirname + '/../public/img/' + req.session.usuario + '.' + req.files.image.extension;
+						console.log('data: ' + data.length);
+					  	fs.writeFile(newPath, data, function (err) {
+					  		Usuario.update({usuario: req.session.usuario}, {$set: {foto: '/img/' + req.session.usuario + '.' + req.files.image.extension}}, function (err, data) {
+					  			if(err) { throw err;}
+					    		res.redirect('/perfil/' + req.session.usuario);
+					  		}); // Usuario
+					  	}); // writeFile
+				  	}); // readFile
+				}
 			} else {
 				res.render('login', {error: 'Debes iniciar sesión ' +
 					'para acceder a SocialGCap.'});
