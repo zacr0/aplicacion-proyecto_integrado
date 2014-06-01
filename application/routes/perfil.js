@@ -1,6 +1,7 @@
 var Usuario = require('../models/Usuario'),
 	Curso = require('../models/Curso'),
 	Promocion = require('../models/Promocion'),
+	fs = require('fs'),
 	nombrePromocion,
 	nombreCurso,
 	route = function (app) {
@@ -24,6 +25,13 @@ var Usuario = require('../models/Usuario'),
 
 					// Control de existencia del usuario
 	            	if (user) {
+	            		var perfilPropio = false;
+
+	            		// Comprobacion de perfil propio
+	            		if (req.params.usuario === req.session.usuario) {
+	            			perfilPropio = true;
+	            		};
+
 	            		// Se obtiene informacion distinta en funcion del perfil
 	            		if (user.perfil === 'alumno') {
 	            			Promocion.findOne({_id: user.id_promocion}, function (err, promocion) {
@@ -35,13 +43,15 @@ var Usuario = require('../models/Usuario'),
 			            		res.render('perfil', {datosUsuario: user, 
 			            			usuario: req.session.usuario,
 			            			nombreCurso: nombreCurso,
-			            			nombrePromocion: nombrePromocion});
+			            			nombrePromocion: nombrePromocion,
+			            			perfilPropio: perfilPropio});
 					            });
 				           	});
 	            		} else {
 	            			// Usuario no es alumno
 	            			res.render('perfil', {datosUsuario: user, 
-	            				usuario: req.session.usuario});
+	            				usuario: req.session.usuario,
+	            				perfilPropio: perfilPropio});
 	            		}
 	            	} else {
 	            		res.render('perfil', {datosUsuario: user, 
@@ -56,6 +66,37 @@ var Usuario = require('../models/Usuario'),
 					'para acceder a SocialGCap.'});
 			}
 		});
+
+		app.post('/perfil/editar/:usuario', function(req, res) {
+			if (req.session.usuario !== undefined) {
+				console.log(req.files.image.mimetype);
+                if (req.files.image.mimetype != 'image/png' && 
+            	req.files.image.mimetype != 'image/jpeg' &&
+            	req.files.image.mimetype != 'image/gif') {
+            		// Validacion de tipo de fichero
+                	res.redirect('/perfil');
+                	res.send(500, 'El fichero subido debe ser una imagen. <a href="/perfil">Volver</a>');
+                } else if (req.files.image.size >= 204800){
+                	// Validacion de tamaño del fichero
+                	res.redirect('/perfil');
+                	res.send(500, 'La imagen debe pesar menos de 200KB. <a href="/perfil">Volver</a>');
+                } else {
+                	fs.readFile(req.files.image.path, function (err, data) {
+                		var newPath = __dirname + '/../public/img/' + req.session.usuario + '.' + req.files.image.extension;
+                		console.log('data: ' + data.length);
+                		fs.writeFile(newPath, data, function (err) {
+                			Usuario.update({usuario: req.session.usuario}, {$set: {foto: '/img/' + req.session.usuario + '.' + req.files.image.extension}}, function (err, data) {
+                				if(err) { throw err;}
+                				res.redirect('/perfil/' + req.session.usuario);
+                                        }); // Usuario
+                                }); // writeFile
+                        }); // readFile
+                }
+            } else {
+            	res.render('login', {error: 'Debes iniciar sesión ' +
+            		'para acceder a SocialGCap.'});
+            }
+        });
 	};
 
 module.exports = route;

@@ -44,10 +44,10 @@ $(function() {
 		$('#chat').animate({ scrollTop: $(document).height() }, 1000);
 	});
 
-	// Recepcion de salas
+	// Recepcion de salas iniciales
 	socket.on('rooms', function (rooms) {
 		$.each(rooms, function(index, room) {
-			$('#lista-salas ul').append($('<li> - <a href="#" ' 
+			$('#lista-salas ul').prepend($('<li> - <a href="#" ' 
 				+ 'title="Entrar a la sala ' + room +'">' + room + '</a></li>'));
 		});
 	});

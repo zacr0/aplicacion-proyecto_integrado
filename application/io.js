@@ -8,41 +8,6 @@ module.exports = function(io) {
         'Sala de profesores',
         'La Chaty'];
 
-    // Obtencion e insercion de salas de promociones
-    var query = Promocion.find({}, {_id: 0});   
-
-    query.exec(function (err, promociones) {
-        if (err) {
-            return console.log(err);
-        } else {
-            if (promociones.length > 0) {
-                for (var i = promociones.length - 1; i >= 0; i--) {
-                    rooms.push(promociones[i].nombre);
-                };
-            } else {
-                console.log("No hay promociones");
-            }
-        }
-    });
-    // Obtencion e insercion de salas de asignaturas
-    // COMENTADO PORQUE CREA UN ARRAY DEMASIADO GRANDE PARA EL NAVEGADOR
-    /*var query = Asignatura.find({}, {_id: 0, "id_curso": 0}).sort({"nombre": 1});
-
-    query.exec(function (err, asignaturas) {
-        if (err) {
-            return console.log(err);
-        } else {
-            if (asignaturas.length > 0) {
-                for (var i = asignaturas.length - 1; i >= 0; i--) {
-                    rooms.push(asignaturas[i].nombre);
-                };
-                console.log(rooms);
-            } else {
-                console.log("No hay asignaturas");
-            }
-        }
-    });*/
-
 io.on('connection', function (socket) {
         // Introducimos al usuario en la sala por defecto
         socket.room = rooms[0];

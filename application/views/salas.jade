@@ -28,18 +28,24 @@ block content
             strong Salas:
             #lista-salas
               ul.list-unstyled
-              //-each asignatura in asignaturas
-                li 
-                  a(href="", title="Entrar a la sala #{asignatura.nombre}") - #{asignatura.nombre}
+                each promocion in promociones
+                  li - 
+                    a(href="", title="Entrar a la sala #{promocion.nombre}") #{promocion.nombre}
+                each curso in cursos
+                  li - 
+                    a(href="", title="Entrar a la sala #{curso.nombre}") #{curso.nombre}
+                each asignatura in asignaturas
+                  li - 
+                    a(href="", title="Entrar a la sala #{asignatura.nombre}") #{asignatura.nombre}
           .col-xs-4.col-sm-2.col-md-2.col-lg-2
-            strong Usuarios:
+            strong Usuarios en la sala:
             #lista-usuarios
               ul.list-unstyled
               //- Aqui va la lista de usuarios existentes en la sala
         .row
           form(id='form-mensaje',method="post",accept-charset='UTF-8',role='form').form-inline
             .col-xs-8.col-sm-8.col-md-8.col-lg-8
-              input(id="mensaje",name="mensaje",type="text",maxlength="200",placeholder="Escriba su mensaje",required,style="width:100%").form-control.no-resize
+              input(id="mensaje",name="mensaje",type="text",maxlength="200",placeholder="Escriba su mensaje",required).form-control.no-resize
               <p class="help-block">Etiquetas HTML permitidas: b, i, em, strong, a.</p>
             .col-xs-2.col-sm-2.col-md-2.col-lg-2
               input.btn.btn-block.btn-success(type='submit', value="Enviar")

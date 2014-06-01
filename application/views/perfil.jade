@@ -23,12 +23,11 @@ block content
       header.page-header
         h1 Perfil del #{datosUsuario.perfil}  
           small #{datosUsuario.nombre}  #{datosUsuario.apellidos}
-
       section.text-center.well
         .row
           .col-sm-6.col-md-6.col-sm-6
             img(src='#{datosUsuario.foto}',
-              alt="Imagen de perfil de #{datosUsuario.nombre}").img-circle
+              alt="Imagen de perfil de #{datosUsuario.nombre}" , height="200", width="200").img-circle
           .col-sm-6.col-md-6.text-left
             p
               strong Nombre: 
@@ -68,6 +67,12 @@ block content
             a(href="mailto:zacro.suarez@gmail.com?Subject=Denuncia del perfil de #{datosUsuario.nombre} #{datosUsuario.apellidos}") 
               span.glyphicon.glyphicon-exclamation-sign 
               |  Denunciar este perfil
+            
+            if perfilPropio
+              //- Personalizacion de imagen de perfil
+              form(action="/perfil/editar/#{datosUsuario.usuario}" method="post", enctype="multipart/form-data")
+                input(type="file", name="image", accept='image/*',required)
+                input(type="submit" value="Modificar imagen image")
 
 
     include footer

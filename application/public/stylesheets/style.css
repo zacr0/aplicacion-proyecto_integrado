@@ -20,9 +20,14 @@ body {
 }
 #lista-salas {
 	height: 250px;
+	margin-bottom: 5px;
+	border-bottom: 1px solid black;
 }
 #lista-usuarios {
 	height: 150px;
+}
+#mensaje {
+	width: 100%;
 }
 .msg,
 .msgPropio {
