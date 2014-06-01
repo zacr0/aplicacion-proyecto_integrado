@@ -24,18 +24,17 @@ block content
         .row
           #chat.col-xs-8.col-sm-10.col-md-10.col-lg-10.well.well-sm
             //-Aqui saldrian los mensajes enviados dentro de la sala
-          #lista-salas.col-xs-4.col-sm-2.col-md-2.col-lg-2
+          .col-xs-4.col-sm-2.col-md-2.col-lg-2
             strong Salas:
-            //-Aqui se cargarian las salas existentes
-            //- Posiblemente, si entras a una sala se reemplazaria
-            //- por la lista de usuarios dentro de la sala
-            ul.list-unstyled
+            #lista-salas
+              ul.list-unstyled
               //-each asignatura in asignaturas
                 li 
                   a(href="", title="Entrar a la sala #{asignatura.nombre}") - #{asignatura.nombre}
-          #lista-usuarios.col-xs-4.col-sm-2.col-md-2.col-lg-2
+          .col-xs-4.col-sm-2.col-md-2.col-lg-2
             strong Usuarios:
-            ul.list-unstyled
+            #lista-usuarios
+              ul.list-unstyled
               //- Aqui va la lista de usuarios existentes en la sala
         .row
           form(id='form-mensaje',method="post",accept-charset='UTF-8',role='form').form-inline

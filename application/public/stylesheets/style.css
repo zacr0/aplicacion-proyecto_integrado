@@ -5,9 +5,11 @@ body {
 .no-resize {
 	resize: none;	
 }
+/* Anuncios */
 .anuncio {
 	word-wrap: break-word;
 }
+/* Salas de chat */
 #chat, #lista-salas {
 	overflow: auto;
 	overflow-x: hidden;
@@ -17,10 +19,10 @@ body {
 	height: 400px;
 }
 #lista-salas {
-	height: 200px;
+	height: 250px;
 }
 #lista-usuarios {
-	height: 200px;
+	height: 150px;
 }
 .msg,
 .msgPropio {

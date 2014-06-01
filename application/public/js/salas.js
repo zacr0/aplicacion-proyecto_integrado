@@ -65,9 +65,10 @@ $(function() {
 	});
 
 	// Listado de usuarios en la sala actual
-	socket.on('userlist'. function (userlist) {
+	socket.on('userlist', function (userlist) {
+		$('#lista-usuarios ul').empty();
 		$.each(userlist, function (index, user) {
-			$('#lista-usuarios ul').append($('<li> - <a href="#" ' 
+			$('#lista-usuarios ul').append($('<li> - <a href="/perfil/' + user + '" ' 
 				+ 'title="Ir al perfil de ' + user +'" target="_blank">' + user + '</a></li>'));
 		});
 	});

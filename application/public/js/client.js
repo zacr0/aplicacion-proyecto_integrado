@@ -149,10 +149,6 @@ $(function() {
 		return /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/.test(value);
 	});
 
-// PAGINA DE SALAS
-	// En salas.js
-
-
 // PAGINA DE ANUNCIOS
 	$('#form-anuncios').validate({
 		errorPlacement: function(label, element) {
@@ -175,6 +171,7 @@ $(function() {
 		}
 	});
 	
+	// Obtiene el formulario desde el que se ha llamado al modal
 	$('#formularioConfirmar').on('show.bs.modal', function (e) {
 		$message = $(e.relatedTarget).attr('data-message');
 		$(this).find('.modal-body p').text($message);
@@ -195,7 +192,6 @@ $(function() {
 	$.each($('.panel-body'), function(index, val) {
 		 $(this).html(Autolinker.link($(this).text()));
 	});
-	//$('.panel-body').html(Autolinker.link($('.panel-body')));
 	
 
 // PAGINA DE USUARIOS
