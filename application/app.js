@@ -1,5 +1,6 @@
 var express = require('express'),
     path = require('path'),
+    multer  = require('multer'), // NUEVO
     favicon = require('static-favicon'),
     logger = require('morgan'),
     cookieParser = require('cookie-parser'),
@@ -19,7 +20,7 @@ var express = require('express'),
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
-
+app.use(multer()) // NUEVO
 app.use(favicon());
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -65,10 +66,13 @@ app.use(function(err, req, res, next) {
     });
 });
 
+// socket.io logic file
 require('./io')(io);
 
 // set timezone
 process.env.TZ = 'UTC+2';
+
+// Starts server
 server.listen(3000);
 //app.listen(3000); // port to listen
 console.log('Server running on localhost:3000');

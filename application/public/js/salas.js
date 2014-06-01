@@ -1,22 +1,19 @@
 $(function() {
-	var socket = io(),
-		nickPropio = $('#perfilusuario').text()
-			.substr(9, $('#perfilusuario').text().length);
+	var nickname = $('#perfilusuario').text()
+						.substr(9, $('#perfilusuario').text().length);
+	var socket = io();
 
-	// Envio de nickname del usuario
-	socket.emit('nickname', nickPropio);
+	// Envia nombre de usuario
+	socket.emit('nickname', nickname);
 
 	// Envio de mensajes
 	$('#form-mensaje').submit(function (e) {
-		var nickname = $('#perfilusuario').text()
-						.substr(9, $('#perfilusuario').text().length);
-
-		socket.emit('message', nickname, $('#mensaje').val() );
+		socket.emit('message', $('#mensaje').val() );
 		$('#mensaje').val('');
 		$('#chat').animate({ scrollTop: $(document).height() }, 1000);
 		return false;
 	});
-
+		
 	// Recepcion de mensajes
 	socket.on('message', function (nickname, message) {
 		var nickPropio = $('#perfilusuario').text()
@@ -24,10 +21,10 @@ $(function() {
 		
 		if (nickname === nickPropio) {
 			$('#chat').append($('<p class="msgPropio bg-success"><strong>' + nickname 
-								+ ': </strong>' + message + '</p>'));
+								+ ': </strong>' + Autolinker.link(message) + '</p>'));
 		} else {
 			$('#chat').append($('<p class="msg bg-info"><strong>' + nickname 
-								+ ': </strong>' + message + '</p>'));
+								+ ': </strong>' + Autolinker.link(message) + '</p>'));
 		}
 		
 		$('#chat').animate({ scrollTop: $(document).height() }, 1000);
@@ -37,12 +34,14 @@ $(function() {
 	socket.on('info', function (message) {
 		$('#chat').append($('<p class="msg text-success"><strong>' + message 
 								+ '</strong>'));
+		$('#chat').animate({ scrollTop: $(document).height() }, 1000);
 	});
 
 	// Mensajes de errores
 	socket.on('error', function (message) {
 		$('#chat').append($('<p class="msg text-danger"><strong>' + message 
 								+ '</strong>'));
+		$('#chat').animate({ scrollTop: $(document).height() }, 1000);
 	});
 
 	// Recepcion de salas
@@ -62,7 +61,6 @@ $(function() {
 	$('#lista-salas').on("click", "a", function() {
 		$('#chat').empty();
 		socket.emit('switchroom', $(this).text());
-		console.log('Cambio de sala');
 		return false;
 	});
 });

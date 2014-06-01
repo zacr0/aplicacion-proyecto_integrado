@@ -37,6 +37,7 @@ block content
           form(id='form-mensaje',method="post",accept-charset='UTF-8',role='form').form-inline
             .col-xs-8.col-sm-8.col-md-8.col-lg-8
               input(id="mensaje",name="mensaje",type="text",maxlength="200",placeholder="Escriba su mensaje",required,style="width:100%").form-control.no-resize
+              <p class="help-block">Etiquetas HTML permitidas: b, i, em, strong, a.</p>
             .col-xs-2.col-sm-2.col-md-2.col-lg-2
               input.btn.btn-block.btn-success(type='submit', value="Enviar")
 

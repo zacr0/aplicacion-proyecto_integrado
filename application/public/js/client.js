@@ -149,6 +149,7 @@ $(function() {
 		return /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/.test(value);
 	});
 
+// PAGINA DE SALAS
 	// En salas.js
 
 
@@ -189,6 +190,13 @@ $(function() {
 	.on('click', function(){
 		$(this).data('form').submit();
 	});
+
+	// Convierte los posibles enlaces en links clickables
+	$.each($('.panel-body'), function(index, val) {
+		 $(this).html(Autolinker.link($(this).text()));
+	});
+	//$('.panel-body').html(Autolinker.link($('.panel-body')));
+	
 
 // PAGINA DE USUARIOS
 	$('ul.nav li.disabled a').click(function(){
