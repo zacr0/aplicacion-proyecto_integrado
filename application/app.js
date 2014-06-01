@@ -1,5 +1,6 @@
 var express = require('express'),
     path = require('path'),
+    multer  = require('multer'), // NUEVO
     favicon = require('static-favicon'),
     logger = require('morgan'),
     cookieParser = require('cookie-parser'),
@@ -19,7 +20,7 @@ var express = require('express'),
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
-
+app.use(multer({ dest: './public/img/'})) // NUEVO
 app.use(favicon());
 app.use(logger('dev'));
 app.use(bodyParser.json());
