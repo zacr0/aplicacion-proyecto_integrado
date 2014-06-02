@@ -149,10 +149,6 @@ $(function() {
 		return /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/.test(value);
 	});
 
-// PAGINA DE SALAS
-	// En salas.js
-
-
 // PAGINA DE ANUNCIOS
 	$('#form-anuncios').validate({
 		errorPlacement: function(label, element) {
@@ -175,6 +171,7 @@ $(function() {
 		}
 	});
 	
+	// Obtiene el formulario desde el que se ha llamado al modal
 	$('#formularioConfirmar').on('show.bs.modal', function (e) {
 		$message = $(e.relatedTarget).attr('data-message');
 		$(this).find('.modal-body p').text($message);
@@ -195,11 +192,61 @@ $(function() {
 	$.each($('.panel-body'), function(index, val) {
 		 $(this).html(Autolinker.link($(this).text()));
 	});
-	//$('.panel-body').html(Autolinker.link($('.panel-body')));
 	
 
 // PAGINA DE USUARIOS
 	$('ul.nav li.disabled a').click(function(){
 		return false;
+	});
+
+// PAGINA DE PERFIL
+	$('#form-imagen').validate({
+		errorPlacement: function(label, element) {
+			label.insertAfter(element);
+			label.addClass('control-label');
+			$(element).parent().addClass('has-error');
+		},
+		unhighlight: function (element) {
+			$(element).parent().removeClass('has-error');
+		},
+		rules: {
+			image: {
+				required: true,
+				accept: 'image/png, image/jpeg'
+			}
+		},
+		messages: {
+			image: {
+				accept: 'El formato de la imagen debe ser .png o .jpg.'
+			}
+		}
+	});
+
+	$('#form-datos').validate({
+		errorPlacement: function(label, element) {
+			label.insertAfter(element);
+			label.addClass('control-label');
+			$(element).parent().addClass('has-error');
+		},
+		unhighlight: function (element) {
+			$(element).parent().removeClass('has-error');
+		},
+		rules: {
+			email: {
+				email: true
+			}
+		}
+	});
+
+	$(function(){
+		$('#fechaNacimiento').datepicker({
+			format: 'mm/dd/yyyy',
+			endDate: new Date($.now()),
+			startDate: new Date('01/01/1970'),
+			language: 'es',
+			minViewMode: 'days',
+			weekStart: 1,
+			autoclose: true
+		});
 	});
 });

@@ -1,11 +1,13 @@
 var Usuario = require('../models/Usuario'),
 	Curso = require('../models/Curso'),
 	Promocion = require('../models/Promocion'),
+	Anuncio = require('../models/Anuncio'),
 	fs = require('fs'),
 	nombrePromocion,
 	nombreCurso,
 	route = function (app) {
-		app.get('/perfil', function(req, res) {
+		// Visualizacion del perfil
+		app.get('/perfil', function (req, res) {
 			// Redirige a su perfil si el usuario solo escribe /perfil
 			if (req.session.usuario != undefined) {
 				res.redirect('/perfil/' + req.session.usuario);
@@ -15,7 +17,7 @@ var Usuario = require('../models/Usuario'),
 			}
 		});
 
-		app.get('/perfil/:usuario', function(req, res) {
+		app.get('/perfil/:usuario', function (req, res) {
 			// Busca al usuario especificado en la url
 			if (req.session.usuario != undefined) {
 				Usuario.findOne({usuario: req.params.usuario}, function (err, user){
@@ -66,34 +68,123 @@ var Usuario = require('../models/Usuario'),
 					'para acceder a SocialGCap.'});
 			}
 		});
+	
+		// Edicion del perfil
+		app.get('/perfil/:usuario/editar', function (req, res) {
+			if (req.session.usuario != undefined) {
+				if (req.session.usuario === req.params.usuario) {
+					// Faltan campos por cargar
+					Usuario.findOne({usuario: req.params.usuario}, function (err, user) {
+						if (err) {
+							return console.log(err);
+						} else {
+							res.render('editar', {datosUsuario: user, 
+		            			usuario: req.session.usuario
+		            		});
+						}
+					});
+				} else {
+					res.redirect('/perfil');
+				}
+			} else {
+				res.render('login', {error: 'Debes iniciar sesión ' +
+            		'para acceder a SocialGCap.'});
+			}
+		});
 
-		app.post('/perfil/editar/:usuario', function(req, res) {
+		// Actualizacion de imagen de perfil
+		app.post('/perfil/:usuario/editar/foto', function (req, res) {
 			if (req.session.usuario !== undefined) {
-                // IMPORTANTE EN EL app.js donde ponga: NUEVO
-                // TODAVIA NO ESTA FINIQUITADO
-                console.log(req.files.image.size);
-                if(req.files.image.size >= 204800){
-                	console.log('ES MAYOR');
-                	res.redirect('/perfil');
-                	res.send(500, 'La imagen debe pesar menos de 200KB. <a href="/perfil">Volver</a>');
-                }else{
-                	console.log('ES MENOR');
+
+                if (req.files.image.mimetype != 'image/png' && 
+            	req.files.image.mimetype != 'image/jpeg') {
+            		// Validacion de tipo de fichero
+                	res.render('editar', {usuario: req.session.usuario,
+                		error: 'El fichero subido debe ser una imagen con formato .jpg o .png.'});
+                } else if (req.files.image.size >= 204800){
+                	// Validacion de tamaño del fichero
+                	Usuario.findOne({usuario: req.params.usuario}, function (err, user) {
+                		if (err) {
+                			return console.log(err)
+                		} else {
+                			res.render('editar', {usuario: req.session.usuario,
+                				datosUsuario: user,
+                				error: 'La imagen supera el límite de 200KB, utilice una imagen más pequeña.'
+                			});
+                		}
+                	});
+                } else {
                 	fs.readFile(req.files.image.path, function (err, data) {
                 		var newPath = __dirname + '/../public/img/' + req.session.usuario + '.' + req.files.image.extension;
                 		console.log('data: ' + data.length);
                 		fs.writeFile(newPath, data, function (err) {
                 			Usuario.update({usuario: req.session.usuario}, {$set: {foto: '/img/' + req.session.usuario + '.' + req.files.image.extension}}, function (err, data) {
-                				if(err) { throw err;}
-                				res.redirect('/perfil/' + req.session.usuario);
-                                        }); // Usuario
-                                }); // writeFile
-                        }); // readFile
+                				if (err) { throw err;}
+                				Usuario.findOne({usuario: req.params.usuario}, function (err, user) {
+                					if (err) {
+                						return console.log(err);
+                					} else {
+		                				res.render('editar', {usuario: req.session.usuario,
+		                					datosUsuario: user,
+		                					success: true
+		                				});
+                					}
+                				})
+                			}); // Usuario
+                        }); // writeFile
+                    }); // readFile
                 }
             } else {
             	res.render('login', {error: 'Debes iniciar sesión ' +
             		'para acceder a SocialGCap.'});
             }
         });
+		
+		// Actualizacion de datos de usuario
+		app.post('/perfil/:usuario/editar/datos', function (req, res) {
+			// Pendiente de completar
+		});
+
+		// Visualizacion de anuncios publicados por el usuario
+		app.get('/perfil/:usuario/anuncios', function (req, res) {
+			
+			if (req.session.usuario != undefined) {
+				// Control de existencia de usuario
+				Usuario.findOne({usuario: req.params.usuario}, function (err, user) {
+					if (err) {
+						return console.log(err);
+					} else {
+						if (user) {
+							var perfilPropio = false;
+
+							if (req.session.usuario === req.params.usuario) {
+								perfilPropio = true;
+							}
+							// Consulta del anuncios del usuario
+							var query = Anuncio.find({"autor.usuario": req.params.usuario},
+													{"titulo": 1, "contenido": 1, "fechaPublicacion": 1})
+												.sort({fechaPublicacion: -1});
+							query.exec(function (err, anuncios) {
+								if (err) {
+									return console.log(err);
+								} else {
+									res.render('anuncios-perfil', {usuario: req.session.usuario,
+										perfilDe: req.params.usuario,
+										perfilPropio: perfilPropio,
+										anuncios: anuncios});
+								}
+							});
+						} else {
+							// El usuario no existe
+							res.redirect('/perfil/:usuario');
+						}
+					}
+				});
+			} else {
+				res.render('login', {error: 'Debes iniciar sesión ' +
+            		'para acceder a SocialGCap.'});
+			}
+		});
 	};
 
 module.exports = route;

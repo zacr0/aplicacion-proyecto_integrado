@@ -1,0 +1,70 @@
+extends layout
+
+block title
+  title SocialGCap - Editar perfil
+
+block custom-styles
+  link(rel='stylesheet', href='/stylesheets/datepicker.css')
+  link(rel='stylesheet', href='/stylesheets/style.css')
+
+block content
+  .container
+    - var activo = 'perfil';
+    include navbar
+
+    header.page-header
+      h1 Editar perfil
+
+    ul.nav.nav-tabs
+        li
+          a(href="/perfil", title="Ver datos de perfil") Perfil
+        li.active
+          a(href="#", title='Edita los datos de tu perfil') Editar perfil     
+        li
+          a(href="/perfil/#{datosUsuario.usuario}/anuncios", title='Ver anuncios publicados') Anuncios publicados
+
+    section.text-center.well
+      .row
+        if error
+          .alert.alert-danger.alert-dismissable
+            button(type="button",data-dismiss="alert",aria-hidden="true").close 
+              | &times;
+            strong 
+              | ¡Lo sentimos! 
+            p=error
+        if success
+          .alert.alert-success.alert-dismissable
+            button(type="button",data-dismiss="alert",aria-hidden="true").close 
+              | &times;
+            strong 
+              | ¡Todo correcto! 
+            p Tus datos han sido actualizados correctamente.
+      .row
+        .col-md-6
+          h3 Foto de perfil
+          img(src='#{datosUsuario.foto}', title='Foto de perfil actual', height="200", width="200").img-circle
+          hr
+          form(id='form-imagen',action='/perfil/' + usuario +'/editar/foto' method="post", enctype="multipart/form-data")
+            .form-group.has-feedback
+              input(type="file", id="image", name="image", accept='image/jpeg, image/png',required).form-control
+            p.help-block
+              | Formatos de imagen permitidos: .png, .jpg
+            p.help-block
+              | Peso máximo: 200KB
+            input(type="submit" value="Actualizar imagen").btn.btn-block.btn-primary
+        .col-md-6
+          h3 Datos de usuario
+          form(id='form-datos', action='/perfil/' + usuario + '/editar/datos', method='post',accept-charset='UTF-8')
+            .form-group.has-feedback
+              label(for='email')
+                strong Email:
+              input(type='email', id='email',name='email', value='#{datosUsuario.email}', placeholder='Email').form-control.text-center
+            .form-group
+              - var fechaNacimiento = (datosUsuario.fechaNacimiento.getMonth()+1) + '/' + datosUsuario.fechaNacimiento.getDate() + '/' + datosUsuario.fechaNacimiento.getFullYear()
+              label(for='fechaNacimiento')
+                strong Fecha de nacimiento:
+              input.form-control(id='fechaNacimiento',name='fechaNacimiento',value='#{fechaNacimiento}',placeholder='Fecha de nacimiento', type='text').text-center
+            input(type='submit', value='Actualizar datos').btn.btn-block.btn-primary
+
+
+    include footer

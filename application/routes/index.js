@@ -48,8 +48,7 @@ var route = function (app) {
     });
 
     // Registro
-    var queryAsignaturas = Asignatura.find()
-        .sort( { "nombre": 1 } );
+    var queryAsignaturas = Asignatura.find().sort( { "nombre": 1 } );
 
 	app.get('/registro', function (req, res) {
         async.series([

@@ -1,6 +1,6 @@
 $(function() {
-	var nickname = $('#perfilusuario').text()
-						.substr(9, $('#perfilusuario').text().length);
+	var nickname = $('#nombreUsuario').text();
+
 	var socket = io();
 
 	// Envia nombre de usuario
@@ -16,8 +16,7 @@ $(function() {
 		
 	// Recepcion de mensajes
 	socket.on('message', function (nickname, message) {
-		var nickPropio = $('#perfilusuario').text()
-						.substr(9, $('#perfilusuario').text().length);
+		var nickPropio = $('#nombreUsuario').text();
 		
 		if (nickname === nickPropio) {
 			$('#chat').append($('<p class="msgPropio bg-success"><strong>' + nickname 
@@ -44,10 +43,10 @@ $(function() {
 		$('#chat').animate({ scrollTop: $(document).height() }, 1000);
 	});
 
-	// Recepcion de salas
+	// Recepcion de salas iniciales
 	socket.on('rooms', function (rooms) {
 		$.each(rooms, function(index, room) {
-			$('#lista-salas ul').append($('<li> - <a href="#" ' 
+			$('#lista-salas ul').prepend($('<li> - <a href="#" ' 
 				+ 'title="Entrar a la sala ' + room +'">' + room + '</a></li>'));
 		});
 	});
@@ -62,5 +61,14 @@ $(function() {
 		$('#chat').empty();
 		socket.emit('switchroom', $(this).text());
 		return false;
+	});
+
+	// Listado de usuarios en la sala actual
+	socket.on('userlist', function (userlist) {
+		$('#lista-usuarios ul').empty();
+		$.each(userlist, function (index, user) {
+			$('#lista-usuarios ul').append($('<li> - <a href="/perfil/' + user + '" ' 
+				+ 'title="Ir al perfil de ' + user +'" target="_blank">' + user + '</a></li>'));
+		});
 	});
 });
