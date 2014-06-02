@@ -45,7 +45,7 @@ block content
           hr
           form(id='form-imagen',action='/perfil/' + usuario +'/editar/foto' method="post", enctype="multipart/form-data")
             .form-group.has-feedback
-              input(type="file", id="image", name="image", accept='image/png, image/jpeg',required).form-control
+              input(type="file", id="image", name="image", accept='image/png,image/jpg',required).form-control
             p.help-block
               | Formatos de imagen permitidos: .png, .jpg
             p.help-block

@@ -1,6 +1,7 @@
 var Usuario = require('../models/Usuario'),
 	Curso = require('../models/Curso'),
 	Promocion = require('../models/Promocion'),
+	Anuncio = require('../models/Anuncio'),
 	fs = require('fs'),
 	nombrePromocion,
 	nombreCurso,
