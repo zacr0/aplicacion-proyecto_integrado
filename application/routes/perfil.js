@@ -73,6 +73,7 @@ var Usuario = require('../models/Usuario'),
 		app.get('/perfil/:usuario/editar', function (req, res) {
 			if (req.session.usuario != undefined) {
 				if (req.session.usuario === req.params.usuario) {
+					// Faltan campos por cargar
 					Usuario.findOne({usuario: req.params.usuario}, function (err, user) {
 						if (err) {
 							return console.log(err);
@@ -141,7 +142,7 @@ var Usuario = require('../models/Usuario'),
 		
 		// Actualizacion de datos de usuario
 		app.post('/perfil/:usuario/editar/datos', function (req, res) {
-
+			// Pendiente de completar
 		});
 
 		// Visualizacion de anuncios publicados por el usuario
