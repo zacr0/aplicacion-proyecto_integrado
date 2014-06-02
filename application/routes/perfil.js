@@ -114,6 +114,27 @@ var Usuario = require('../models/Usuario'),
                 		}
                 	});
                 } else {
+                	var fileToDelete = __dirname + '/../public/img/' + req.session.usuario + '.';
+                	if(req.files.image.mimetype === 'image/png'){
+                		console.log(fileToDelete + 'jpg');
+						fs.exists(fileToDelete + 'png', function (exists) {
+						    if(exists) {
+						    	var tempFile = fs.openSync(fileToDelete + 'jpg', 'r');
+								fs.closeSync(tempFile);
+								fs.unlinkSync(fileToDelete + 'jpg');
+						    }
+					    }); // fs.exist
+                	}
+                	if(req.files.image.mimetype === 'image/jpeg'){
+                		console.log(fileToDelete + 'png');
+                		fs.exists(fileToDelete + 'png', function (exists) {
+						    if(exists) {
+						    	var tempFile = fs.openSync(fileToDelete + 'png', 'r');
+								fs.closeSync(tempFile);
+								fs.unlinkSync(fileToDelete + 'png');
+						    }
+					    }); // fs.exist
+                	}
                 	fs.readFile(req.files.image.path, function (err, data) {
                 		var newPath = __dirname + '/../public/img/' + req.session.usuario + '.' + req.files.image.extension;
                 		console.log('data: ' + data.length);
@@ -142,7 +163,20 @@ var Usuario = require('../models/Usuario'),
 		
 		// Actualizacion de datos de usuario
 		app.post('/perfil/:usuario/editar/datos', function (req, res) {
-			// Pendiente de completar
+			Usuario.update( { usuario : req.params.usuario }, { $set : { email : req.body.email , fechaNacimiento: req.body.fechaNacimiento } },
+			function (err, data) {
+				if(err) { return console.log(err); }
+				Usuario.findOne({usuario: req.params.usuario}, function (err, user) {
+					if (err) {
+						return console.log(err);
+					} else {
+        				res.render('editar', {usuario: req.session.usuario,
+        					datosUsuario: user,
+        					success: true
+        				});
+					}
+				}); // Usuario.findOne
+			}); // Usuario.update
 		});
 
 		// Visualizacion de anuncios publicados por el usuario
