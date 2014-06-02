@@ -148,23 +148,35 @@ var Usuario = require('../models/Usuario'),
 		app.get('/perfil/:usuario/anuncios', function (req, res) {
 			
 			if (req.session.usuario != undefined) {
-				var perfilPropio = false;
-
-				if (req.session.usuario === req.params.usuario) {
-					perfilPropio = true;
-				}
-				// Consulta del anuncios del usuario
-				var query = Anuncio.find({"autor.usuario": req.params.usuario},
-										{"titulo": 1, "contenido": 1, "fechaPublicacion": 1})
-									.sort({fechaPublicacion: -1});
-				query.exec(function (err, anuncios) {
+				// Control de existencia de usuario
+				Usuario.findOne({usuario: req.params.usuario}, function (err, user) {
 					if (err) {
 						return console.log(err);
 					} else {
-						res.render('anuncios-perfil', {usuario: req.session.usuario,
-							perfilDe: req.params.usuario,
-							perfilPropio: perfilPropio,
-							anuncios: anuncios});
+						if (user) {
+							var perfilPropio = false;
+
+							if (req.session.usuario === req.params.usuario) {
+								perfilPropio = true;
+							}
+							// Consulta del anuncios del usuario
+							var query = Anuncio.find({"autor.usuario": req.params.usuario},
+													{"titulo": 1, "contenido": 1, "fechaPublicacion": 1})
+												.sort({fechaPublicacion: -1});
+							query.exec(function (err, anuncios) {
+								if (err) {
+									return console.log(err);
+								} else {
+									res.render('anuncios-perfil', {usuario: req.session.usuario,
+										perfilDe: req.params.usuario,
+										perfilPropio: perfilPropio,
+										anuncios: anuncios});
+								}
+							});
+						} else {
+							// El usuario no existe
+							res.redirect('/perfil/:usuario');
+						}
 					}
 				});
 			} else {
