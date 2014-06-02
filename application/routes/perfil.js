@@ -5,7 +5,7 @@ var Usuario = require('../models/Usuario'),
 	nombrePromocion,
 	nombreCurso,
 	route = function (app) {
-		app.get('/perfil', function(req, res) {
+		app.get('/perfil', function (req, res) {
 			// Redirige a su perfil si el usuario solo escribe /perfil
 			if (req.session.usuario != undefined) {
 				res.redirect('/perfil/' + req.session.usuario);
@@ -15,7 +15,7 @@ var Usuario = require('../models/Usuario'),
 			}
 		});
 
-		app.get('/perfil/:usuario', function(req, res) {
+		app.get('/perfil/:usuario', function (req, res) {
 			// Busca al usuario especificado en la url
 			if (req.session.usuario != undefined) {
 				Usuario.findOne({usuario: req.params.usuario}, function (err, user){
@@ -67,30 +67,43 @@ var Usuario = require('../models/Usuario'),
 			}
 		});
 
-		app.post('/perfil/editar/:usuario', function(req, res) {
+		app.get('/perfil/editar/:usuario', function (req, res) {
+			if (req.session.usuario != undefined) {
+				if (req.session.usuario === req.params.usuario) {
+					res.render('editar', {usuario: req.session.usuario});
+				} else {
+					res.redirect('/perfil');
+				}
+			} else {
+				res.render('login', {error: 'Debes iniciar sesión ' +
+            		'para acceder a SocialGCap.'});
+			}
+		});
+
+		app.post('/perfil/editar/:usuario', function (req, res) {
 			if (req.session.usuario !== undefined) {
-				console.log(req.files.image.mimetype);
+
                 if (req.files.image.mimetype != 'image/png' && 
             	req.files.image.mimetype != 'image/jpeg' &&
             	req.files.image.mimetype != 'image/gif') {
             		// Validacion de tipo de fichero
                 	res.redirect('/perfil');
-                	res.send(500, 'El fichero subido debe ser una imagen. <a href="/perfil">Volver</a>');
+                	res.send(500, 'El fichero subido debe ser una imagen. <a href="/perfil/editar/' + req.session.usuario + '">Volver</a>');
                 } else if (req.files.image.size >= 204800){
                 	// Validacion de tamaño del fichero
                 	res.redirect('/perfil');
-                	res.send(500, 'La imagen debe pesar menos de 200KB. <a href="/perfil">Volver</a>');
+                	res.send(500, 'La imagen supera el límite de 200KB. <a href="/perfil/editar/' + req.session.usuario + '">Volver</a>');
                 } else {
                 	fs.readFile(req.files.image.path, function (err, data) {
                 		var newPath = __dirname + '/../public/img/' + req.session.usuario + '.' + req.files.image.extension;
                 		console.log('data: ' + data.length);
                 		fs.writeFile(newPath, data, function (err) {
                 			Usuario.update({usuario: req.session.usuario}, {$set: {foto: '/img/' + req.session.usuario + '.' + req.files.image.extension}}, function (err, data) {
-                				if(err) { throw err;}
+                				if (err) { throw err;}
                 				res.redirect('/perfil/' + req.session.usuario);
-                                        }); // Usuario
-                                }); // writeFile
-                        }); // readFile
+                			}); // Usuario
+                        }); // writeFile
+                    }); // readFile
                 }
             } else {
             	res.render('login', {error: 'Debes iniciar sesión ' +
