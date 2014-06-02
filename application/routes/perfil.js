@@ -185,6 +185,24 @@ var Usuario = require('../models/Usuario'),
             		'para acceder a SocialGCap.'});
 			}
 		});
+
+		// Eliminacion de anuncios desde perfil del usuario
+		app.post('/perfil/:usuario/anuncios/:id/eliminar', function (req, res){
+			if (req.session.usuario != undefined) {
+				Anuncio.findByIdAndRemove(req.params.id, function (err, anuncio) {
+					console.log('Va a eliminar el anuncio:' + anuncio);
+					if (err) {
+						return console.log(err);
+					} else {
+						console.log('Anuncio eliminado');
+						res.redirect('/perfil/' + req.params.usuario + '/anuncios');
+					}
+				})
+			} else {
+				res.render('login', {error: 'Debes iniciar sesión ' +
+					'para acceder a SocialGCap.'});
+			}
+		});
 	};
 
 module.exports = route;

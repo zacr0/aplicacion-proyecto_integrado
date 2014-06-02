@@ -7,6 +7,19 @@ block custom-styles
   link(rel='stylesheet', href='/stylesheets/style.css')
 
 block content
+  if perfilPropio
+    #formularioConfirmar.modal.fade(tabindex='-1', role='dialog', aria-labelledby='tituloConfirmar', aria-hidden='true')
+      .modal-dialog
+        .modal-content
+          .modal-header
+            button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+            h4#tituloConfirmar.modal-title Eliminar anuncio
+          p.modal-body
+            | Vas a <strong>eliminar</strong> este anuncio, ¿estás seguro?
+          .modal-footer
+            button.btn.btn-default(type='button', data-dismiss='modal') Cancelar
+            button.btn.btn-primary(type='button', id="btnConfirmar") Confirmar
+
   .container
     - var activo = 'perfil';
     include navbar
@@ -28,10 +41,18 @@ block content
         if anuncios.length > 0
           each anuncio in anuncios
             article.anuncio.col-md-6
+              if perfilPropio
+                form(id="eliminar",method='post', action='/perfil/#{perfilDe}/anuncios/#{anuncio._id}/eliminar')
+                  input(name='_id', type='hidden', value='#{anuncio._id}')
+                  button(type='button', data-toggle='modal',data-target='#formularioConfirmar').close
+                    | &times;
+              
               header
                 h4 #{anuncio.titulo}
+
               p 
                 | #{anuncio.contenido}
+
               footer
                 time(datetime="#{anuncio.fechaPublicacion.getFullYear()}-#{anuncio.fechaPublicacion.getMonth()+1}-#{anuncio.fechaPublicacion.getDate()}").
                  | #{anuncio.fechaPublicacion.getDate()}/#{anuncio.fechaPublicacion.getMonth()+1}/#{anuncio.fechaPublicacion.getFullYear()}, 
