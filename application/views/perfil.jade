@@ -29,9 +29,9 @@ block content
           a(href="#", title="Ver datos de perfil") Perfil
         if perfilPropio
           li
-            a(href="/perfil/editar/#{datosUsuario.usuario}", title='Edita los datos de tu perfil') Editar perfil     
+            a(href="/perfil/#{datosUsuario.usuario}/editar", title='Edita los datos de tu perfil') Editar perfil     
         li
-          a(href="/perfil/anuncios/#{datosUsuario.usuario}", title='Ver anuncios publicados') Anuncios publicados
+          a(href="/perfil/#{datosUsuario.usuario}/anuncios", title='Ver anuncios publicados') Anuncios publicados
 
       section.text-center.well
         .row

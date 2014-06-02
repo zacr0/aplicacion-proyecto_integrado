@@ -10,7 +10,9 @@ body {
 	word-wrap: break-word;
 }
 /* Salas de chat */
-#chat, #lista-salas {
+#chat,
+#lista-salas,
+#lista-usuarios {
 	overflow: auto;
 	overflow-x: hidden;
 	word-wrap: break-word;

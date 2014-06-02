@@ -20,7 +20,7 @@ block content
         li.active
           a(href="#", title='Edita los datos de tu perfil') Editar perfil     
         li
-          a(href="#", title='Ver anuncios publicados') Anuncios publicados
+          a(href="/perfil/#{datosUsuario.usuario}/anuncios", title='Ver anuncios publicados') Anuncios publicados
 
     section.text-center.well
       .row
@@ -43,7 +43,7 @@ block content
           h3 Foto de perfil
           img(src='#{datosUsuario.foto}', title='Foto de perfil actual', height="200", width="200").img-circle
           hr
-          form(id='form-imagen',action='/perfil/editar/' + usuario +'/foto' method="post", enctype="multipart/form-data")
+          form(id='form-imagen',action='/perfil/' + usuario +'/editar/foto' method="post", enctype="multipart/form-data")
             .form-group.has-feedback
               input(type="file", id="image", name="image", accept='image/png, image/jpeg',required).form-control
             p.help-block
@@ -53,7 +53,7 @@ block content
             input(type="submit" value="Actualizar imagen de perfil").btn.btn-block.btn-primary
         .col-md-6
           h3 Datos de usuario
-          form(id='form-datos', action='/perfil/editar/' + usuario + '/datos', method='post',accept-charset='UTF-8')
+          form(id='form-datos', action='/perfil/' + usuario + '/editar/datos', method='post',accept-charset='UTF-8')
             .form-group.has-feedback
               label(for='email')
                 strong Email:

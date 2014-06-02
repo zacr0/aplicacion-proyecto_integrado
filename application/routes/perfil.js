@@ -69,7 +69,7 @@ var Usuario = require('../models/Usuario'),
 		});
 	
 		// Edicion del perfil
-		app.get('/perfil/editar/:usuario', function (req, res) {
+		app.get('/perfil/:usuario/editar', function (req, res) {
 			if (req.session.usuario != undefined) {
 				if (req.session.usuario === req.params.usuario) {
 					Usuario.findOne({usuario: req.params.usuario}, function (err, user) {
@@ -93,7 +93,7 @@ var Usuario = require('../models/Usuario'),
 		});
 
 		// Actualizacion de imagen de perfil
-		app.post('/perfil/editar/:usuario/foto', function (req, res) {
+		app.post('/perfil/:usuario/editar/foto', function (req, res) {
 			if (req.session.usuario !== undefined) {
 
                 if (req.files.image.mimetype != 'image/png' && 
@@ -125,12 +125,12 @@ var Usuario = require('../models/Usuario'),
         });
 		
 		// Actualizacion de datos de usuario
-		app.post('/perfil/editar/:usuario/datos', function (req, res) {
+		app.post('/perfil/:usuario/editar/datos', function (req, res) {
 
 		});
 
 		// Visualizacion de anuncios publicados por el usuario
-		app.get('/perfil/anuncios/:usuario', function (req, res) {
+		app.get('/perfil/:usuario/anuncios', function (req, res) {
 			if (req.session.usuario != undefined) {
 				// Consulta del anuncios del usuario
 			} else {
