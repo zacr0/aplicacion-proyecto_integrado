@@ -80,8 +80,6 @@ var Usuario = require('../models/Usuario'),
 							res.render('editar', {datosUsuario: user, 
 		            			usuario: req.session.usuario
 		            		});
-
-							//res.render('editar', {usuario: req.session.usuario});
 						}
 					});
 				} else {
@@ -104,8 +102,16 @@ var Usuario = require('../models/Usuario'),
                 		error: 'El fichero subido debe ser una imagen con formato .jpg o .png.'});
                 } else if (req.files.image.size >= 204800){
                 	// Validacion de tamaño del fichero
-                	res.render('editar', {usuario: req.session.usuario,
-                		error: 'La imagen supera el límite de 200KB, utilice una imagen más pequeña.'});
+                	Usuario.findOne({usuario: req.params.usuario}, function (err, user) {
+                		if (err) {
+                			return console.log(err)
+                		} else {
+                			res.render('editar', {usuario: req.session.usuario,
+                				datosUsuario: user,
+                				error: 'La imagen supera el límite de 200KB, utilice una imagen más pequeña.'
+                			});
+                		}
+                	});
                 } else {
                 	fs.readFile(req.files.image.path, function (err, data) {
                 		var newPath = __dirname + '/../public/img/' + req.session.usuario + '.' + req.files.image.extension;
@@ -113,8 +119,16 @@ var Usuario = require('../models/Usuario'),
                 		fs.writeFile(newPath, data, function (err) {
                 			Usuario.update({usuario: req.session.usuario}, {$set: {foto: '/img/' + req.session.usuario + '.' + req.files.image.extension}}, function (err, data) {
                 				if (err) { throw err;}
-                				res.render('editar', {usuario: req.session.usuario,
-                					success: true});
+                				Usuario.findOne({usuario: req.params.usuario}, function (err, user) {
+                					if (err) {
+                						return console.log(err);
+                					} else {
+		                				res.render('editar', {usuario: req.session.usuario,
+		                					datosUsuario: user,
+		                					success: true
+		                				});
+                					}
+                				})
                 			}); // Usuario
                         }); // writeFile
                     }); // readFile
@@ -132,8 +146,27 @@ var Usuario = require('../models/Usuario'),
 
 		// Visualizacion de anuncios publicados por el usuario
 		app.get('/perfil/:usuario/anuncios', function (req, res) {
+			
 			if (req.session.usuario != undefined) {
+				var perfilPropio = false;
+
+				if (req.session.usuario === req.params.usuario) {
+					perfilPropio = true;
+				}
 				// Consulta del anuncios del usuario
+				var query = Anuncio.find({"autor.usuario": req.params.usuario},
+										{"titulo": 1, "contenido": 1, "fechaPublicacion": 1})
+									.sort({fechaPublicacion: -1});
+				query.exec(function (err, anuncios) {
+					if (err) {
+						return console.log(err);
+					} else {
+						res.render('anuncios-perfil', {usuario: req.session.usuario,
+							perfilDe: req.params.usuario,
+							perfilPropio: perfilPropio,
+							anuncios: anuncios});
+					}
+				});
 			} else {
 				res.render('login', {error: 'Debes iniciar sesión ' +
             		'para acceder a SocialGCap.'});

@@ -212,6 +212,12 @@ $(function() {
 		rules: {
 			image: {
 				required: true,
+				accept: 'image/png, image/jpeg'
+			}
+		},
+		messages: {
+			image: {
+				accept: 'El formato de la imagen debe ser .png o .jpg.'
 			}
 		}
 	});
