@@ -1,6 +1,6 @@
 $(function() {
 	var nickname = $('#nombreUsuario').text();
-						//.substr(9, $('#perfilusuario').text().length);
+
 	var socket = io();
 
 	// Envia nombre de usuario
@@ -17,7 +17,6 @@ $(function() {
 	// Recepcion de mensajes
 	socket.on('message', function (nickname, message) {
 		var nickPropio = $('#nombreUsuario').text();
-						//.substr(9, $('#perfilusuario').text().length);
 		
 		if (nickname === nickPropio) {
 			$('#chat').append($('<p class="msgPropio bg-success"><strong>' + nickname 
