@@ -200,7 +200,7 @@ $(function() {
 	});
 
 // PAGINA DE PERFIL
-	$('#form-editar').validate({
+	$('#form-imagen').validate({
 		errorPlacement: function(label, element) {
 			label.insertAfter(element);
 			label.addClass('control-label');
@@ -214,5 +214,33 @@ $(function() {
 				required: true,
 			}
 		}
+	});
+
+	$('#form-datos').validate({
+		errorPlacement: function(label, element) {
+			label.insertAfter(element);
+			label.addClass('control-label');
+			$(element).parent().addClass('has-error');
+		},
+		unhighlight: function (element) {
+			$(element).parent().removeClass('has-error');
+		},
+		rules: {
+			email: {
+				email: true
+			}
+		}
+	});
+
+	$(function(){
+		$('#fechaNacimiento').datepicker({
+			format: 'mm/dd/yyyy',
+			endDate: new Date($.now()),
+			startDate: new Date('01/01/1970'),
+			language: 'es',
+			minViewMode: 'days',
+			weekStart: 1,
+			autoclose: true
+		});
 	});
 });

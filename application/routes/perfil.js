@@ -72,7 +72,17 @@ var Usuario = require('../models/Usuario'),
 		app.get('/perfil/editar/:usuario', function (req, res) {
 			if (req.session.usuario != undefined) {
 				if (req.session.usuario === req.params.usuario) {
-					res.render('editar', {usuario: req.session.usuario});
+					Usuario.findOne({usuario: req.params.usuario}, function (err, user) {
+						if (err) {
+							return console.log(err);
+						} else {
+							res.render('editar', {datosUsuario: user, 
+		            			usuario: req.session.usuario
+		            		});
+
+							//res.render('editar', {usuario: req.session.usuario});
+						}
+					});
 				} else {
 					res.redirect('/perfil');
 				}
@@ -82,7 +92,8 @@ var Usuario = require('../models/Usuario'),
 			}
 		});
 
-		app.post('/perfil/editar/:usuario', function (req, res) {
+		// Actualizacion de imagen de perfil
+		app.post('/perfil/editar/:usuario/foto', function (req, res) {
 			if (req.session.usuario !== undefined) {
 
                 if (req.files.image.mimetype != 'image/png' && 
@@ -90,13 +101,10 @@ var Usuario = require('../models/Usuario'),
             		// Validacion de tipo de fichero
                 	res.render('editar', {usuario: req.session.usuario,
                 		error: 'El fichero subido debe ser una imagen con formato .jpg o .png.'});
-                	//res.send(500, 'El fichero subido debe ser una imagen. <a href="/perfil/">Volver</a>');
                 } else if (req.files.image.size >= 204800){
                 	// Validacion de tamaño del fichero
                 	res.render('editar', {usuario: req.session.usuario,
                 		error: 'La imagen supera el límite de 200KB, utilice una imagen más pequeña.'});
-                	//res.redirect('/perfil');
-                	//res.send(500, 'La imagen supera el límite de 200KB. <a href="/perfil/">Volver</a>');
                 } else {
                 	fs.readFile(req.files.image.path, function (err, data) {
                 		var newPath = __dirname + '/../public/img/' + req.session.usuario + '.' + req.files.image.extension;
@@ -104,7 +112,8 @@ var Usuario = require('../models/Usuario'),
                 		fs.writeFile(newPath, data, function (err) {
                 			Usuario.update({usuario: req.session.usuario}, {$set: {foto: '/img/' + req.session.usuario + '.' + req.files.image.extension}}, function (err, data) {
                 				if (err) { throw err;}
-                				res.redirect('/perfil/' + req.session.usuario);
+                				res.render('editar', {usuario: req.session.usuario,
+                					success: true});
                 			}); // Usuario
                         }); // writeFile
                     }); // readFile
@@ -114,6 +123,11 @@ var Usuario = require('../models/Usuario'),
             		'para acceder a SocialGCap.'});
             }
         });
+		
+		// Actualizacion de datos de usuario
+		app.post('/perfil/editar/:usuario/datos', function (req, res) {
+
+		});
 
 		// Visualizacion de anuncios publicados por el usuario
 		app.get('/perfil/anuncios/:usuario', function (req, res) {

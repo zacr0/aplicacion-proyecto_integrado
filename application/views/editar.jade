@@ -31,13 +31,39 @@ block content
             strong 
               | ¡Lo sentimos! 
             p=error
-        form(id='form-editar',action='/perfil/editar/' + usuario +'' method="post", enctype="multipart/form-data")
-          .form-group.has-feedback
-            input(type="file", name="image", accept='image/*',required).form-control
-          p.help-block
-            | Formatos de imagen permitidos: .png, .jpg
-          p.help-block
-            | Peso máximo: 200KB
-          input(type="submit" value="Actualizar imagen de perfil").btn.btn-primary
+        if success
+          .alert.alert-success.alert-dismissable
+            button(type="button",data-dismiss="alert",aria-hidden="true").close 
+              | &times;
+            strong 
+              | ¡Todo correcto! 
+            p Tus datos han sido actualizados correctamente.
+      .row
+        .col-md-6
+          h3 Foto de perfil
+          img(src='#{datosUsuario.foto}', title='Foto de perfil actual', height="200", width="200").img-circle
+          hr
+          form(id='form-imagen',action='/perfil/editar/' + usuario +'/foto' method="post", enctype="multipart/form-data")
+            .form-group.has-feedback
+              input(type="file", id="image", name="image", accept='image/png, image/jpeg',required).form-control
+            p.help-block
+              | Formatos de imagen permitidos: .png, .jpg
+            p.help-block
+              | Peso máximo: 200KB
+            input(type="submit" value="Actualizar imagen de perfil").btn.btn-block.btn-primary
+        .col-md-6
+          h3 Datos de usuario
+          form(id='form-datos', action='/perfil/editar/' + usuario + '/datos', method='post',accept-charset='UTF-8')
+            .form-group.has-feedback
+              label(for='email')
+                strong Email:
+              input(type='email', id='email',name='email', value='#{datosUsuario.email}', placeholder='Email').form-control.text-center
+            .form-group
+              - var fechaNacimiento = (datosUsuario.fechaNacimiento.getMonth()+1) + '/' + datosUsuario.fechaNacimiento.getDate() + '/' + datosUsuario.fechaNacimiento.getFullYear()
+              label(for='fechaNacimiento')
+                strong Fecha de nacimiento:
+              input.form-control(id='fechaNacimiento',name='fechaNacimiento',value='#{fechaNacimiento}',placeholder='Fecha de nacimiento', type='text').text-center
+            input(type='submit', value='Actualizar datos de perfil').btn.btn-block.btn-primary
+
 
     include footer

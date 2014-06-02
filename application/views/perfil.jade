@@ -37,16 +37,7 @@ block content
         .row
           .col-sm-6.col-md-6.col-sm-6
             img(src='#{datosUsuario.foto}',
-              alt="Imagen de perfil de #{datosUsuario.nombre}" , height="200", width="200").img-circle
-            if perfilPropio
-              //- Personalizacion de imagen de perfil
-              //-form(action="/perfil/editar/#{datosUsuario.usuario}" method="post", enctype="multipart/form-data")
-                input(type="file", name="image", accept='image/*',required)
-                p.help-block
-                  | Formatos de imagen permitidos: .png, .jpg, .gif
-                p.help-block
-                  | Peso máximo: 200KB
-                input(type="submit" value="Actualizar imagen de perfil")
+              alt="Imagen de perfil de #{datosUsuario.nombre}", height="200", width="200").img-circle
           
           .col-sm-6.col-md-6.text-left
             p
@@ -82,9 +73,6 @@ block content
                       li #{queue}.
                 else
                   |  no indicadas.
-          //-if perfilPropio
-            a(href='/perfil/editar/#{datosUsuario.usuario}').btn.btn-primary
-                | Editar perfil
 
         .row
           .col-md-12.text-right
