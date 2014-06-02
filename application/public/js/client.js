@@ -198,4 +198,21 @@ $(function() {
 	$('ul.nav li.disabled a').click(function(){
 		return false;
 	});
+
+// PAGINA DE PERFIL
+	$('#form-editar').validate({
+		errorPlacement: function(label, element) {
+			label.insertAfter(element);
+			label.addClass('control-label');
+			$(element).parent().addClass('has-error');
+		},
+		unhighlight: function (element) {
+			$(element).parent().removeClass('has-error');
+		},
+		rules: {
+			image: {
+				required: true,
+			}
+		}
+	});
 });

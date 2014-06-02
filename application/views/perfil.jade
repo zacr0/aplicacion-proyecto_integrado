@@ -26,13 +26,13 @@ block content
       
       ul.nav.nav-tabs
         li.active
-          a(href="#") Perfil
+          a(href="#", title="Ver datos de perfil") Perfil
         if perfilPropio
           li
-            a(href="/perfil/editar/#{datosUsuario.usuario}") Editar perfil     
+            a(href="/perfil/editar/#{datosUsuario.usuario}", title='Edita los datos de tu perfil') Editar perfil     
         li
-          a(href="#") Anuncios publicados
-          
+          a(href="/perfil/anuncios/#{datosUsuario.usuario}", title='Ver anuncios publicados') Anuncios publicados
+
       section.text-center.well
         .row
           .col-sm-6.col-md-6.col-sm-6

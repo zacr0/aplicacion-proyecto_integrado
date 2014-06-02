@@ -5,6 +5,7 @@ var Usuario = require('../models/Usuario'),
 	nombrePromocion,
 	nombreCurso,
 	route = function (app) {
+		// Visualizacion del perfil
 		app.get('/perfil', function (req, res) {
 			// Redirige a su perfil si el usuario solo escribe /perfil
 			if (req.session.usuario != undefined) {
@@ -66,7 +67,8 @@ var Usuario = require('../models/Usuario'),
 					'para acceder a SocialGCap.'});
 			}
 		});
-
+	
+		// Edicion del perfil
 		app.get('/perfil/editar/:usuario', function (req, res) {
 			if (req.session.usuario != undefined) {
 				if (req.session.usuario === req.params.usuario) {
@@ -84,15 +86,17 @@ var Usuario = require('../models/Usuario'),
 			if (req.session.usuario !== undefined) {
 
                 if (req.files.image.mimetype != 'image/png' && 
-            	req.files.image.mimetype != 'image/jpeg' &&
-            	req.files.image.mimetype != 'image/gif') {
+            	req.files.image.mimetype != 'image/jpeg') {
             		// Validacion de tipo de fichero
-                	res.redirect('/perfil');
-                	res.send(500, 'El fichero subido debe ser una imagen. <a href="/perfil/editar/' + req.session.usuario + '">Volver</a>');
+                	res.render('editar', {usuario: req.session.usuario,
+                		error: 'El fichero subido debe ser una imagen con formato .jpg o .png.'});
+                	//res.send(500, 'El fichero subido debe ser una imagen. <a href="/perfil/">Volver</a>');
                 } else if (req.files.image.size >= 204800){
                 	// Validacion de tamaño del fichero
-                	res.redirect('/perfil');
-                	res.send(500, 'La imagen supera el límite de 200KB. <a href="/perfil/editar/' + req.session.usuario + '">Volver</a>');
+                	res.render('editar', {usuario: req.session.usuario,
+                		error: 'La imagen supera el límite de 200KB, utilice una imagen más pequeña.'});
+                	//res.redirect('/perfil');
+                	//res.send(500, 'La imagen supera el límite de 200KB. <a href="/perfil/">Volver</a>');
                 } else {
                 	fs.readFile(req.files.image.path, function (err, data) {
                 		var newPath = __dirname + '/../public/img/' + req.session.usuario + '.' + req.files.image.extension;
@@ -110,6 +114,16 @@ var Usuario = require('../models/Usuario'),
             		'para acceder a SocialGCap.'});
             }
         });
+
+		// Visualizacion de anuncios publicados por el usuario
+		app.get('/perfil/anuncios/:usuario', function (req, res) {
+			if (req.session.usuario != undefined) {
+				// Consulta del anuncios del usuario
+			} else {
+				res.render('login', {error: 'Debes iniciar sesión ' +
+            		'para acceder a SocialGCap.'});
+			}
+		});
 	};
 
 module.exports = route;

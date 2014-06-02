@@ -8,6 +8,7 @@ block custom-styles
 
 block content
   .container
+    - var activo = 'perfil';
     include navbar
 
     header.page-header
@@ -15,18 +16,26 @@ block content
 
     ul.nav.nav-tabs
         li
-          a(href="/perfil") Perfil
+          a(href="/perfil", title="Ver datos de perfil") Perfil
         li.active
-          a(href="#") Editar perfil     
+          a(href="#", title='Edita los datos de tu perfil') Editar perfil     
         li
-          a(href="#") Anuncios publicados
+          a(href="#", title='Ver anuncios publicados') Anuncios publicados
 
     section.text-center.well
       .row
-        form(action='/perfil/editar/' + usuario +'' method="post", enctype="multipart/form-data")
-          input(type="file", name="image", accept='image/*',required)
+        if error
+          .alert.alert-danger.alert-dismissable
+            button(type="button",data-dismiss="alert",aria-hidden="true").close 
+              | &times;
+            strong 
+              | ¡Lo sentimos! 
+            p=error
+        form(id='form-editar',action='/perfil/editar/' + usuario +'' method="post", enctype="multipart/form-data")
+          .form-group.has-feedback
+            input(type="file", name="image", accept='image/*',required).form-control
           p.help-block
-            | Formatos de imagen permitidos: .png, .jpg, .gif
+            | Formatos de imagen permitidos: .png, .jpg
           p.help-block
             | Peso máximo: 200KB
           input(type="submit" value="Actualizar imagen de perfil").btn.btn-primary
