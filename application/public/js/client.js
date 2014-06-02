@@ -249,4 +249,8 @@ $(function() {
 			autoclose: true
 		});
 	});
+
+	$.each($('.anuncio p'), function(index, val) {
+		 $(this).html(Autolinker.link($(this).text()));
+	});
 });

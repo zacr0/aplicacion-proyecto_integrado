@@ -176,7 +176,7 @@ var Usuario = require('../models/Usuario'),
 							});
 						} else {
 							// El usuario no existe
-							res.redirect('/perfil/:usuario');
+							res.redirect('/perfil/' + req.params.usuario);
 						}
 					}
 				});

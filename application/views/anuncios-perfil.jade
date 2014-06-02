@@ -23,16 +23,23 @@ block content
         li.active
           a(href="#", title='Ver anuncios publicados') Anuncios publicados
 
-    section.text-center.well
+    section.well
       .row
         if anuncios.length > 0
           each anuncio in anuncios
-            article
-              strong #{anuncio.titulo}
-              p #{anuncio.contenido}
-              date #{anuncio.fechaPublicacion}
+            article.anuncio.col-md-6
+              header
+                h4 #{anuncio.titulo}
+              p 
+                | #{anuncio.contenido}
+              footer
+                time(datetime="#{anuncio.fechaPublicacion.getFullYear()}-#{anuncio.fechaPublicacion.getMonth()+1}-#{anuncio.fechaPublicacion.getDate()}").
+                 | #{anuncio.fechaPublicacion.getDate()}/#{anuncio.fechaPublicacion.getMonth()+1}/#{anuncio.fechaPublicacion.getFullYear()}, 
+                time(datetime="#{anuncio.fechaPublicacion.getHours()}:#{anuncio.fechaPublicacion.getMinutes()}:#{anuncio.fechaPublicacion.getSeconds()}").
+                  #{anuncio.fechaPublicacion.getHours()}:#{anuncio.fechaPublicacion.getMinutes()}:#{anuncio.fechaPublicacion.getSeconds()}
+              hr
         else
-          p.
+          p.text-center.
             El usuario "#{perfilDe}" aún no ha publicado ningún anuncio.
 
 
