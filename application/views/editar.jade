@@ -64,7 +64,17 @@ block content
               label(for='fechaNacimiento')
                 strong Fecha de nacimiento:
               input.form-control(id='fechaNacimiento',name='fechaNacimiento',value='#{fechaNacimiento}',placeholder='Fecha de nacimiento', type='text' required).text-center
-            input(type='submit', value='Actualizar datos').btn.btn-block.btn-primary
+            .form-group
+              label(for='password')
+                strong Contraseña actual:
+              input.form-control(id='pass',name='pass',placeholder='Contraseña actual',type='password' required).text-center
+              label(for='newPassword')
+                strong Contraseña nueva:
+              input.form-control(id='newPassword',name='newPassword',placeholder='Contraseña nueva',type='password' required).text-center
+              label(for='newPassword2')
+                strong Repite contraseña nueva:
+              input.form-control(id='newPassword2',name='newPassword2',placeholder='Repite contraseña nueva',type='password' required).text-center
+            input(type='submit', value='Actualizar datos', id='updateSubmit').btn.btn-block.btn-primary
 
 
     include footer

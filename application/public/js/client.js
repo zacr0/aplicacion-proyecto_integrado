@@ -117,6 +117,10 @@ $(function() {
 				pwd: "La contraseña debe tener al menos 6 caracteres, \
 					una minúscula, una mayúscula y un número."
 			},
+			newPass: {
+				pwd: "La contraseña debe tener al menos 6 caracteres, \
+					una minúscula, una mayúscula y un número."
+			},
 			nombre: {
 				nombre: "El nombre sólo puede contener letras."
 			},
@@ -235,6 +239,14 @@ $(function() {
 			email: {
 				email: true
 			}
+		}
+	});
+
+	$('#updateSubmit').on('click', function (ev){
+		alert( $('#newPassword').val() + ' + ' + $('#newPassword2').val() );
+		if( $('#newPassword').val() !== $('#newPassword2').val() ){
+			ev.preventDefault();
+			alert('introduzca la contrasñe biena');
 		}
 	});
 
