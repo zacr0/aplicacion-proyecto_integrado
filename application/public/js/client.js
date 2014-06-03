@@ -198,4 +198,59 @@ $(function() {
 	$('ul.nav li.disabled a').click(function(){
 		return false;
 	});
+
+// PAGINA DE PERFIL
+	$('#form-imagen').validate({
+		errorPlacement: function(label, element) {
+			label.insertAfter(element);
+			label.addClass('control-label');
+			$(element).parent().addClass('has-error');
+		},
+		unhighlight: function (element) {
+			$(element).parent().removeClass('has-error');
+		},
+		rules: {
+			image: {
+				required: true,
+				accept: 'image/png, image/jpeg'
+			}
+		},
+		messages: {
+			image: {
+				accept: 'El formato de la imagen debe ser .png o .jpg.'
+			}
+		}
+	});
+
+	$('#form-datos').validate({
+		errorPlacement: function(label, element) {
+			label.insertAfter(element);
+			label.addClass('control-label');
+			$(element).parent().addClass('has-error');
+		},
+		unhighlight: function (element) {
+			$(element).parent().removeClass('has-error');
+		},
+		rules: {
+			email: {
+				email: true
+			}
+		}
+	});
+
+	$(function(){
+		$('#fechaNacimiento').datepicker({
+			format: 'mm/dd/yyyy',
+			endDate: new Date($.now()),
+			startDate: new Date('01/01/1970'),
+			language: 'es',
+			minViewMode: 'days',
+			weekStart: 1,
+			autoclose: true
+		});
+	});
+
+	$.each($('.anuncio p'), function(index, val) {
+		 $(this).html(Autolinker.link($(this).text()));
+	});
 });

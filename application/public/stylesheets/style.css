@@ -10,7 +10,9 @@ body {
 	word-wrap: break-word;
 }
 /* Salas de chat */
-#chat, #lista-salas {
+#chat,
+#lista-salas,
+#lista-usuarios {
 	overflow: auto;
 	overflow-x: hidden;
 	word-wrap: break-word;
@@ -19,7 +21,7 @@ body {
 	height: 400px;
 }
 #lista-salas {
-	height: 250px;
+	height: 200px;
 	margin-bottom: 5px;
 	border-bottom: 1px solid black;
 }
