@@ -2,6 +2,7 @@ var Usuario = require('../models/Usuario'),
 	Curso = require('../models/Curso'),
 	Promocion = require('../models/Promocion'),
 	Anuncio = require('../models/Anuncio'),
+	Asignatura = require('../models/Asignatura'),
 	fs = require('fs'),
 	nombrePromocion,
 	nombreCurso,
@@ -69,7 +70,7 @@ var Usuario = require('../models/Usuario'),
 			}
 		});
 	
-		// Edicion del perfil
+		// Pagina de edicion del perfil
 		app.get('/perfil/:usuario/editar', function (req, res) {
 			if (req.session.usuario != undefined) {
 				if (req.session.usuario === req.params.usuario) {
@@ -214,7 +215,9 @@ var Usuario = require('../models/Usuario'),
 									res.render('anuncios-perfil', {usuario: req.session.usuario,
 										perfilDe: req.params.usuario,
 										perfilPropio: perfilPropio,
-										anuncios: anuncios});
+										anuncios: anuncios,
+										perfil: req.session.perfil
+									});
 								}
 							});
 						} else {
@@ -246,6 +249,46 @@ var Usuario = require('../models/Usuario'),
 					'para acceder a SocialGCap.'});
 			}
 		});
+
+		// Pagina de edicion de asignaturas
+		app.get('/perfil/:usuario/editar/asignaturas', function (req, res) {
+			if (req.session.usuario != undefined) {
+				if (req.session.usuario === req.params.usuario) {
+					// Consulta preliminar, hay que obtener que
+					// asignaturas imparte actualmente el profesor
+					var queryAsignaturas = Asignatura.find().sort( { "nombre": 1 } );
+					queryAsignaturas.exec(function (err, asignaturas) {
+						if (err) {
+							return console.log(err);
+						} else {
+							res.render('editar-profesor', {usuario: req.session.usuario,
+								asignaturas: asignaturas
+							});
+						}
+					})
+				} else {
+					res.redirect('/perfil');
+				}
+			} else {
+				res.render('login', {error: 'Debes iniciar sesión ' +
+						'para acceder a SocialGCap.'});
+			}
+		});
+
+		// Actualizacion de asignaturas impartidas
+		app.post('/perfil/:usuario/editar/asignaturas', function (req, res) {
+			if (req.session.usuario != undefined) {
+				if (req.session.usuario === req.params.usuario) {
+					// Consulta de actualizacion de asignaturas
+				} else {
+					res.redirect('/perfil');
+				}
+			} else {
+				res.render('login', {error: 'Debes iniciar sesión ' +
+						'para acceder a SocialGCap.'});
+			}
+		});
 	};
+
 
 module.exports = route;
