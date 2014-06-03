@@ -74,7 +74,7 @@ var Usuario = require('../models/Usuario'),
 		app.get('/perfil/:usuario/editar', function (req, res) {
 			if (req.session.usuario != undefined) {
 				if (req.session.usuario === req.params.usuario) {
-					// Faltan campos por cargar
+					
 					Usuario.findOne({usuario: req.params.usuario}, function (err, user) {
 						if (err) {
 							return console.log(err);
@@ -116,7 +116,8 @@ var Usuario = require('../models/Usuario'),
                 	});
                 } else {
                 	var fileToDelete = __dirname + '/../public/img/' + req.session.usuario + '.';
-                	if(req.files.image.mimetype === 'image/png'){
+                	
+                	if (req.files.image.mimetype === 'image/png'){
                 		console.log(fileToDelete + 'jpg');
 						fs.exists(fileToDelete + 'png' || fileToDelete + 'jpeg', function (exists) {
 						    if(exists) {
@@ -126,7 +127,8 @@ var Usuario = require('../models/Usuario'),
 						    }
 					    }); // fs.exist
                 	}
-                	if(req.files.image.mimetype === 'image/jpeg'){
+
+                	if (req.files.image.mimetype === 'image/jpeg'){
                 		console.log(fileToDelete + 'png');
                 		fs.exists(fileToDelete + 'png', function (exists) {
 						    if(exists) {
@@ -136,6 +138,7 @@ var Usuario = require('../models/Usuario'),
 						    }
 					    }); // fs.exist
                 	}
+                	
                 	fs.readFile(req.files.image.path, function (err, data) {
                 		var newPath = __dirname + '/../public/img/' + req.session.usuario + '.' + req.files.image.extension;
                 		console.log('data: ' + data.length);
