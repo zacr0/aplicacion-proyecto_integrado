@@ -10,15 +10,15 @@ var express = require('express'),
     server = require('http').Server(app),
     io = require('socket.io')(server),
     mongoose = require('mongoose'),
-    db = mongoose.connect('mongodb://pablo:pablo@ds043388.mongolab.com:43388/proyectointegrado'),
-    //db = mongoose.connect('mongodb://localhost:27017/proyectointegrado'),
+    //db = mongoose.connect('mongodb://pablo:pablo@ds043388.mongolab.com:43388/proyectointegrado'),
+    db = mongoose.connect('mongodb://localhost:27017/proyectointegrado'),
     async = require('async'),
     admin_routes = require('./routes/admin_routes'); // Module for routing
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
-app.use(multer()) // NUEVO
+app.use(multer());
 app.use(favicon());
 app.use(logger('dev'));
 app.use(bodyParser.json());
