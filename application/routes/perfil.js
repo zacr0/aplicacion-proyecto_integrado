@@ -164,21 +164,25 @@ var Usuario = require('../models/Usuario'),
 		// Actualizacion de datos de usuario
 		app.post('/perfil/:usuario/editar/datos', function (req, res) {
 			Usuario.findOne({usuario : req.params.usuario}, function (err, user){
-				if(err) { console.log(err);}
+				if(err) {
+					return console.log(err);
+				}
 				
-				if( req.body.pass === user.pass ){
+				if (req.body.pass === user.pass){
 					Usuario.update( { usuario : req.params.usuario }, { $set : { email : req.body.email , fechaNacimiento: req.body.fechaNacimiento, pass: req.body.newPassword } },
 						function (err, data) {
-						if(err) { return console.log(err); }
-		        		res.render('editar', {usuario: req.session.usuario,
-		        			datosUsuario: user,
-		        			success: true
-		        		});
+							if(err) {
+								return console.log(err);
+							}
+			        		res.render('editar', {usuario: req.session.usuario,
+			        			datosUsuario: user,
+			        			success: true
+			        		});
 					}); // Usuario.update
 				} else {
 					res.render('editar', {usuario: req.session.usuario,
     					datosUsuario: user,
-    					error: 'No has introducido bien tu contraseña actual'
+    					error: 'La contraseña actual introducida no es correcta. Inténtelo de nuevo.'
 		        	});
 				} // else
 			}); // Usuario

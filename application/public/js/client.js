@@ -106,7 +106,6 @@ $(function() {
 			fechanacimiento: {
 				date: true
 			}
-			// Validacion de promocion/curso/asignaturas:
 		},
 		messages: {
 			usuario: {
@@ -237,16 +236,37 @@ $(function() {
 		},
 		rules: {
 			email: {
+				required: true,
 				email: true
+			},
+			fechaNacimiento: {
+				required: true,
+				date: true
+			}, 
+			pass: {
+				required: true,
+				pwd: true,
+				minlength: 6
+			},
+			newPassword: {
+				required: true,
+				pwd: true,
+				minlength: 6
+			},
+			newPassword2: {
+				required: true,
+				equalTo: '#newPassword'
 			}
-		}
-	});
-
-	$('#updateSubmit').on('click', function (ev){
-		alert( $('#newPassword').val() + ' + ' + $('#newPassword2').val() );
-		if( $('#newPassword').val() !== $('#newPassword2').val() ){
-			ev.preventDefault();
-			alert('introduzca la contrasñe biena');
+		},
+		messages: {
+			pass: {
+				pwd: "La contraseña debe tener al menos 6 caracteres, \
+					una minúscula, una mayúscula y un número."
+			},
+			newPassword: {
+				pwd: "La contraseña debe tener al menos 6 caracteres, \
+					una minúscula, una mayúscula y un número."
+			}
 		}
 	});
 
