@@ -233,7 +233,12 @@ $(function() {
 		},
 		rules: {
 			email: {
+				required: true,
 				email: true
+			},
+			fechaNacimiento: {
+				required: true,
+				date: true
 			}
 		}
 	});
