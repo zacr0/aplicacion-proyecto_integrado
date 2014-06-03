@@ -22,6 +22,8 @@ block content
           a(href="#", title='Edita los datos de tu perfil') Editar perfil     
         li
           a(href="/perfil/#{datosUsuario.usuario}/anuncios", title='Ver anuncios publicados') Anuncios publicados
+        li
+          a(href="/perfil/#{datosUsuario.usuario}/editar/asignaturas", title='Edita las asignaturas que impartes') Editar asignaturas
 
     section.text-center.well
       .row
@@ -76,7 +78,7 @@ block content
               label(for='newPassword2')
                 strong Confirmación de contraseña:
               input.form-control(id='newPassword2',name='newPassword2',placeholder='Nueva contraseña (confirmación)',type='password', required).text-center
-            input(type='submit', value='Actualizar datos', id='updateSubmit').btn.btn-block.btn-primary
+            input(type='submit', value='Actualizar datos').btn.btn-block.btn-primary
 
 
     include footer
