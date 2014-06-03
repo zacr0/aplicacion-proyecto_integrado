@@ -117,11 +117,11 @@ var Usuario = require('../models/Usuario'),
                 	var fileToDelete = __dirname + '/../public/img/' + req.session.usuario + '.';
                 	if(req.files.image.mimetype === 'image/png'){
                 		console.log(fileToDelete + 'jpg');
-						fs.exists(fileToDelete + 'png', function (exists) {
+						fs.exists(fileToDelete + 'png' || fileToDelete + 'jpeg', function (exists) {
 						    if(exists) {
-						    	var tempFile = fs.openSync(fileToDelete + 'jpg', 'r');
+						    	var tempFile = fs.openSync(fileToDelete + 'jpg' || fileToDelete + 'jpeg', 'r');
 								fs.closeSync(tempFile);
-								fs.unlinkSync(fileToDelete + 'jpg');
+								fs.unlinkSync(fileToDelete + 'jpg' || fileToDelete + 'jpeg');
 						    }
 					    }); // fs.exist
                 	}
