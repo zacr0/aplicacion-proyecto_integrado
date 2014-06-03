@@ -22,8 +22,9 @@ block content
           a(href="#", title='Edita los datos de tu perfil') Editar perfil     
         li
           a(href="/perfil/#{datosUsuario.usuario}/anuncios", title='Ver anuncios publicados') Anuncios publicados
-        li
-          a(href="/perfil/#{datosUsuario.usuario}/editar/asignaturas", title='Edita las asignaturas que impartes') Editar asignaturas
+        if (datosUsuario.perfil === 'profesor' && perfilPropio)
+          li
+            a(href="/perfil/#{datosUsuario.usuario}/editar/asignaturas", title='Edita las asignaturas que impartes') Editar asignaturas
 
     section.text-center.well
       .row

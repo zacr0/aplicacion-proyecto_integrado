@@ -253,9 +253,11 @@ var Usuario = require('../models/Usuario'),
 		// Pagina de edicion de asignaturas
 		app.get('/perfil/:usuario/editar/asignaturas', function (req, res) {
 			if (req.session.usuario != undefined) {
-				if (req.session.usuario === req.params.usuario) {
+				if (req.session.usuario === req.params.usuario &&
+					req.session.perfil === 'profesor') {
 					// Consulta preliminar, hay que obtener que
-					// asignaturas imparte actualmente el profesor
+					// asignaturas imparte actualmente el profesor junto
+					// con el resto de asignaturas
 					var queryAsignaturas = Asignatura.find().sort( { "nombre": 1 } );
 					queryAsignaturas.exec(function (err, asignaturas) {
 						if (err) {
@@ -278,7 +280,8 @@ var Usuario = require('../models/Usuario'),
 		// Actualizacion de asignaturas impartidas
 		app.post('/perfil/:usuario/editar/asignaturas', function (req, res) {
 			if (req.session.usuario != undefined) {
-				if (req.session.usuario === req.params.usuario) {
+				if (req.session.usuario === req.params.usuario &&
+					req.session.perfil === 'profesor') {
 					// Consulta de actualizacion de asignaturas
 				} else {
 					res.redirect('/perfil');
