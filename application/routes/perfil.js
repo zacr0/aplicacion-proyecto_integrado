@@ -74,7 +74,7 @@ var Usuario = require('../models/Usuario'),
 		app.get('/perfil/:usuario/editar', function (req, res) {
 			if (req.session.usuario != undefined) {
 				if (req.session.usuario === req.params.usuario) {
-					// Faltan campos por cargar
+					
 					Usuario.findOne({usuario: req.params.usuario}, function (err, user) {
 						if (err) {
 							return console.log(err);
@@ -116,7 +116,8 @@ var Usuario = require('../models/Usuario'),
                 	});
                 } else {
                 	var fileToDelete = __dirname + '/../public/img/' + req.session.usuario + '.';
-                	if(req.files.image.mimetype === 'image/png'){
+                	
+                	if (req.files.image.mimetype === 'image/png'){
                 		console.log(fileToDelete + 'jpg');
 						fs.exists(fileToDelete + 'png' || fileToDelete + 'jpeg', function (exists) {
 						    if(exists) {
@@ -126,7 +127,8 @@ var Usuario = require('../models/Usuario'),
 						    }
 					    }); // fs.exist
                 	}
-                	if(req.files.image.mimetype === 'image/jpeg'){
+
+                	if (req.files.image.mimetype === 'image/jpeg'){
                 		console.log(fileToDelete + 'png');
                 		fs.exists(fileToDelete + 'png', function (exists) {
 						    if(exists) {
@@ -136,6 +138,7 @@ var Usuario = require('../models/Usuario'),
 						    }
 					    }); // fs.exist
                 	}
+                	
                 	fs.readFile(req.files.image.path, function (err, data) {
                 		var newPath = __dirname + '/../public/img/' + req.session.usuario + '.' + req.files.image.extension;
                 		console.log('data: ' + data.length);
@@ -253,17 +256,24 @@ var Usuario = require('../models/Usuario'),
 		// Pagina de edicion de asignaturas
 		app.get('/perfil/:usuario/editar/asignaturas', function (req, res) {
 			if (req.session.usuario != undefined) {
-				if (req.session.usuario === req.params.usuario) {
-					// Consulta preliminar, hay que obtener que
-					// asignaturas imparte actualmente el profesor
+				if (req.session.usuario === req.params.usuario &&
+					req.session.perfil === 'profesor') {
 					var queryAsignaturas = Asignatura.find().sort( { "nombre": 1 } );
 					queryAsignaturas.exec(function (err, asignaturas) {
 						if (err) {
 							return console.log(err);
 						} else {
-							res.render('editar-profesor', {usuario: req.session.usuario,
-								asignaturas: asignaturas
-							});
+							Usuario.findOne({usuario: req.params.usuario}, function (err, user) {
+								if (err) {
+									return console.log(err);
+								} else {
+									console.log(user.asignaturasProfesor);
+									res.render('editar-profesor', {usuario: req.session.usuario,
+										datosUsuario: user,
+										asignaturas: asignaturas
+									});
+								}
+							})
 						}
 					})
 				} else {
@@ -278,21 +288,22 @@ var Usuario = require('../models/Usuario'),
 		// Actualizacion de asignaturas impartidas
 		app.post('/perfil/:usuario/editar/asignaturas', function (req, res) {
 			if (req.session.usuario != undefined) {
-				if (req.session.usuario === req.params.usuario) {
-					//console.log(req.body.asignatura);
-					Usuario.update({usuario: req.params.usuario}, {$set: {asignaturasProfesor: req.body.asignatura}}, function (err, data) {
-        				if (err) { throw err;}
-        				Usuario.findOne({usuario: req.params.usuario}, function (err, user) {
-        					if (err) {
-        						return console.log(err);
-        					} else {
-                				res.render('editar', {usuario: req.session.usuario,
-                					datosUsuario: user,
-                					success: true
-                				});
-        					}
-        				})
-                	}); // Usuario
+				if (req.session.usuario === req.params.usuario &&
+					req.session.perfil === 'profesor') {
+						Usuario.update({usuario: req.params.usuario},{$set: {asignaturasProfesor: req.body.asignatura}}, function (err, data) {
+	        				if (err) { throw err;}
+	        				Usuario.findOne({usuario: req.params.usuario}, function (err, user) {
+	        					if (err) {
+	        						return console.log(err);
+	        					} else {
+	        						console.log(user.asignaturasProfesor);
+	                				res.render('editar-profesor', {usuario: req.session.usuario,
+	                					datosUsuario: user,
+	                					success: true
+	                				});
+	        					}
+	        				})
+	                	}); // Usuario
 				} else {
 					res.redirect('/perfil');
 				}

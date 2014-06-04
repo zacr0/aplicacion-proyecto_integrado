@@ -22,8 +22,9 @@ block content
           a(href="#", title='Edita los datos de tu perfil') Editar perfil     
         li
           a(href="/perfil/#{datosUsuario.usuario}/anuncios", title='Ver anuncios publicados') Anuncios publicados
-        li
-          a(href="/perfil/#{datosUsuario.usuario}/editar/asignaturas", title='Edita las asignaturas que impartes') Editar asignaturas
+        if (datosUsuario.perfil === 'profesor')
+          li
+            a(href="/perfil/#{datosUsuario.usuario}/editar/asignaturas", title='Edita las asignaturas que impartes') Editar asignaturas impartidas
 
     section.text-center.well
       .row
@@ -50,7 +51,7 @@ block content
             .form-group.has-feedback
               input(type="file", id="image", name="image", accept='image/jpeg, image/png',required).form-control
             p.help-block
-              | Formatos de imagen permitidos: .png, .jpg
+              | Formatos permitidos: .png, .jpg
             p.help-block
               | Peso máximo: 200KB
             input(type="submit" value="Actualizar imagen").btn.btn-block.btn-primary

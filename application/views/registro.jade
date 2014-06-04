@@ -4,6 +4,7 @@ block title
   title SocialGCap - Registro
 
 block custom-styles
+  link(rel='stylesheet', href='/stylesheets/style.css')
   link(rel='stylesheet', href='/stylesheets/datepicker.css')
 
 block content
@@ -79,7 +80,7 @@ block content
                       //- (Este campo aparece solo si el usuario es un profesor, sera obligatorio)
                       //- (Las opciones de este campo son resultado de una consulta a asignaturas)
                       p.lead ¿Qué asignaturas impartes?
-                      - each asignatura in asignaturaData
+                      each asignatura in asignaturaData
                         label(for="asignatura")
                           input(type='checkbox',name='asignatura', value="#{asignatura.nombre}")
                           |  #{asignatura.nombre}
