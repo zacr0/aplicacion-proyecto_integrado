@@ -11,8 +11,8 @@ var express = require('express'),
     server = require('http').Server(app),
     io = require('socket.io')(server),
     mongoose = require('mongoose'),
-    //db = mongoose.connect('mongodb://pablo:pablo@ds043388.mongolab.com:43388/proyectointegrado'),
-    db = mongoose.connect('mongodb://localhost:27017/proyectointegrado'),
+    db = mongoose.connect('mongodb://pablo:pablo@ds043388.mongolab.com:43388/proyectointegrado'),
+    //db = mongoose.connect('mongodb://localhost:27017/proyectointegrado'),
     async = require('async'),
     admin_routes = require('./routes/admin_routes'); // Module for routing
 
@@ -30,6 +30,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({ secret: 'keyboard cat', cookie: {
     maxAge:  2 * 3600000
 }}))
+// Compresion de archivos desde el servidor
 app.use(compress());
 
 // Routing
