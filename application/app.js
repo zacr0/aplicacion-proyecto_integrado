@@ -6,7 +6,6 @@ var express = require('express'),
     cookieParser = require('cookie-parser'),
     bodyParser = require('body-parser'),
     session = require('express-session'),
-    compress = require('compression'),
     app = express(),
     server = require('http').Server(app),
     io = require('socket.io')(server),
@@ -22,7 +21,6 @@ app.set('view engine', 'jade');
 app.use(multer());
 app.use(favicon());
 app.use(logger('dev'));
-app.use(compress());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser('t999YE72wJ'));
