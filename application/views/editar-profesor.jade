@@ -39,16 +39,15 @@ block content
               | &times;
             strong 
               | ¡Todo correcto! 
-            p Asignturas actualizadas correctamente.
+            p Asignaturas actualizadas correctamente.
       .row
-        //- Estilos preliminares
         form(id='form-asignaturas',method='post', action='/perfil/#{usuario}/editar/asignaturas')
-          //- Falta marcar las que ya tiene el profesor actualmente
           each asignatura in asignaturas
-            label(for="asignatura")
+            if datosUsuario.asignaturasProfesor.length > 0
               - var checked = datosUsuario.asignaturasProfesor.indexOf(asignatura.nombre) !=-1
+            label(for="asignatura")
               input(type='checkbox',name='asignatura', value="#{asignatura.nombre}", checked=checked)
-              |  #{asignatura.nombre}
+              |  #{asignatura.nombre}.
             br
           input(type='submit', value='Actualizar asignaturas').btn.btn-block.btn-primary
 
