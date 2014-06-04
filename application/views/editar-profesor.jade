@@ -42,7 +42,7 @@ block content
             p Asignturas actualizadas correctamente.
       .row
         //- Estilos preliminares
-        form(id='form-asignaturas',method='post')
+        form(id='form-asignaturas',method='post', action='/perfil/#{usuario}/editar/asignaturas')
           //- Falta marcar las que ya tiene el profesor actualmente
           each asignatura in asignaturas
             label(for="asignatura")

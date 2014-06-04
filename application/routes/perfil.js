@@ -285,7 +285,19 @@ var Usuario = require('../models/Usuario'),
 			if (req.session.usuario != undefined) {
 				if (req.session.usuario === req.params.usuario &&
 					req.session.perfil === 'profesor') {
-					// Consulta de actualizacion de asignaturas
+						Usuario.update({usuario: req.params.usuario}, {$set: {asignaturasProfesor: req.body.asignatura}}, function (err, data) {
+	        				if (err) { throw err;}
+	        				Usuario.findOne({usuario: req.params.usuario}, function (err, user) {
+	        					if (err) {
+	        						return console.log(err);
+	        					} else {
+	                				res.render('editar', {usuario: req.session.usuario,
+	                					datosUsuario: user,
+	                					success: true
+	                				});
+	        					}
+	        				})
+	                	}); // Usuario
 				} else {
 					res.redirect('/perfil');
 				}
