@@ -169,6 +169,7 @@ $(function() {
 			},
 			cuerpo: {
 				required: true,
+				minlength: 10,
 				maxlength: 200
 			}
 		}

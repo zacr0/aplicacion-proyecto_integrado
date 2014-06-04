@@ -291,7 +291,7 @@ var Usuario = require('../models/Usuario'),
 	        					if (err) {
 	        						return console.log(err);
 	        					} else {
-	                				res.render('editar', {usuario: req.session.usuario,
+	                				res.render('editar-profesor', {usuario: req.session.usuario,
 	                					datosUsuario: user,
 	                					success: true
 	                				});

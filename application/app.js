@@ -30,7 +30,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({ secret: 'keyboard cat', cookie: {
     maxAge:  2 * 3600000
 }}))
-//app.use(compress());
+app.use(compress());
 
 // Routing
 admin_routes(app);
