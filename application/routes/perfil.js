@@ -258,17 +258,22 @@ var Usuario = require('../models/Usuario'),
 			if (req.session.usuario != undefined) {
 				if (req.session.usuario === req.params.usuario &&
 					req.session.perfil === 'profesor') {
-					// Consulta preliminar, hay que obtener que
-					// asignaturas imparte actualmente el profesor junto
-					// con el resto de asignaturas
 					var queryAsignaturas = Asignatura.find().sort( { "nombre": 1 } );
 					queryAsignaturas.exec(function (err, asignaturas) {
 						if (err) {
 							return console.log(err);
 						} else {
-							res.render('editar-profesor', {usuario: req.session.usuario,
-								asignaturas: asignaturas
-							});
+							Usuario.findOne({usuario: req.params.usuario}, function (err, user) {
+								if (err) {
+									return console.log(err);
+								} else {
+									console.log(user.asignaturasProfesor);
+									res.render('editar-profesor', {usuario: req.session.usuario,
+										datosUsuario: user,
+										asignaturas: asignaturas
+									});
+								}
+							})
 						}
 					})
 				} else {
@@ -285,12 +290,13 @@ var Usuario = require('../models/Usuario'),
 			if (req.session.usuario != undefined) {
 				if (req.session.usuario === req.params.usuario &&
 					req.session.perfil === 'profesor') {
-						Usuario.update({usuario: req.params.usuario}, {$set: {asignaturasProfesor: req.body.asignatura}}, function (err, data) {
+						Usuario.update({usuario: req.params.usuario},{$set: {asignaturasProfesor: req.body.asignatura}}, function (err, data) {
 	        				if (err) { throw err;}
 	        				Usuario.findOne({usuario: req.params.usuario}, function (err, user) {
 	        					if (err) {
 	        						return console.log(err);
 	        					} else {
+	        						console.log(user.asignaturasProfesor);
 	                				res.render('editar-profesor', {usuario: req.session.usuario,
 	                					datosUsuario: user,
 	                					success: true

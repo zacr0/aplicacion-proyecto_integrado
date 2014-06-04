@@ -46,10 +46,10 @@ block content
           //- Falta marcar las que ya tiene el profesor actualmente
           each asignatura in asignaturas
             label(for="asignatura")
-              input(type='checkbox',name='asignatura', value="#{asignatura.nombre}")
+              - var checked = datosUsuario.asignaturasProfesor.indexOf(asignatura.nombre) !=-1
+              input(type='checkbox',name='asignatura', value="#{asignatura.nombre}", checked=checked)
               |  #{asignatura.nombre}
             br
           input(type='submit', value='Actualizar asignaturas').btn.btn-block.btn-primary
 
     include footer
-    

@@ -81,8 +81,8 @@ var Anuncio = require('../models/Anuncio'),
 		}
 	}); // /post/anuncios
 	
+	// Eliminacion de anuncios
 	app.post('/anuncios/:id/eliminar', function (req, res){
-
 		if (req.session.usuario != undefined) {
 			Anuncio.findByIdAndRemove(req.params.id, function (err, anuncio) {
 				console.log('Va a eliminar el anuncio:' + anuncio);
