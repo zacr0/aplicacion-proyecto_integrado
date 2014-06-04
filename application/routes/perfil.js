@@ -2,6 +2,7 @@ var Usuario = require('../models/Usuario'),
 	Curso = require('../models/Curso'),
 	Promocion = require('../models/Promocion'),
 	Anuncio = require('../models/Anuncio'),
+	Asignatura = require('../models/Asignatura'),
 	fs = require('fs'),
 	nombrePromocion,
 	nombreCurso,
@@ -69,11 +70,11 @@ var Usuario = require('../models/Usuario'),
 			}
 		});
 	
-		// Edicion del perfil
+		// Pagina de edicion del perfil
 		app.get('/perfil/:usuario/editar', function (req, res) {
 			if (req.session.usuario != undefined) {
 				if (req.session.usuario === req.params.usuario) {
-					// Faltan campos por cargar
+					
 					Usuario.findOne({usuario: req.params.usuario}, function (err, user) {
 						if (err) {
 							return console.log(err);
@@ -115,7 +116,8 @@ var Usuario = require('../models/Usuario'),
                 	});
                 } else {
                 	var fileToDelete = __dirname + '/../public/img/' + req.session.usuario + '.';
-                	if(req.files.image.mimetype === 'image/png'){
+                	
+                	if (req.files.image.mimetype === 'image/png'){
                 		console.log(fileToDelete + 'jpg');
 						fs.exists(fileToDelete + 'png' || fileToDelete + 'jpeg', function (exists) {
 						    if(exists) {
@@ -125,7 +127,8 @@ var Usuario = require('../models/Usuario'),
 						    }
 					    }); // fs.exist
                 	}
-                	if(req.files.image.mimetype === 'image/jpeg'){
+
+                	if (req.files.image.mimetype === 'image/jpeg'){
                 		console.log(fileToDelete + 'png');
                 		fs.exists(fileToDelete + 'png', function (exists) {
 						    if(exists) {
@@ -135,6 +138,7 @@ var Usuario = require('../models/Usuario'),
 						    }
 					    }); // fs.exist
                 	}
+                	
                 	fs.readFile(req.files.image.path, function (err, data) {
                 		var newPath = __dirname + '/../public/img/' + req.session.usuario + '.' + req.files.image.extension;
                 		console.log('data: ' + data.length);
@@ -163,21 +167,30 @@ var Usuario = require('../models/Usuario'),
 		
 		// Actualizacion de datos de usuario
 		app.post('/perfil/:usuario/editar/datos', function (req, res) {
-			Usuario.update( { usuario : req.params.usuario }, { $set : { email : req.body.email , fechaNacimiento: req.body.fechaNacimiento } },
-			function (err, data) {
-				if(err) { return console.log(err); }
-				Usuario.findOne({usuario: req.params.usuario}, function (err, user) {
-					if (err) {
-						return console.log(err);
-					} else {
-        				res.render('editar', {usuario: req.session.usuario,
-        					datosUsuario: user,
-        					success: true
-        				});
-					}
-				}); // Usuario.findOne
-			}); // Usuario.update
-		});
+			Usuario.findOne({usuario : req.params.usuario}, function (err, user){
+				if(err) {
+					return console.log(err);
+				}
+				
+				if (req.body.pass === user.pass){
+					Usuario.update( { usuario : req.params.usuario }, { $set : { email : req.body.email , fechaNacimiento: req.body.fechaNacimiento, pass: req.body.newPassword } },
+						function (err, data) {
+							if(err) {
+								return console.log(err);
+							}
+			        		res.render('editar', {usuario: req.session.usuario,
+			        			datosUsuario: user,
+			        			success: true
+			        		});
+					}); // Usuario.update
+				} else {
+					res.render('editar', {usuario: req.session.usuario,
+    					datosUsuario: user,
+    					error: 'La contraseña actual introducida no es correcta. Inténtelo de nuevo.'
+		        	});
+				} // else
+			}); // Usuario
+		}); // app.post
 
 		// Visualizacion de anuncios publicados por el usuario
 		app.get('/perfil/:usuario/anuncios', function (req, res) {
@@ -205,7 +218,9 @@ var Usuario = require('../models/Usuario'),
 									res.render('anuncios-perfil', {usuario: req.session.usuario,
 										perfilDe: req.params.usuario,
 										perfilPropio: perfilPropio,
-										anuncios: anuncios});
+										anuncios: anuncios,
+										perfil: req.session.perfil
+									});
 								}
 							});
 						} else {
@@ -237,6 +252,75 @@ var Usuario = require('../models/Usuario'),
 					'para acceder a SocialGCap.'});
 			}
 		});
+
+		// Pagina de edicion de asignaturas
+		app.get('/perfil/:usuario/editar/asignaturas', function (req, res) {
+			if (req.session.usuario != undefined) {
+				if (req.session.usuario === req.params.usuario &&
+					req.session.perfil === 'profesor') {
+					var queryAsignaturas = Asignatura.find().sort( { "nombre": 1 } );
+					queryAsignaturas.exec(function (err, asignaturas) {
+						if (err) {
+							return console.log(err);
+						} else {
+							Usuario.findOne({usuario: req.params.usuario}, function (err, user) {
+								if (err) {
+									return console.log(err);
+								} else {
+									res.render('editar-profesor', {usuario: req.session.usuario,
+										datosUsuario: user,
+										asignaturas: asignaturas
+									});
+								}
+							})
+						}
+					})
+				} else {
+					res.redirect('/perfil');
+				}
+			} else {
+				res.render('login', {error: 'Debes iniciar sesión ' +
+						'para acceder a SocialGCap.'});
+			}
+		});
+
+		// Actualizacion de asignaturas impartidas
+		app.post('/perfil/:usuario/editar/asignaturas', function (req, res) {
+			if (req.session.usuario != undefined) {
+				if (req.session.usuario === req.params.usuario &&
+					req.session.perfil === 'profesor') {
+						Usuario.update({usuario: req.params.usuario},{$set: {asignaturasProfesor: req.body.asignatura || []}}, function (err, data) {
+	        				if (err) { throw err;}
+	        				Usuario.findOne({usuario: req.params.usuario}, function (err, user) {
+	        					if (err) {
+	        						return console.log(err);
+	        					} else {
+	        						console.log(user.asignaturasProfesor);
+	        						var queryAsignaturas = Asignatura.find().sort( { "nombre": 1 } );
+	        						queryAsignaturas.exec(function (err, asignaturas) {
+	        							if (err) {
+	        								return console.log(err);
+	        							} else {
+	        								res.render('editar-profesor', {usuario: req.session.usuario,
+			                					datosUsuario: user,
+			                					asignaturas: asignaturas,
+			                					success: true
+			                				});
+	        							}
+	        						})
+	                				
+	        					}
+	        				})
+	                	}); // Usuario
+				} else {
+					res.redirect('/perfil');
+				}
+			} else {
+				res.render('login', {error: 'Debes iniciar sesión ' +
+						'para acceder a SocialGCap.'});
+			}
+		});
 	};
+
 
 module.exports = route;

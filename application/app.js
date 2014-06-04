@@ -6,6 +6,7 @@ var express = require('express'),
     cookieParser = require('cookie-parser'),
     bodyParser = require('body-parser'),
     session = require('express-session'),
+    compress = require('compression'),
     app = express(),
     server = require('http').Server(app),
     io = require('socket.io')(server),
@@ -29,6 +30,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({ secret: 'keyboard cat', cookie: {
     maxAge:  2 * 3600000
 }}))
+// Compresion gzip de archivos desde el servidor
+app.use(compress());
 
 // Routing
 admin_routes(app);
@@ -64,16 +67,16 @@ app.use(function(err, req, res, next) {
     });
 });
 
-// socket.io logic file
-require('./io')(io);
-
 // set timezone
 process.env.TZ = 'UTC+2';
+
+// socket.io logic file
+require('./io')(io);
 
 // Starts server
 server.listen(3000);
 //app.listen(3000); // port to listen
-console.log('Server running on localhost:3000');
+console.log('Server running on localhost:3000. Mode: ' + process.env.NODE_ENV);
 console.log('Conectando a MongoDB...');
 
 module.exports = app;

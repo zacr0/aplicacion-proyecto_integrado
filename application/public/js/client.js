@@ -106,7 +106,6 @@ $(function() {
 			fechanacimiento: {
 				date: true
 			}
-			// Validacion de promocion/curso/asignaturas:
 		},
 		messages: {
 			usuario: {
@@ -114,6 +113,10 @@ $(function() {
 					y números, y una longitud 3 a 12 caracteres."
 			},
 			pass: {
+				pwd: "La contraseña debe tener al menos 6 caracteres, \
+					una minúscula, una mayúscula y un número."
+			},
+			newPass: {
 				pwd: "La contraseña debe tener al menos 6 caracteres, \
 					una minúscula, una mayúscula y un número."
 			},
@@ -166,6 +169,7 @@ $(function() {
 			},
 			cuerpo: {
 				required: true,
+				minlength: 10,
 				maxlength: 200
 			}
 		}
@@ -233,7 +237,36 @@ $(function() {
 		},
 		rules: {
 			email: {
+				required: true,
 				email: true
+			},
+			fechaNacimiento: {
+				required: true,
+				date: true
+			}, 
+			pass: {
+				required: true,
+				pwd: true,
+				minlength: 6
+			},
+			newPassword: {
+				required: true,
+				pwd: true,
+				minlength: 6
+			},
+			newPassword2: {
+				required: true,
+				equalTo: '#newPassword'
+			}
+		},
+		messages: {
+			pass: {
+				pwd: "La contraseña debe tener al menos 6 caracteres, \
+					una minúscula, una mayúscula y un número."
+			},
+			newPassword: {
+				pwd: "La contraseña debe tener al menos 6 caracteres, \
+					una minúscula, una mayúscula y un número."
 			}
 		}
 	});

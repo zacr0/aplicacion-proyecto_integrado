@@ -1,7 +1,19 @@
 $(function() {
 	var nickname = $('#nombreUsuario').text();
-
 	var socket = io();
+
+	// Buscador de salas
+	$('#buscar-salas').keyup(function(){
+		var filtro = $(this).val();
+
+		$('#lista-salas ul li').each(function(){
+			if ($(this).text().search(new RegExp(filtro, "i")) < 0) {
+				$(this).hide();
+			} else {
+				$(this).show();
+			}
+		});
+	});
 
 	// Envia nombre de usuario
 	socket.emit('nickname', nickname);

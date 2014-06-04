@@ -35,6 +35,9 @@ block content
             a(href="/perfil/#{usuario}/editar", title='Edita los datos de tu perfil') Editar perfil     
         li.active
           a(href="#", title='Ver anuncios publicados') Anuncios publicados
+        if (perfil === 'profesor' && perfilPropio)
+          li
+            a(href="/perfil/#{usuario}/editar/asignaturas", title='Edita las asignaturas que impartes') Editar asignaturas impartidas
 
     section.well
       .row
@@ -66,3 +69,4 @@ block content
 
 
     include footer
+    
