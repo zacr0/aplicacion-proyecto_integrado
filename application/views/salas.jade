@@ -28,9 +28,10 @@ block content
             strong Usuarios en la sala:
             #lista-usuarios
               ul.list-unstyled
-              //- Aqui va la lista de usuarios existentes en la sala
+              //- Aqui carga la lista de usuarios existentes en la sala
           .col-xs-4.col-sm-2.col-md-2.col-lg-2
             strong Salas:
+            input(type="text",id="buscar-salas", placeholder="Buscar sala...").form-control.input-sm
             #lista-salas
               ul.list-unstyled
                 if promociones
@@ -57,5 +58,6 @@ block content
               input.btn.btn-block.btn-success(type='submit', value="Enviar")
 
     include footer
+
 block custom-scripts
   script(src='/js/salas.js')

@@ -22,7 +22,6 @@ app.set('view engine', 'jade');
 app.use(multer());
 app.use(favicon());
 app.use(logger('dev'));
-app.use(compress());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser('t999YE72wJ'));
@@ -31,6 +30,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({ secret: 'keyboard cat', cookie: {
     maxAge:  2 * 3600000
 }}))
+//app.use(compress());
 
 // Routing
 admin_routes(app);
@@ -66,16 +66,16 @@ app.use(function(err, req, res, next) {
     });
 });
 
-// socket.io logic file
-require('./io')(io);
-
 // set timezone
 process.env.TZ = 'UTC+2';
+
+// socket.io logic file
+require('./io')(io);
 
 // Starts server
 server.listen(3000);
 //app.listen(3000); // port to listen
-console.log('Server running on localhost:3000');
+console.log('Server running on localhost:3000. Mode: ' + process.env.NODE_ENV);
 console.log('Conectando a MongoDB...');
 
 module.exports = app;
