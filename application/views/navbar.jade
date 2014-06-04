@@ -20,7 +20,7 @@ nav(role="navigation").navbar.navbar-inverse.navbar-fixed-top
           ul.nav.navbar-nav.navbar-right
             li(class=(activo==='perfil' ? 'active' : ''))
               a(href="/perfil/" + usuario, id="perfilusuario") 
-                | Usuario: 
+                strong Usuario: 
                 span#nombreUsuario= usuario
             li
               a(href="/logout").btn.btn-danger Cerrar sesión
