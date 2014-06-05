@@ -21,7 +21,7 @@ $(function() {
 
 	// Envio de mensajes
 	$('#form-mensaje').submit(function (e) {
-		socket.emit('message', $('#mensaje').val() );
+		socket.emit('message', $('#mensaje').val());
 		$('#mensaje').val('');
 		$('#chat').animate({ scrollTop: $(document).height() }, 1000);
 		return false;

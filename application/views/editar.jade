@@ -56,6 +56,7 @@ block content
               | Peso máximo: 200KB
             input(type="submit" value="Actualizar imagen").btn.btn-block.btn-primary
         .col-md-6
+          hr.visible-xs.visible-sm
           h3 Datos de usuario
           form(id='form-datos', action='/perfil/' + usuario + '/editar/datos', method='post',accept-charset='UTF-8')
             .form-group.has-feedback
@@ -70,15 +71,15 @@ block content
             .form-group.has-feedback
               label(for='pass')
                 strong Contraseña actual:
-              input.form-control(id='pass',name='pass',placeholder='Contraseña actual',type='password', required).text-center
-              .form-group.has-feedback
+              input(id='pass',name='pass',placeholder='Contraseña actual',type='password', required).form-control.text-center
+            .form-group.has-feedback
               label(for='newPassword')
                 strong Contraseña nueva:
-              input.form-control(id='newPassword',name='newPassword',placeholder='Nueva contraseña',type='password', required).text-center
-              .form-group.has-feedback
+              input(id='newPassword',name='newPassword',placeholder='Nueva contraseña',type='password', required).form-control.text-center
+            .form-group.has-feedback
               label(for='newPassword2')
                 strong Confirmación de contraseña:
-              input.form-control(id='newPassword2',name='newPassword2',placeholder='Nueva contraseña (confirmación)',type='password', required).text-center
+              input(id='newPassword2',name='newPassword2',placeholder='Nueva contraseña (confirmación)',type='password', required).form-control.text-center
             input(type='submit', value='Actualizar datos').btn.btn-block.btn-primary
 
 
