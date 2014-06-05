@@ -3,6 +3,7 @@ var Usuario = require('../models/Usuario'),
     Promocion = require('../models/Promocion'),
     Asignatura = require('../models/Asignatura'),
     async = require('async'),
+    crypto = require('crypto'),
     user,
     cursoData,
     promocionData,
@@ -23,7 +24,11 @@ var route = function (app) {
 	});
 
     app.post('/login', function(req, res) {
-        Usuario.findOne({usuario: req.body.usuario, pass: req.body.pass},
+        var hash = crypto
+          .createHash('md5')
+          .update(req.body.pass)
+          .digest("hex");
+        Usuario.findOne({usuario: req.body.usuario, pass: hash},
          function(err, user) {
             if (err) {
                 console.log('Error al buscar usuario en la BD');
@@ -98,9 +103,14 @@ var route = function (app) {
                 });
 
             }, function (callback) {
+                var hash = crypto
+                  .createHash('md5')
+                  .update(req.body.pass)
+                  .digest("hex");
+
                 user = new Usuario();
                 user.usuario = req.body.usuario;
-                user.pass = req.body.pass;
+                user.pass = hash;
                 // Foto por defecto del usuario
                 user.foto = '/img/avatar_default.jpg';
                 user.nombre = req.body.nombre;
