@@ -21,7 +21,7 @@ var Usuario = require('../models/Usuario'),
 					'para acceder a SocialGCap.'});
 			}
 
-		}); // /usuarios
+		}); // app.get/usuarios
 
 		app.get('/usuarios/alumnos', function(req, res) {
 
@@ -40,7 +40,7 @@ var Usuario = require('../models/Usuario'),
 					'para acceder a SocialGCap.'});
 			}
 
-		}); // /usuarios/alumnos
+		}); // app.get/usuarios/alumnos
 
 		app.get('/usuarios/profesores', function(req, res) {
 
@@ -59,7 +59,7 @@ var Usuario = require('../models/Usuario'),
 					'para acceder a SocialGCap.'});
 			}
 
-		}); // /usuarios/profesores
+		}); // app.get/usuarios/profesores
 
 		app.get('/usuarios/promociones', function(req, res) {
 
@@ -70,7 +70,6 @@ var Usuario = require('../models/Usuario'),
 					if (err) {
 						return console.log(err);
 					} else {
-						console.log(dataPromocion);
 						res.render('usuarios', {usuario: req.session.usuario,
 							promociones: dataPromocion,
 							ver: 'promociones'});
@@ -81,7 +80,7 @@ var Usuario = require('../models/Usuario'),
 					'para acceder a SocialGCap.'});
 			}
 
-		}); // /usuarios/promociones
+		}); // app.get/usuarios/promociones
 
 		app.get('/usuarios/promociones/:promocion', function(req, res) {
 
@@ -107,7 +106,7 @@ var Usuario = require('../models/Usuario'),
 					'para acceder a SocialGCap.'});
 			}
 
-		}); // /usuarios/promociones
+		}); // app.get/usuarios/promociones/promocion
 
 		app.post('/usuarios/buscar', function (req, res) {
 			
@@ -140,7 +139,7 @@ var Usuario = require('../models/Usuario'),
 				res.render('login', {error: 'Debes iniciar sesión ' +
 					'para acceder a SocialGCap.'});
 			}
-		}); // /usuarios/buscador
+		}); // app.post/usuarios/buscar
 	}
 
 module.exports = route;

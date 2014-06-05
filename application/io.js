@@ -114,7 +114,7 @@ io.on('connection', function (socket) {
             // Elimina al usuario del array al desconectarse
             console.log('Usuario desconectado: ' + socket.id);
             io.in(socket.room).emit('info', socket.nickname + ' se ha desconectado.');
-            // Actualize los arrays
+            // Actualiza los arrays
             users.splice(user, 1);
             usersRooms.splice(user,1);
             // Manda la lista de los usuarios a la sala anterior

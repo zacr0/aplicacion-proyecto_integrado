@@ -69,7 +69,7 @@ var Promocion = require('../models/Promocion'),
 					'para acceder a SocialGCap.'});
 			}
 
-		});
+		}); // app.get/salas
 	}
 
 module.exports = route;

@@ -1,4 +1,5 @@
 $(function() {
+	// Obtencion del nick de usuario (desde el navbar)
 	var nickname = $('#nombreUsuario').text();
 	var socket = io();
 

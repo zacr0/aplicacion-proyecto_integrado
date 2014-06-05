@@ -18,21 +18,22 @@ block content
       .container-fluid
         .row
           #sala-actual
-            //-Aqui se carga el nombre de la sala actual
+            //- Nombre de la sala actual
             strong Estás en la sala: 
             span#nombre-sala 
         .row
           #chat.col-xs-8.col-sm-10.col-md-10.col-lg-10.well.well-sm
-            //-Aqui saldrian los mensajes enviados dentro de la sala
+            //- Mensajes enviados dentro de la sala actual
           .col-xs-4.col-sm-2.col-md-2.col-lg-2
             strong Usuarios en la sala:
             #lista-usuarios
               ul.list-unstyled
-              //- Aqui carga la lista de usuarios existentes en la sala
+              //- Lista de usuarios existentes en la sala actual
           .col-xs-4.col-sm-2.col-md-2.col-lg-2
             strong Salas:
             input(type="text",id="buscar-salas", placeholder="Buscar sala...").form-control.input-sm
             #lista-salas
+              //- Lista de salas de chat
               ul.list-unstyled
                 if promociones
                   li Promociones:

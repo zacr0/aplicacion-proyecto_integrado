@@ -16,7 +16,7 @@ var Usuario = require('../models/Usuario'),
 				res.render('login', {error: 'Debes iniciar sesión ' +
 					'para acceder a SocialGCap.'});
 			}
-		});
+		}); // app.get/perfil
 
 		app.get('/perfil/:usuario', function (req, res) {
 			// Busca al usuario especificado en la url
@@ -68,7 +68,7 @@ var Usuario = require('../models/Usuario'),
 				res.render('login', {error: 'Debes iniciar sesión ' +
 					'para acceder a SocialGCap.'});
 			}
-		});
+		}); // app.get/perfil/usuario
 	
 		// Pagina de edicion del perfil
 		app.get('/perfil/:usuario/editar', function (req, res) {
@@ -91,7 +91,7 @@ var Usuario = require('../models/Usuario'),
 				res.render('login', {error: 'Debes iniciar sesión ' +
             		'para acceder a SocialGCap.'});
 			}
-		});
+		});  // app.get/perfil/usuario/editar
 
 		// Actualizacion de imagen de perfil
 		app.post('/perfil/:usuario/editar/foto', function (req, res) {
@@ -163,7 +163,7 @@ var Usuario = require('../models/Usuario'),
             	res.render('login', {error: 'Debes iniciar sesión ' +
             		'para acceder a SocialGCap.'});
             }
-        });
+        }); // app.post/perfil/usuario/editar/foto
 		
 		// Actualizacion de datos de usuario
 		app.post('/perfil/:usuario/editar/datos', function (req, res) {
@@ -190,7 +190,7 @@ var Usuario = require('../models/Usuario'),
 		        	});
 				} // else
 			}); // Usuario
-		}); // app.post
+		}); // app.post/editar/datos
 
 		// Visualizacion de anuncios publicados por el usuario
 		app.get('/perfil/:usuario/anuncios', function (req, res) {
@@ -233,7 +233,7 @@ var Usuario = require('../models/Usuario'),
 				res.render('login', {error: 'Debes iniciar sesión ' +
             		'para acceder a SocialGCap.'});
 			}
-		});
+		}); // app.get/usuario/anuncios
 
 		// Eliminacion de anuncios desde perfil del usuario
 		app.post('/perfil/:usuario/anuncios/:id/eliminar', function (req, res){
@@ -251,7 +251,7 @@ var Usuario = require('../models/Usuario'),
 				res.render('login', {error: 'Debes iniciar sesión ' +
 					'para acceder a SocialGCap.'});
 			}
-		});
+		}); // app.post/usuario/anuncios/id/eliminar
 
 		// Pagina de edicion de asignaturas
 		app.get('/perfil/:usuario/editar/asignaturas', function (req, res) {
@@ -282,7 +282,7 @@ var Usuario = require('../models/Usuario'),
 				res.render('login', {error: 'Debes iniciar sesión ' +
 						'para acceder a SocialGCap.'});
 			}
-		});
+		});	// app.get/perfil/usuario/editar/asignaturas
 
 		// Actualizacion de asignaturas impartidas
 		app.post('/perfil/:usuario/editar/asignaturas', function (req, res) {
@@ -319,7 +319,7 @@ var Usuario = require('../models/Usuario'),
 				res.render('login', {error: 'Debes iniciar sesión ' +
 						'para acceder a SocialGCap.'});
 			}
-		});
+		}); // app.post/usuario/editar/asignaturas
 	};
 
 
