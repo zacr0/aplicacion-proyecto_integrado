@@ -76,7 +76,7 @@ require('./io')(io);
 // Starts server
 server.listen(3000);
 //app.listen(3000); // port to listen
-console.log('Server running on localhost:3000. Mode: ' + process.env.NODE_ENV);
+console.log('Server running on localhost:3000. Mode: ' + app.get('env'));
 console.log('Conectando a MongoDB...');
 
 module.exports = app;
