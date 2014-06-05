@@ -68,7 +68,7 @@ var Usuario = require('../models/Usuario'),
 
 				query.exec( function (err, dataPromocion) {
 					if (err) {
-						return console.log(err);
+						return console.error(err);
 					} else {
 						res.render('usuarios', {usuario: req.session.usuario,
 							promociones: dataPromocion,
@@ -89,7 +89,7 @@ var Usuario = require('../models/Usuario'),
 
 				query.exec(function (err, dataPromocion) {
 					if(err){
-	                  return console.log(err);
+	                  return console.error(err);
 					} else {
 						Usuario.find({"id_promocion": dataPromocion},
 										{_id: 0, fechaNacimiento: 0, email: 0, pass: 0, asignaturasProfesor: 0},
@@ -119,7 +119,7 @@ var Usuario = require('../models/Usuario'),
 
 				query.exec(function (err, users) {
 					if (err) {
-						return console.log(err);
+						return console.error(err);
 					}
 
 					if (users) {

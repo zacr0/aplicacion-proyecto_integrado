@@ -69,7 +69,6 @@ block content
             if (datosUsuario.perfil === 'profesor')
               p
                 strong Asignaturas impartidas:
-                - console.log()
                 if (datosUsuario.asignaturasProfesor.length > 0)
                   ul
                     each queue in datosUsuario.asignaturasProfesor

@@ -55,7 +55,7 @@ var Anuncio = require('../models/Anuncio'),
 						Usuario.findOne({'usuario': req.session.usuario}, {_id: 1},
 							function (err, usuario) {
 								if (err) {
-									return console.log(err);
+									return console.error(err);
 								} else {
 									anuncio.id_usuario = usuario;
 									console.log("usuario: " + usuario + ", _id: " + anuncio.id_usuario);
@@ -63,12 +63,12 @@ var Anuncio = require('../models/Anuncio'),
 								}
 							});
 					}, function (callback) {
-						anuncio.save( function(err) {
+						anuncio.save( function (err) {
 							if (err) {
 								req.session.error = err;
 								console.log('Error al publicar anuncio.');
 								res.render('anuncios', {error: req.session.error});
-								return console.log(err);
+								return console.error(err);
 							}
 
 							res.redirect('anuncios');
@@ -88,7 +88,7 @@ var Anuncio = require('../models/Anuncio'),
 					console.log('Va a eliminar el anuncio:' + anuncio);
 
 					if (err) {
-						return console.log(err);
+						return console.error(err);
 					} else {
 						console.log('Anuncio eliminado');
 						res.redirect('/anuncios');

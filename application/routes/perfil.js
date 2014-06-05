@@ -74,10 +74,10 @@ var Usuario = require('../models/Usuario'),
 		app.get('/perfil/:usuario/editar', function (req, res) {
 			if (req.session.usuario != undefined) {
 				if (req.session.usuario === req.params.usuario) {
-					
+
 					Usuario.findOne({usuario: req.params.usuario}, function (err, user) {
 						if (err) {
-							return console.log(err);
+							return console.error(err);
 						} else {
 							res.render('editar', {datosUsuario: user, 
 		            			usuario: req.session.usuario
@@ -106,7 +106,7 @@ var Usuario = require('../models/Usuario'),
                 	// Validacion de tamaño del fichero
                 	Usuario.findOne({usuario: req.params.usuario}, function (err, user) {
                 		if (err) {
-                			return console.log(err)
+                			return console.error(err)
                 		} else {
                 			res.render('editar', {usuario: req.session.usuario,
                 				datosUsuario: user,
@@ -144,10 +144,10 @@ var Usuario = require('../models/Usuario'),
                 		console.log('data: ' + data.length);
                 		fs.writeFile(newPath, data, function (err) {
                 			Usuario.update({usuario: req.session.usuario}, {$set: {foto: '/img/' + req.session.usuario + '.' + req.files.image.extension}}, function (err, data) {
-                				if (err) { throw err;}
+                				if (err) { console.error(err);}
                 				Usuario.findOne({usuario: req.params.usuario}, function (err, user) {
                 					if (err) {
-                						return console.log(err);
+                						return console.error(err);
                 					} else {
 		                				res.render('editar', {usuario: req.session.usuario,
 		                					datosUsuario: user,
@@ -169,14 +169,14 @@ var Usuario = require('../models/Usuario'),
 		app.post('/perfil/:usuario/editar/datos', function (req, res) {
 			Usuario.findOne({usuario : req.params.usuario}, function (err, user){
 				if(err) {
-					return console.log(err);
+					return console.error(err);
 				}
 				
 				if (req.body.pass === user.pass){
 					Usuario.update( { usuario : req.params.usuario }, { $set : { email : req.body.email , fechaNacimiento: req.body.fechaNacimiento, pass: req.body.newPassword } },
 						function (err, data) {
 							if(err) {
-								return console.log(err);
+								return console.error(err);
 							}
 			        		res.render('editar', {usuario: req.session.usuario,
 			        			datosUsuario: user,
@@ -199,7 +199,7 @@ var Usuario = require('../models/Usuario'),
 				// Control de existencia de usuario
 				Usuario.findOne({usuario: req.params.usuario}, function (err, user) {
 					if (err) {
-						return console.log(err);
+						return console.error(err);
 					} else {
 						if (user) {
 							var perfilPropio = false;
@@ -213,7 +213,7 @@ var Usuario = require('../models/Usuario'),
 												.sort({fechaPublicacion: -1});
 							query.exec(function (err, anuncios) {
 								if (err) {
-									return console.log(err);
+									return console.error(err);
 								} else {
 									res.render('anuncios-perfil', {usuario: req.session.usuario,
 										perfilDe: req.params.usuario,
@@ -241,7 +241,7 @@ var Usuario = require('../models/Usuario'),
 				Anuncio.findByIdAndRemove(req.params.id, function (err, anuncio) {
 					console.log('Va a eliminar el anuncio:' + anuncio);
 					if (err) {
-						return console.log(err);
+						return console.error(err);
 					} else {
 						console.log('Anuncio eliminado');
 						res.redirect('/perfil/' + req.params.usuario + '/anuncios');
@@ -261,11 +261,11 @@ var Usuario = require('../models/Usuario'),
 					var queryAsignaturas = Asignatura.find().sort( { "nombre": 1 } );
 					queryAsignaturas.exec(function (err, asignaturas) {
 						if (err) {
-							return console.log(err);
+							return console.error(err);
 						} else {
 							Usuario.findOne({usuario: req.params.usuario}, function (err, user) {
 								if (err) {
-									return console.log(err);
+									return console.error(err);
 								} else {
 									res.render('editar-profesor', {usuario: req.session.usuario,
 										datosUsuario: user,
@@ -293,13 +293,13 @@ var Usuario = require('../models/Usuario'),
 	        				if (err) { throw err;}
 	        				Usuario.findOne({usuario: req.params.usuario}, function (err, user) {
 	        					if (err) {
-	        						return console.log(err);
+	        						return console.error(err);
 	        					} else {
 	        						console.log(user.asignaturasProfesor);
 	        						var queryAsignaturas = Asignatura.find().sort( { "nombre": 1 } );
 	        						queryAsignaturas.exec(function (err, asignaturas) {
 	        							if (err) {
-	        								return console.log(err);
+	        								return console.error(err);
 	        							} else {
 	        								res.render('editar-profesor', {usuario: req.session.usuario,
 			                					datosUsuario: user,

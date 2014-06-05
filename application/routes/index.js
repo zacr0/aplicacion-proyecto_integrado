@@ -88,7 +88,7 @@ var Usuario = require('../models/Usuario'),
                     });
                     
                     stream.on('error', function (err) {
-                        console.log(err);
+                        console.error(err);
                     });
 
                     stream.on('close', function () {
@@ -129,7 +129,7 @@ var Usuario = require('../models/Usuario'),
                                     console.log('Error al registrar usuario');
                                     res.render('registro', {error: req.session.error, cursoData: cursoData, 
                                     promocionData: promocionData});
-                                    return console.log(err);
+                                    return console.error(err);
                                 }
                                 console.log('Usuario registrado');
                                 res.render('login', {success: true});

@@ -17,7 +17,7 @@ var Promocion = require('../models/Promocion'),
 
 					    query.exec(function (err, promociones) {
 					        if (err) {
-					            return console.log(err);
+					            return console.error(err);
 					        } else {
 					            if (promociones.length > 0) {
 					                dataPromociones = promociones;
@@ -32,7 +32,7 @@ var Promocion = require('../models/Promocion'),
 
 						query.exec(function (err, cursos) {
 					        if (err) {
-					            return console.log(err);
+					            return console.error(err);
 					        } else {
 					            if (cursos.length > 0) {
 									dataCursos = cursos;
@@ -47,7 +47,7 @@ var Promocion = require('../models/Promocion'),
 
 					    query.exec(function (err, asignaturas) {
 					        if (err) {
-					            return console.log(err);
+					            return console.error(err);
 					        } else {
 					            if (asignaturas.length > 0) {
 					                dataAsignaturas = asignaturas;
