@@ -203,6 +203,31 @@ $(function() {
 		return false;
 	});
 
+	$('#buscador').keyup( function () {
+		var word;
+		if( $('#buscador').val() !== '' )
+			word = $('#buscador').val();
+
+		$.ajax({
+          url: "/usuarios/buscar/" + word,
+          type: 'GET',
+		  success: function(result){
+            if(result){
+              $('body #perfil').remove();
+              
+              var perfil;
+              for(var i = 0; i < result.users.length; i++){
+              	if (result.users[i].perfil === 'profesor')
+                  	perfil = '<span class="glyphicon glyphicon-book"></span> ';
+                else
+                  	perfil = '<span class="glyphicon glyphicon-pencil"></span> ';
+              	$('#usuarios').after('<article class="text-center col-xs-6 col-sm-4 col-md-3 col-lg-3" id="perfil"><a href="/perfil/' + result.users[i].usuario + '" title="Perfil de ' + result.users[i].nombre + ' ' + result.users[i].apellidos + '" id="enlacePerfil"><img src=' + result.users[i].foto + ' id="imagenPerfil" height="100" width="100" class="img-circle"/><p>' + perfil + result.users[i].nombre + ' ' + result.users[i].apellidos + '</p></a></article>');
+              } // for
+            } // if
+          } // success
+        });
+	});
+
 // PAGINA DE PERFIL
 	$('#form-imagen').validate({
 		errorPlacement: function(label, element) {

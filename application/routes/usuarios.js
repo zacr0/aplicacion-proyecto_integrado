@@ -133,7 +133,7 @@ route = function (app) {
 				} else {
 					res.render('usuarios', {
 						usuario: req.session.usuario,
-						ver: 'usuarios encontrados'
+						ver: 'usuarios no encontrados'
 					});
 				}
 			});
@@ -141,7 +141,28 @@ route = function (app) {
 			res.render('login', {error: 'Debes iniciar sesión ' +
 				'para acceder a SocialGCap.'});
 		}
-	}); // /usuarios/buscador
+	}); // /usuarios/buscar
+
+	app.get('/usuarios/buscar/:buscador', function (req, res) {
+		
+		if( req.params["buscador"] === 'undefined' ) {
+			query = Usuario.find({},{_id: 0, fechaNacimiento: 0, email: 0, pass: 0, asignaturasProfesor: 0})
+							.sort({nombre: 1, apellidos: 1});
+		} else {
+			query = Usuario.find({},{_id: 0, fechaNacimiento: 0, email: 0, pass: 0, asignaturasProfesor: 0})
+						.or([{'usuario': {$regex: new RegExp(req.params["buscador"], "i")}}, 
+							{'nombre': {$regex: new RegExp(req.params["buscador"], "i")}}, 
+							{'apellidos': { $regex: new RegExp(req.params["buscador"], "i")}}])
+						.sort({nombre: 1, apellidos: 1});
+		} // else
+		query.exec(function (err, users) {
+			if(err)
+		        return res.json({});
+		    else
+		        res.json({ users: users });
+		});
+	}); // /usuarios/buscar
+
 }
 
 module.exports = route;
