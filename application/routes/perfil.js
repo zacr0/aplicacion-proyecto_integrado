@@ -168,14 +168,14 @@ var Usuario = require('../models/Usuario'),
 		// Actualizacion de datos de usuario
 		app.post('/perfil/:usuario/editar/datos', function (req, res) {
 			Usuario.findOne({usuario : req.params.usuario}, function (err, user){
-				if(err) {
+				if (err) {
 					return console.error(err);
 				}
 				
 				if (req.body.pass === user.pass){
-					Usuario.update( { usuario : req.params.usuario }, { $set : { email : req.body.email , fechaNacimiento: req.body.fechaNacimiento, pass: req.body.newPassword } },
+					Usuario.update( { usuario : req.params.usuario }, { $set : { email : req.body.email , fechaNacimiento: req.body.fechaNacimiento, pass: req.body.newPassword || req.body.pass} },
 						function (err, data) {
-							if(err) {
+							if (err) {
 								return console.error(err);
 							}
 			        		res.render('editar', {usuario: req.session.usuario,

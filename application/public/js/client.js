@@ -259,12 +259,23 @@ $(function() {
 				minlength: 6
 			},
 			newPassword: {
-				required: true,
-				pwd: true,
-				minlength: 6
+				required: {
+					depends: function (element) {
+						return $("#newPassword").val() !== '';
+					}
+				},
+				pwd: {
+					depends: function (element) {
+						return $("#newPassword").val() !== '';
+					}
+				}
 			},
 			newPassword2: {
-				required: true,
+				required: {
+					depends: function (element) {
+						return $("#newPassword").val() !== '';
+					}
+				},
 				equalTo: '#newPassword'
 			}
 		},
