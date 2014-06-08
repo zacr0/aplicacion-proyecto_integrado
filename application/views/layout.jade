@@ -1,34 +1,36 @@
 doctype html
 html(lang='es')
   head
+    block title
     meta(charset='utf-8')
     meta(http-equiv='X-UA-Compatible', content='IE=edge')
     meta(name='viewport', content='width=device-width, initial-scale=1')
-    meta(name='description', content='Red social Gran Capitan')
+    meta(name='description', content='Red social IES Gran Capitan')
     meta(name='author', content='Pablo Medina Suarez, Ruben Rodriguez Ramirez')
-    script(src='http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js')
-    script(src="/socket.io/socket.io.js")
-    block title
     // Bootstrap core CSS
     link(rel='stylesheet', href='/lib/bootstrap/css/bootstrap.min.css')
     block custom-styles
+    script(src="/socket.io/socket.io.js")
+    //-script(src="https://cdn.socket.io/socket.io-1.0.2.js")
     //HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries 
     //if lt IE 9
       script(src='https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js')
       script(src='https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js')
   body
     block content
-  
+    
+  //- JavaScript al final del body
   //Bootstrap core JavaScript
-  script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js')
+  //-script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js')
+  script(src='/js/jquery.min.js')
   script(src='/lib/bootstrap/js/bootstrap.min.js')
   //JavaScript cliente
   script(src='/js/bootstrap-datepicker.min.js')
   script(src='/js/jquery.validate.min.js')
-  script(src='/js/messages_es.js')
+  script(src='/js/additional-methods.min.js')
+  script(src='/js/messages_es.min.js')
   script(src='/js/Autolinker.min.js')
   script(src='/js/client.js')
     
   block custom-scripts
-  
   

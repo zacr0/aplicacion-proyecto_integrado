@@ -4,7 +4,7 @@ block title
   if error
     title SocialGCap - Usuario inválido
   else
-    title SocialGCap - Perfil de #{datosUsuario.nombre}
+    title SocialGCap - Perfil de #{datosUsuario.nombre} #{datosUsuario.apellidos}
     
 block custom-styles
   link(rel='stylesheet', href='/stylesheets/style.css')
@@ -23,11 +23,25 @@ block content
       header.page-header
         h1 Perfil del #{datosUsuario.perfil}  
           small #{datosUsuario.nombre}  #{datosUsuario.apellidos}
+      
+      ul.nav.nav-tabs
+        li.active
+          a(href="#", title="Ver datos de perfil") Perfil
+        if perfilPropio
+          li
+            a(href="/perfil/#{datosUsuario.usuario}/editar", title='Edita los datos de tu perfil') Editar perfil     
+        li
+          a(href="/perfil/#{datosUsuario.usuario}/anuncios", title='Ver anuncios publicados') Anuncios publicados
+        if (datosUsuario.perfil === 'profesor' && perfilPropio)
+          li
+            a(href="/perfil/#{datosUsuario.usuario}/editar/asignaturas", title='Edita las asignaturas que impartes') Editar asignaturas impartidas
+
       section.text-center.well
         .row
           .col-sm-6.col-md-6.col-sm-6
             img(src='#{datosUsuario.foto}',
-              alt="Imagen de perfil de #{datosUsuario.nombre}" , height="200", width="200").img-circle
+              alt="Imagen de perfil de #{datosUsuario.nombre}", height="200", width="200").img-circle
+          hr.visible-xs
           .col-sm-6.col-md-6.text-left
             p
               strong Nombre: 
@@ -55,24 +69,17 @@ block content
             if (datosUsuario.perfil === 'profesor')
               p
                 strong Asignaturas impartidas:
-                - console.log()
                 if (datosUsuario.asignaturasProfesor.length > 0)
                   ul
                     each queue in datosUsuario.asignaturasProfesor
                       li #{queue}.
                 else
                   |  no indicadas.
+
         .row
           .col-md-12.text-right
             a(href="mailto:zacro.suarez@gmail.com?Subject=Denuncia del perfil de #{datosUsuario.nombre} #{datosUsuario.apellidos}") 
               span.glyphicon.glyphicon-exclamation-sign 
               |  Denunciar este perfil
-            
-            if perfilPropio
-              //- Personalizacion de imagen de perfil
-              form(action="/perfil/editar/#{datosUsuario.usuario}" method="post", enctype="multipart/form-data")
-                input(type="file", name="image", accept='image/*',required)
-                input(type="submit" value="Modificar imagen image")
-
 
     include footer

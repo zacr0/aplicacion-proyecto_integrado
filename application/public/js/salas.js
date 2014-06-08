@@ -1,14 +1,27 @@
 $(function() {
-	var nickname = $('#perfilusuario').text()
-						.substr(9, $('#perfilusuario').text().length);
+	// Obtencion del nick de usuario (desde el navbar)
+	var nickname = $('#nombreUsuario').text();
 	var socket = io();
+
+	// Buscador de salas
+	$('#buscar-salas').keyup(function(){
+		var filtro = $(this).val();
+
+		$('#lista-salas ul li').each(function(){
+			if ($(this).text().search(new RegExp(filtro, "i")) < 0) {
+				$(this).hide();
+			} else {
+				$(this).show();
+			}
+		});
+	});
 
 	// Envia nombre de usuario
 	socket.emit('nickname', nickname);
 
 	// Envio de mensajes
 	$('#form-mensaje').submit(function (e) {
-		socket.emit('message', $('#mensaje').val() );
+		socket.emit('message', $('#mensaje').val());
 		$('#mensaje').val('');
 		$('#chat').animate({ scrollTop: $(document).height() }, 1000);
 		return false;
@@ -16,8 +29,7 @@ $(function() {
 		
 	// Recepcion de mensajes
 	socket.on('message', function (nickname, message) {
-		var nickPropio = $('#perfilusuario').text()
-						.substr(9, $('#perfilusuario').text().length);
+		var nickPropio = $('#nombreUsuario').text();
 		
 		if (nickname === nickPropio) {
 			$('#chat').append($('<p class="msgPropio bg-success"><strong>' + nickname 

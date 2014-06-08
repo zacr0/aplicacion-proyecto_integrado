@@ -1,5 +1,6 @@
 $(function() {
 // PAGINA DE LOGIN
+	// Validacion de formulario
 	$('#form-login').validate({
 		errorPlacement: function(label, element) {
 			label.insertAfter(element);
@@ -32,9 +33,11 @@ $(function() {
 		});
 	});
 	
+	// Esconde las secciones de alumno y profesor
 	$('.visible-alumno').hide();
 	$('.visible-profesor').hide();
 
+	// Muestra y deselecciona opciones de los perfiles
 	$('input[name=perfil]').click(function () {
 		if (this.checked && this.id == "alumno") {
 			$(".visible-alumno").show();
@@ -50,6 +53,7 @@ $(function() {
 		}
 	});
 
+	// Control de la seleccion de promociones y cursos
 	$('select[name=promocion]').change(function(){
 		// Obtencion del curso de la promocion
 		var curso = $(this).val().split(" ")[0];
@@ -65,6 +69,7 @@ $(function() {
 			.show();
 	});
 
+	// Validacion de formulario
 	$('#form-registro').validate({
 		errorPlacement: function(label, element) {
 			label.insertAfter(element);
@@ -106,7 +111,6 @@ $(function() {
 			fechanacimiento: {
 				date: true
 			}
-			// Validacion de promocion/curso/asignaturas:
 		},
 		messages: {
 			usuario: {
@@ -114,6 +118,10 @@ $(function() {
 					y números, y una longitud 3 a 12 caracteres."
 			},
 			pass: {
+				pwd: "La contraseña debe tener al menos 6 caracteres, \
+					una minúscula, una mayúscula y un número."
+			},
+			newPass: {
 				pwd: "La contraseña debe tener al menos 6 caracteres, \
 					una minúscula, una mayúscula y un número."
 			},
@@ -150,6 +158,7 @@ $(function() {
 	});
 
 // PAGINA DE ANUNCIOS
+	// Validacion de formulario
 	$('#form-anuncios').validate({
 		errorPlacement: function(label, element) {
 			label.insertAfter(element);
@@ -166,6 +175,7 @@ $(function() {
 			},
 			cuerpo: {
 				required: true,
+				minlength: 10,
 				maxlength: 200
 			}
 		}
@@ -183,6 +193,7 @@ $(function() {
 		$(this).find('.modal-footer #btnConfirmar').data('form', form);
 	});
 
+	// Envia el formulario desde el que se ha lanzado el modal
 	$('#formularioConfirmar').find('.modal-footer #btnConfirmar')
 	.on('click', function(){
 		$(this).data('form').submit();
@@ -197,5 +208,158 @@ $(function() {
 // PAGINA DE USUARIOS
 	$('ul.nav li.disabled a').click(function(){
 		return false;
+	});
+
+	$('#buscador').keyup( function () {
+		var word;
+		if( $('#buscador').val() !== '' )
+			word = $('#buscador').val();
+
+		$.ajax({
+          url: "/usuarios/buscar/" + word,
+          type: 'GET',
+		  success: function(result){
+            if (result){
+              $('#perfil, #error').remove();
+              
+              var perfil;
+              for(var i = 0; i < result.users.length; i++){
+              	if (result.users[i].perfil === 'profesor')
+                  	perfil = '<span class="glyphicon glyphicon-book"></span> ';
+                else
+                  	perfil = '<span class="glyphicon glyphicon-pencil"></span> ';
+              	$('#usuarios').after('<article class="text-center col-xs-6 col-sm-4 col-md-3 col-lg-3" id="perfil"> \
+              		<a href="/perfil/' + result.users[i].usuario + '" title="Perfil de ' + result.users[i].nombre + ' ' + result.users[i].apellidos + '" id="enlacePerfil"> \
+              		<img src=' + result.users[i].foto + ' id="imagenPerfil" height="100" width="100" class="img-circle"/> \
+              		<p>' + perfil + result.users[i].nombre + ' ' + result.users[i].apellidos + '</p></a></article>');
+              } // for
+            } // if
+          } // success
+        });
+	});
+
+// PAGINA DE PERFIL
+	// Validacion de formulario 
+	$('#form-imagen').validate({
+		errorPlacement: function(label, element) {
+			label.insertAfter(element);
+			label.addClass('control-label');
+			$(element).parent().addClass('has-error');
+		},
+		unhighlight: function (element) {
+			$(element).parent().removeClass('has-error');
+		},
+		rules: {
+			image: {
+				required: true,
+				accept: 'image/png, image/jpeg'
+			}
+		},
+		messages: {
+			image: {
+				accept: 'El formato de la imagen debe ser .png o .jpg.'
+			}
+		}
+	});
+
+	// Validacion de formulario
+	$('#form-datos').validate({
+		errorPlacement: function(label, element) {
+			label.insertAfter(element);
+			label.addClass('control-label');
+			$(element).parent().addClass('has-error');
+		},
+		unhighlight: function (element) {
+			$(element).parent().removeClass('has-error');
+		},
+		rules: {
+			email: {
+				required: true,
+				email: true
+			},
+			fechaNacimiento: {
+				required: true,
+				date: true
+			}, 
+			pass: {
+				required: true,
+				pwd: true,
+				minlength: 6
+			},
+			newPassword: {
+				required: {
+					depends: function (element) {
+						return $("#newPassword").val() !== '';
+					}
+				},
+				pwd: {
+					depends: function (element) {
+						return $("#newPassword").val() !== '';
+					}
+				}
+			},
+			newPassword2: {
+				required: {
+					depends: function (element) {
+						return $("#newPassword").val() !== '';
+					}
+				},
+				equalTo: '#newPassword'
+			},
+			twitter: {
+
+			},
+			facebook: {
+
+			},
+			linkedin: {
+
+			},
+			googleplus: {
+
+			}
+		},
+		messages: {
+			pass: {
+				pwd: "La contraseña debe tener al menos 6 caracteres, \
+					una minúscula, una mayúscula y un número."
+			},
+			newPassword: {
+				pwd: "La contraseña debe tener al menos 6 caracteres, \
+					una minúscula, una mayúscula y un número."
+			}
+		}
+	});
+
+	// Validaciones para perfiles sociales:
+	$.validator.addMethod("twitter", function(value) {
+		return /^[a-z\d_]{3,12}$/.test(value);
+	});
+	$.validator.addMethod("facebook", function(value) {
+		return /^[a-z\d_]{3,12}$/.test(value);
+	});
+	$.validator.addMethod("linkedin", function(value) {
+		return /^[a-z\d_]{3,12}$/.test(value);
+	});
+	$.validator.addMethod("googleplus", function(value) {
+		return /^[a-z\d_]{3,12}$/.test(value);
+	});
+
+
+	$(function(){
+		$('#fechaNacimiento').datepicker({
+			format: 'mm/dd/yyyy',
+			endDate: new Date($.now()),
+			startDate: new Date('01/01/1970'),
+			language: 'es',
+			minViewMode: 'days',
+			weekStart: 1,
+			autoclose: true
+		});
+	});
+
+	// Conversion de URLs a links clickables
+	$.each($('.anuncio p'), function(index, val) {
+		 $(this).html(Autolinker.link($(this).text()));
 	});
 });

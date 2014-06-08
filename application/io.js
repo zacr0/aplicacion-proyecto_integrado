@@ -4,9 +4,7 @@ module.exports = function(io) {
         Promocion = require('./models/Promocion'),
         Asignatura = require('./models/Asignatura'),
         sanitizeHtml = require('sanitize-html'),
-        rooms = ['Pasillo',
-        'Sala de profesores',
-        'La Chaty'];
+        rooms = ['Pasillo'];
 
 io.on('connection', function (socket) {
         // Introducimos al usuario en la sala por defecto
@@ -88,8 +86,6 @@ io.on('connection', function (socket) {
                     console.log(getUsersInRoom(socket.room));
                     // Manda la lista de los usuarios a la sala anterior
                     io.in(previousRoom).emit('userlist', getUsersInRoom(previousRoom));
-                    //console.log('Esta en ' + socket.room + ' manda a ' + previousRoom);
-                    //console.log('Manda ' + getUsersInRoom(previousRoom));
                     // Informa a los usuarios
                     users[user].emit('currentroom', socket.room);
                     users[user].emit('info', 'Has cambiado a la sala ' + room + '.');
@@ -116,7 +112,7 @@ io.on('connection', function (socket) {
             // Elimina al usuario del array al desconectarse
             console.log('Usuario desconectado: ' + socket.id);
             io.in(socket.room).emit('info', socket.nickname + ' se ha desconectado.');
-            // Actualize los arrays
+            // Actualiza los arrays
             users.splice(user, 1);
             usersRooms.splice(user,1);
             // Manda la lista de los usuarios a la sala anterior

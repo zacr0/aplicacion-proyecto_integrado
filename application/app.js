@@ -6,6 +6,7 @@ var express = require('express'),
     cookieParser = require('cookie-parser'),
     bodyParser = require('body-parser'),
     session = require('express-session'),
+    compress = require('compression'),
     app = express(),
     server = require('http').Server(app),
     io = require('socket.io')(server),
@@ -18,17 +19,20 @@ var express = require('express'),
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
-app.use(multer()) // NUEVO
+app.use(multer());
 app.use(favicon());
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser('t999YE72wJ'));
-app.use(express.static(path.join(__dirname, 'public')));
+// Expiracion de ficheros estaticos de 1 mes:
+app.use(express.static(path.join(__dirname, 'public'), {maxAge: 2592000000}));
 // Duracion de la sesion = 2 horas
 app.use(session({ secret: 'keyboard cat', cookie: {
     maxAge:  2 * 3600000
 }}))
+// Compresion gzip de archivos desde el servidor
+app.use(compress());
 
 // Routing
 admin_routes(app);
@@ -64,16 +68,16 @@ app.use(function(err, req, res, next) {
     });
 });
 
-// socket.io logic file
-require('./io')(io);
-
 // set timezone
 process.env.TZ = 'UTC+2';
+
+// socket.io logic file
+require('./io')(io);
 
 // Starts server
 server.listen(3000);
 //app.listen(3000); // port to listen
-console.log('Server running on localhost:3000');
+console.log('Server running on localhost:3000. Mode: ' + app.get('env'));
 console.log('Conectando a MongoDB...');
 
 module.exports = app;
