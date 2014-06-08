@@ -109,7 +109,7 @@ var Usuario = require('../models/Usuario'),
 		}); // app.get/usuarios/promociones/promocion
 
 		app.post('/usuarios/buscar', function (req, res) {
-			
+
 			if (req.session.usuario != undefined) {
 				query = Usuario.find({},{_id: 0, fechaNacimiento: 0, email: 0, pass: 0, asignaturasProfesor: 0})
 								.or([{'usuario': {$regex: new RegExp(req.body.buscador, "i")}}, 
@@ -131,7 +131,7 @@ var Usuario = require('../models/Usuario'),
 					} else {
 						res.render('usuarios', {
 							usuario: req.session.usuario,
-							ver: 'usuarios encontrados'
+							ver: 'usuarios no encontrados'
 						});
 					}
 				});
@@ -140,6 +140,28 @@ var Usuario = require('../models/Usuario'),
 					'para acceder a SocialGCap.'});
 			}
 		}); // app.post/usuarios/buscar
-	}
+
+		app.get('/usuarios/buscar/:buscador', function (req, res) {
+
+			if (req.params["buscador"] === 'undefined') {
+				query = Usuario.find({},{_id: 0, fechaNacimiento: 0, email: 0, pass: 0, asignaturasProfesor: 0})
+				.sort({nombre: 1, apellidos: 1});
+			} else {
+				query = Usuario.find({},{_id: 0, fechaNacimiento: 0, email: 0, pass: 0, asignaturasProfesor: 0})
+				.or([{'usuario': {$regex: new RegExp(req.params["buscador"], "i")}}, 
+					{'nombre': {$regex: new RegExp(req.params["buscador"], "i")}}, 
+					{'apellidos': { $regex: new RegExp(req.params["buscador"], "i")}}])
+				.sort({nombre: 1, apellidos: 1});
+		} // else
+		query.exec(function (err, users) {
+			if(err)
+				return res.json({});
+			else
+				res.json({ users: users });
+		});
+	}); // app.get/usuarios/buscar/buscador
+	
+}
+
 
 module.exports = route;

@@ -4,9 +4,7 @@ module.exports = function(io) {
         Promocion = require('./models/Promocion'),
         Asignatura = require('./models/Asignatura'),
         sanitizeHtml = require('sanitize-html'),
-        rooms = ['Pasillo',
-        'Sala de profesores',
-        'La Chaty'];
+        rooms = ['Pasillo'];
 
 io.on('connection', function (socket) {
         // Introducimos al usuario en la sala por defecto
