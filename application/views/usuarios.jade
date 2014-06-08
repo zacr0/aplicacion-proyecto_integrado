@@ -16,18 +16,18 @@ block content
     .clearfix
       .pull-right
         ul.nav.nav-pills
-          li(class=(ver==='usuarios' ? 'active disabled' : ''))
-            a(href="/usuarios", title="Listado de usuarios")
-              | Todos
+          li(class=(ver==='promociones' ? 'active disabled' : ''))
+            a(href="/usuarios/promociones", title="Listado de promociones")
+              | Promociones
           li(class=(ver==='alumnos' ? 'active disabled' : ''))
             a(href="/usuarios/alumnos", title="Listado de alumnos") 
               | Alumnos
           li(class=(ver==='profesores' ? 'active disabled' : ''))
             a(href="/usuarios/profesores", title="Listado de profesores")
               | Profesores
-          li(class=(ver==='promociones' ? 'active disabled' : ''))
-            a(href="/usuarios/promociones", title="Listado de promociones")
-              | Promociones
+          li(class=(ver==='usuarios' ? 'active disabled' : ''))
+            a(href="/usuarios", title="Listado de usuarios")
+              | Todos
           form(id='form-buscador', method="post", action="/usuarios/buscar",accept-charset='UTF-8').input-group
             input(name='buscador', id="buscador" type='search', placeholder='Buscar usuario...', 
               pattern=".{3,}", required, title="Inserte al menos 3 caracteres").form-control

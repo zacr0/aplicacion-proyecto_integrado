@@ -1,5 +1,6 @@
 $(function() {
 // PAGINA DE LOGIN
+	// Validacion de formulario
 	$('#form-login').validate({
 		errorPlacement: function(label, element) {
 			label.insertAfter(element);
@@ -32,9 +33,11 @@ $(function() {
 		});
 	});
 	
+	// Esconde las secciones de alumno y profesor
 	$('.visible-alumno').hide();
 	$('.visible-profesor').hide();
 
+	// Muestra y deselecciona opciones de los perfiles
 	$('input[name=perfil]').click(function () {
 		if (this.checked && this.id == "alumno") {
 			$(".visible-alumno").show();
@@ -50,6 +53,7 @@ $(function() {
 		}
 	});
 
+	// Control de la seleccion de promociones y cursos
 	$('select[name=promocion]').change(function(){
 		// Obtencion del curso de la promocion
 		var curso = $(this).val().split(" ")[0];
@@ -65,6 +69,7 @@ $(function() {
 			.show();
 	});
 
+	// Validacion de formulario
 	$('#form-registro').validate({
 		errorPlacement: function(label, element) {
 			label.insertAfter(element);
@@ -153,6 +158,7 @@ $(function() {
 	});
 
 // PAGINA DE ANUNCIOS
+	// Validacion de formulario
 	$('#form-anuncios').validate({
 		errorPlacement: function(label, element) {
 			label.insertAfter(element);
@@ -187,6 +193,7 @@ $(function() {
 		$(this).find('.modal-footer #btnConfirmar').data('form', form);
 	});
 
+	// Envia el formulario desde el que se ha lanzado el modal
 	$('#formularioConfirmar').find('.modal-footer #btnConfirmar')
 	.on('click', function(){
 		$(this).data('form').submit();
@@ -232,6 +239,7 @@ $(function() {
 	});
 
 // PAGINA DE PERFIL
+	// Validacion de formulario 
 	$('#form-imagen').validate({
 		errorPlacement: function(label, element) {
 			label.insertAfter(element);
@@ -254,6 +262,7 @@ $(function() {
 		}
 	});
 
+	// Validacion de formulario
 	$('#form-datos').validate({
 		errorPlacement: function(label, element) {
 			label.insertAfter(element);
@@ -278,13 +287,36 @@ $(function() {
 				minlength: 6
 			},
 			newPassword: {
-				required: true,
-				pwd: true,
-				minlength: 6
+				required: {
+					depends: function (element) {
+						return $("#newPassword").val() !== '';
+					}
+				},
+				pwd: {
+					depends: function (element) {
+						return $("#newPassword").val() !== '';
+					}
+				}
 			},
 			newPassword2: {
-				required: true,
+				required: {
+					depends: function (element) {
+						return $("#newPassword").val() !== '';
+					}
+				},
 				equalTo: '#newPassword'
+			},
+			twitter: {
+
+			},
+			facebook: {
+
+			},
+			linkedin: {
+
+			},
+			googleplus: {
+
 			}
 		},
 		messages: {
@@ -299,6 +331,21 @@ $(function() {
 		}
 	});
 
+	// Validaciones para perfiles sociales:
+	$.validator.addMethod("twitter", function(value) {
+		return /^[a-z\d_]{3,12}$/.test(value);
+	});
+	$.validator.addMethod("facebook", function(value) {
+		return /^[a-z\d_]{3,12}$/.test(value);
+	});
+	$.validator.addMethod("linkedin", function(value) {
+		return /^[a-z\d_]{3,12}$/.test(value);
+	});
+	$.validator.addMethod("googleplus", function(value) {
+		return /^[a-z\d_]{3,12}$/.test(value);
+	});
+
+
 	$(function(){
 		$('#fechaNacimiento').datepicker({
 			format: 'mm/dd/yyyy',
@@ -311,6 +358,7 @@ $(function() {
 		});
 	});
 
+	// Conversion de URLs a links clickables
 	$.each($('.anuncio p'), function(index, val) {
 		 $(this).html(Autolinker.link($(this).text()));
 	});

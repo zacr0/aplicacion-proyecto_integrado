@@ -41,7 +41,7 @@ block content
           .col-sm-6.col-md-6.col-sm-6
             img(src='#{datosUsuario.foto}',
               alt="Imagen de perfil de #{datosUsuario.nombre}", height="200", width="200").img-circle
-          
+          hr.visible-xs
           .col-sm-6.col-md-6.text-left
             p
               strong Nombre: 
@@ -69,7 +69,6 @@ block content
             if (datosUsuario.perfil === 'profesor')
               p
                 strong Asignaturas impartidas:
-                - console.log()
                 if (datosUsuario.asignaturasProfesor.length > 0)
                   ul
                     each queue in datosUsuario.asignaturasProfesor

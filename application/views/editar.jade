@@ -56,11 +56,12 @@ block content
               | Peso máximo: 200KB
             input(type="submit" value="Actualizar imagen").btn.btn-block.btn-primary
         .col-md-6
+          hr.visible-xs.visible-sm
           h3 Datos de usuario
           form(id='form-datos', action='/perfil/' + usuario + '/editar/datos', method='post',accept-charset='UTF-8')
             .form-group.has-feedback
               label(for='email')
-                strong Email:
+                strong Email (obligatorio):
               input(type='email', id='email',name='email', value='#{datosUsuario.email}', placeholder='Email' required).form-control.text-center
             .form-group.has-feedback
               - var fechaNacimiento = (datosUsuario.fechaNacimiento.getMonth()+1) + '/' + datosUsuario.fechaNacimiento.getDate() + '/' + datosUsuario.fechaNacimiento.getFullYear()
@@ -69,16 +70,34 @@ block content
               input.form-control(id='fechaNacimiento',name='fechaNacimiento',value='#{fechaNacimiento}',placeholder='Fecha de nacimiento', type='text' required).text-center
             .form-group.has-feedback
               label(for='pass')
-                strong Contraseña actual:
-              input.form-control(id='pass',name='pass',placeholder='Contraseña actual',type='password', required).text-center
-              .form-group.has-feedback
+                strong Contraseña actual (obligatorio):
+              input(id='pass',name='pass',placeholder='Contraseña actual',type='password', required).form-control.text-center
+            .form-group.has-feedback
               label(for='newPassword')
-                strong Contraseña nueva:
-              input.form-control(id='newPassword',name='newPassword',placeholder='Nueva contraseña',type='password', required).text-center
-              .form-group.has-feedback
+                strong Nueva contraseña:
+              input(id='newPassword',name='newPassword',placeholder='Nueva contraseña',type='password').form-control.text-center
+            .form-group.has-feedback
               label(for='newPassword2')
-                strong Confirmación de contraseña:
-              input.form-control(id='newPassword2',name='newPassword2',placeholder='Nueva contraseña (confirmación)',type='password', required).text-center
+                strong Nueva contraseña (confirmación):
+              input(id='newPassword2',name='newPassword2',placeholder='Nueva contraseña (confirmación)',type='password').form-control.text-center
+            hr
+            h3 Redes sociales
+            .form-group.has-feedback
+              label(for='twitter')
+                strong Usuario de Twitter:
+              input(id='twitter',name='twitter',placeholder='Por ej.: @usuario',type='text').form-control.text-center
+            .form-group.has-feedback
+              label(for='facebook')
+                strong Perfil de Facebook:
+              input(id='facebook',name='facebook',placeholder='Por ej.: @usuario',type='text').form-control.text-center
+            .form-group.has-feedback
+              label(for='linkedin')
+                strong Perfil de LinkedIn:
+              input(id='linkedin',name='linkedin',placeholder='Por ej.: @usuario',type='text').form-control.text-center
+            .form-group.has-feedback
+              label(for='googleplus')
+                strong Perfil de Google+:
+              input(id='googleplus',name='googleplus',placeholder='Por ej.: @usuario',type='text').form-control.text-center
             input(type='submit', value='Actualizar datos').btn.btn-block.btn-primary
 
 
