@@ -72,12 +72,23 @@ $(function() {
 	// Validacion de formulario
 	$('#form-registro').validate({
 		errorPlacement: function(label, element) {
-			label.insertAfter(element);
+			if ($(element).attr('type') !== 'radio') {
+				label.insertAfter(element);
+				$(element).parent().addClass('has-error');
+			} else {
+				label.appendTo($('#msgError'));
+				$(element).parent().parent().addClass('has-error');
+			}
+			
 			label.addClass('control-label');
-			$(element).parent().addClass('has-error');
+			
 		},
 		unhighlight: function (element) {
-			$(element).parent().removeClass('has-error');
+			if ($(element).attr('type') !== 'radio') {
+				$(element).parent().removeClass('has-error');
+			} else {
+				$(element).parent().parent().removeClass('has-error');
+			}
 		},
 		rules: {
 			usuario: {
