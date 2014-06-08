@@ -65,7 +65,7 @@ $(function() {
 
 	// Sala actual
 	socket.on('currentroom', function (room) {
-		$('#nombre-sala').text(room || '');
+		$('#nombre-sala').text(room);
 	});
 
 	// Cambio de salas al hacer click

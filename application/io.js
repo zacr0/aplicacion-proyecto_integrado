@@ -4,11 +4,11 @@ module.exports = function(io) {
         Promocion = require('./models/Promocion'),
         Asignatura = require('./models/Asignatura'),
         sanitizeHtml = require('sanitize-html'),
-        rooms = [];
+        rooms = ['Pasillo'];
 
 io.on('connection', function (socket) {
         // Introducimos al usuario en la sala por defecto
-        //socket.room = rooms[0];
+        socket.room = rooms[0];
 
         // Introduce la id del usuario en el array de usuarios
         users.push(socket);

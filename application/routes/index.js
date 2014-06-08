@@ -28,6 +28,7 @@ var route = function (app) {
           .createHash('md5')
           .update(req.body.pass)
           .digest("hex");
+          
         Usuario.findOne({usuario: req.body.usuario, pass: hash},
          function(err, user) {
             if (err) {
