@@ -277,6 +277,18 @@ $(function() {
 					}
 				},
 				equalTo: '#newPassword'
+			},
+			twitter: {
+
+			},
+			facebook: {
+
+			},
+			linkedin: {
+
+			},
+			googleplus: {
+
 			}
 		},
 		messages: {
@@ -290,6 +302,21 @@ $(function() {
 			}
 		}
 	});
+
+	// Validaciones para perfiles sociales:
+	$.validator.addMethod("twitter", function(value) {
+		return /^[a-z\d_]{3,12}$/.test(value);
+	});
+	$.validator.addMethod("facebook", function(value) {
+		return /^[a-z\d_]{3,12}$/.test(value);
+	});
+	$.validator.addMethod("linkedin", function(value) {
+		return /^[a-z\d_]{3,12}$/.test(value);
+	});
+	$.validator.addMethod("googleplus", function(value) {
+		return /^[a-z\d_]{3,12}$/.test(value);
+	});
+
 
 	$(function(){
 		$('#fechaNacimiento').datepicker({

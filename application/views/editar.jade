@@ -61,7 +61,7 @@ block content
           form(id='form-datos', action='/perfil/' + usuario + '/editar/datos', method='post',accept-charset='UTF-8')
             .form-group.has-feedback
               label(for='email')
-                strong Email:
+                strong Email (obligatorio):
               input(type='email', id='email',name='email', value='#{datosUsuario.email}', placeholder='Email' required).form-control.text-center
             .form-group.has-feedback
               - var fechaNacimiento = (datosUsuario.fechaNacimiento.getMonth()+1) + '/' + datosUsuario.fechaNacimiento.getDate() + '/' + datosUsuario.fechaNacimiento.getFullYear()
@@ -70,7 +70,7 @@ block content
               input.form-control(id='fechaNacimiento',name='fechaNacimiento',value='#{fechaNacimiento}',placeholder='Fecha de nacimiento', type='text' required).text-center
             .form-group.has-feedback
               label(for='pass')
-                strong Contraseña actual:
+                strong Contraseña actual (obligatorio):
               input(id='pass',name='pass',placeholder='Contraseña actual',type='password', required).form-control.text-center
             .form-group.has-feedback
               label(for='newPassword')
@@ -80,6 +80,24 @@ block content
               label(for='newPassword2')
                 strong Nueva contraseña (confirmación):
               input(id='newPassword2',name='newPassword2',placeholder='Nueva contraseña (confirmación)',type='password').form-control.text-center
+            hr
+            h3 Redes sociales
+            .form-group.has-feedback
+              label(for='twitter')
+                strong Usuario de Twitter:
+              input(id='twitter',name='twitter',placeholder='Por ej.: @usuario',type='text').form-control.text-center
+            .form-group.has-feedback
+              label(for='facebook')
+                strong Perfil de Facebook:
+              input(id='facebook',name='facebook',placeholder='Por ej.: @usuario',type='text').form-control.text-center
+            .form-group.has-feedback
+              label(for='linkedin')
+                strong Perfil de LinkedIn:
+              input(id='linkedin',name='linkedin',placeholder='Por ej.: @usuario',type='text').form-control.text-center
+            .form-group.has-feedback
+              label(for='googleplus')
+                strong Perfil de Google+:
+              input(id='googleplus',name='googleplus',placeholder='Por ej.: @usuario',type='text').form-control.text-center
             input(type='submit', value='Actualizar datos').btn.btn-block.btn-primary
 
 
