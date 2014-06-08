@@ -4,18 +4,42 @@ var Anuncio = require('../models/Anuncio'),
 	async = require('async'),
 	route = function (app) {
 		app.get('/anuncios', function(req, res) {
-			var queryAnuncio = Anuncio.find().sort({fechaPublicacion: -1});
+			var page = req.query.page || 1,
+				totalResults,
+				queryAnuncio = Anuncio.find().sort({fechaPublicacion: -1}).skip((page-1)*20).limit(20),
+        		querystring = req.url.replace(/(\&)?(\?)?page=.+(\&)?/,''),
+        		queryparams = querystring.split('?').length > 1  && querystring.split('?')[1] !== "";
+				console.log('page: ' + page);
+				console.log('querystring: ' + querystring);
+				console.log('queryparams: ' + queryparams);
 
 			if (req.session.usuario != undefined) {
-				queryAnuncio.exec( function (err, dataAnuncios) {
-					if (dataAnuncios.length > 0) {
-						res.render('anuncios', {usuario: req.session.usuario,
-							anuncios: dataAnuncios });
-					} else {
-						console.log("No hay anuncios");
-						res.render('anuncios', {usuario: req.session.usuario});
-					}
-				});
+
+				async.series([
+					function (callback) {
+					  	Anuncio.find().count(function (err, count) {
+					      if(err) {
+					        req.flash('error', err);
+					        return res.redirect("/");
+					      }
+					      totalResults = count;
+					      console.log('Numero total anuncios: ' + totalResults);
+					      callback();
+					    });
+					}, function (callback) {
+						queryAnuncio.exec( function (err, dataAnuncios) {
+							if (dataAnuncios.length > 0) {
+								res.render('anuncios', {usuario: req.session.usuario,
+									querystring: querystring, queryparams: queryparams,
+									page: page, pages: Math.ceil(totalResults/20),
+									anuncios: dataAnuncios });
+							} else {
+								console.log("No hay anuncios");
+								res.render('anuncios', {usuario: req.session.usuario});
+							}
+						});
+					} // callback
+				]);
 			} else {
 				res.render('login', {error: 'Debes iniciar sesión ' +
 					'para acceder a SocialGCap.'});

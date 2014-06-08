@@ -42,6 +42,18 @@ block content
       h1 Tablón de anuncios
         button(data-toggle="modal",data-target="#formularioModal").btn.btn-success.pull-right + Publicar anuncio
 
+    div(class="pagination pagination-centered")
+      ul
+        li
+          a(href=queryparams ? querystring + "&page=1" : querystring + "?page=1") First
+        - for(var i = parseInt(page,10) - 4 ; i <= parseInt(page,10) + 4 ; i++)
+          - if(i >0 && i <= pages){
+            li(class= (page == i ? 'active' : ''))
+              a(href=queryparams ? querystring + "&page=" + i : querystring + "?page=" + i)= i
+          -}
+        li
+          a(href= queryparams ? querystring + "&page=" + pages : querystring + "?page=" + pages) Last
+
     if error
       .alert.alert-danger.alert-dismissable
         button(type="button",data-dismiss="alert",aria-hidden="true").close 
