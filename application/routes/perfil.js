@@ -4,6 +4,7 @@ var Usuario = require('../models/Usuario'),
 	Anuncio = require('../models/Anuncio'),
 	Asignatura = require('../models/Asignatura'),
 	fs = require('fs'),
+	crypto = require('crypto'),
 	nombrePromocion,
 	nombreCurso,
 	route = function (app) {
@@ -171,9 +172,12 @@ var Usuario = require('../models/Usuario'),
 				if(err) {
 					return console.log(err);
 				}
+
+				var passEncrypt = crypto.createHash('md5').update(req.body.pass).digest("hex");
+				var newPassEncrypt = crypto.createHash('md5').update(req.body.newPassword).digest("hex");
 				
-				if (req.body.pass === user.pass){
-					Usuario.update( { usuario : req.params.usuario }, { $set : { email : req.body.email , fechaNacimiento: req.body.fechaNacimiento, pass: req.body.newPassword } },
+				if (passEncrypt === user.pass){
+					Usuario.update( { usuario : req.params.usuario }, { $set : { email : req.body.email , fechaNacimiento: req.body.fechaNacimiento, pass: newPassEncrypt } },
 						function (err, data) {
 							if(err) {
 								return console.log(err);
