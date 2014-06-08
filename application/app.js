@@ -25,7 +25,8 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser('t999YE72wJ'));
-app.use(express.static(path.join(__dirname, 'public')));
+// Expiracion de ficheros estaticos de 1 mes:
+app.use(express.static(path.join(__dirname, 'public'), {maxAge: 2592000000}));
 // Duracion de la sesion = 2 horas
 app.use(session({ secret: 'keyboard cat', cookie: {
     maxAge:  2 * 3600000
@@ -76,7 +77,7 @@ require('./io')(io);
 // Starts server
 server.listen(3000);
 //app.listen(3000); // port to listen
-console.log('Server running on localhost:3000. Mode: ' + process.env.NODE_ENV);
+console.log('Server running on localhost:3000. Mode: ' + app.get('env'));
 console.log('Conectando a MongoDB...');
 
 module.exports = app;

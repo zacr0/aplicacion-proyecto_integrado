@@ -16,39 +16,38 @@ block content
     .clearfix
       .pull-right
         ul.nav.nav-pills
-          li(class=(ver==='usuarios' ? 'active disabled' : ''))
-            a(href="/usuarios", title="Listado de usuarios")
-              | Todos
+          li(class=(ver==='promociones' ? 'active disabled' : ''))
+            a(href="/usuarios/promociones", title="Listado de promociones")
+              | Promociones
           li(class=(ver==='alumnos' ? 'active disabled' : ''))
             a(href="/usuarios/alumnos", title="Listado de alumnos") 
               | Alumnos
           li(class=(ver==='profesores' ? 'active disabled' : ''))
             a(href="/usuarios/profesores", title="Listado de profesores")
               | Profesores
-          li(class=(ver==='promociones' ? 'active disabled' : ''))
-            a(href="/usuarios/promociones", title="Listado de promociones")
-              | Promociones
+          li(class=(ver==='usuarios' ? 'active disabled' : ''))
+            a(href="/usuarios", title="Listado de usuarios")
+              | Todos
           form(id='form-buscador', method="post", action="/usuarios/buscar",accept-charset='UTF-8').input-group
-            input(name='buscador',type='search', placeholder='Buscar usuario...', 
+            input(name='buscador', id="buscador" type='search', placeholder='Buscar usuario...', 
               pattern=".{3,}", required, title="Inserte al menos 3 caracteres").form-control
             span.input-group-btn
               button(type="submit").btn.btn-default   
                 span.glyphicon.glyphicon-search
           
-    hr
-    .row
+    hr.row#usuarios
 
     if (usuarios && usuarios.length > 0)
       each usuario in usuarios
-        article.text-center.col-xs-6.col-sm-4.col-md-3.col-lg-3
-            a(href="/perfil/#{usuario.usuario}", title="Perfil de #{usuario.nombre} #{usuario.apellidos}")
-              img(src="#{usuario.foto}", height="100", width="100").img-circle
+        article.text-center.col-xs-6.col-sm-4.col-md-3.col-lg-3#perfil
+            a(href="/perfil/#{usuario.usuario}", title="Perfil de #{usuario.nombre} #{usuario.apellidos}", id="enlacePerfil")
+              img(src="#{usuario.foto}", id="imagenPerfil" height="100", width="100").img-circle
               p
-              if usuario.perfil === 'profesor'
-                span.glyphicon.glyphicon-book
-              else
-                span.glyphicon.glyphicon-pencil
-              |  #{usuario.nombre} #{usuario.apellidos}
+                if usuario.perfil === 'profesor'
+                  span.glyphicon.glyphicon-book
+                else
+                  span.glyphicon.glyphicon-pencil
+                |  #{usuario.nombre} #{usuario.apellidos}
     else
       if (promociones && promociones.length > 0)
         each promocion in promociones
@@ -58,7 +57,7 @@ block content
               p
               | #{promocion.nombre}
       else
-        p.text-center.well.
+        p#error.text-center.well.
           No se han encontrado usuarios en la base de datos que coincidan
           con la búsqueda introducida.
     
