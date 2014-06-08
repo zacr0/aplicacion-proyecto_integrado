@@ -174,14 +174,30 @@ var Usuario = require('../models/Usuario'),
 				}
 
 				var passEncrypt = crypto.createHash('md5').update(req.body.pass).digest("hex");
-				var newPassEncrypt = crypto.createHash('md5').update(req.body.newPassword).digest("hex");
+				
+				// Controla si no se ha introducido nueva contraseña
+				var newPassEncrypt;
+				if (req.body.newPassword.length > 0) {
+					newPassEncrypt = crypto.createHash('md5').update(req.body.newPassword).digest("hex");
+				} else {
+					newPassEncrypt = passEncrypt;
+				}
 				
 				if (passEncrypt === user.pass){
-					Usuario.update( { usuario : req.params.usuario }, { $set : { email : req.body.email , fechaNacimiento: req.body.fechaNacimiento, pass: newPassEncrypt } },
+					console.log('Twitter ' + req.body.twitter);
+					console.log('Facebook ' + req.body.facebook);
+					console.log('Linkedin ' + req.body.linkedin);
+					console.log('Googleplus ' + req.body.googleplus);
+
+					// No se insertan los valores de los perfiles
+					Usuario.update( { usuario : req.params.usuario }, 
+					{ $set : { email : req.body.email , fechaNacimiento: req.body.fechaNacimiento, pass: newPassEncrypt, 
+						social: {'twitter': req.body.twitter, 'facebook': req.body.facebook, 'linkedin': req.body.linkedin, 'googleplus': req.body.googleplus} } },
 						function (err, data) {
 							if (err) {
 								return console.error(err);
 							}
+							console.log(user);
 			        		res.render('editar', {usuario: req.session.usuario,
 			        			datosUsuario: user,
 			        			success: true
@@ -263,6 +279,7 @@ var Usuario = require('../models/Usuario'),
 				if (req.session.usuario === req.params.usuario &&
 					req.session.perfil === 'profesor') {
 					var queryAsignaturas = Asignatura.find().sort( { "nombre": 1 } );
+					
 					queryAsignaturas.exec(function (err, asignaturas) {
 						if (err) {
 							return console.error(err);

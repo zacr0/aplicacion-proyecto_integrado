@@ -79,7 +79,7 @@ $(function() {
 				label.appendTo($('#msgError'));
 				$(element).parent().parent().addClass('has-error');
 			}
-			
+
 			label.addClass('control-label');
 			
 		},
@@ -322,16 +322,52 @@ $(function() {
 				equalTo: '#newPassword'
 			},
 			twitter: {
-
+				required: {
+					depends: function (element) {
+						return $("#twitter").val() !== '';
+					}
+				},
+				twitter: {
+					depends: function (element) {
+						return $("#twitter").val() !== '';
+					}
+				}
 			},
 			facebook: {
-
+				required: {
+					depends: function (element) {
+						return $("#facebook").val() !== '';
+					}
+				},
+				facebook: {
+					depends: function (element) {
+						return $("#facebook").val() !== '';
+					}
+				}
 			},
 			linkedin: {
-
+				required: {
+					depends: function (element) {
+						return $("#linkedin").val() !== '';
+					}
+				},
+				linkedin: {
+					depends: function (element) {
+						return $("#linkedin").val() !== '';
+					}
+				}
 			},
 			googleplus: {
-
+				required: {
+					depends: function (element) {
+						return $("#googleplus").val() !== '';
+					}
+				},
+				googleplus: {
+					depends: function (element) {
+						return $("#googleplus").val() !== '';
+					}
+				}
 			}
 		},
 		messages: {
@@ -342,22 +378,34 @@ $(function() {
 			newPassword: {
 				pwd: "La contraseña debe tener al menos 6 caracteres, \
 					una minúscula, una mayúscula y un número."
+			},
+			twitter: {
+				twitter: 'El valor introducido no es usuario de Twitter válido.'
+			},
+			facebook: {
+				facebook: 'El valor introducido no es una dirección Facebook válida.'
+			},
+			linkedin: {
+				linkedin: 'El valor introducido no es una dirección LinkedIn válida.'
+			},
+			googleplus: {
+				googleplus: 'El valor introducido no es una dirección Google+ válida.'
 			}
 		}
 	});
 
 	// Validaciones para perfiles sociales:
-	$.validator.addMethod("twitter", function(value) {
-		return /^[a-z\d_]{3,12}$/.test(value);
+	$.validator.addMethod("twitter", function (value) {
+		return /^@?(\w){1,15}$/.test(value);
 	});
-	$.validator.addMethod("facebook", function(value) {
-		return /^[a-z\d_]{3,12}$/.test(value);
+	$.validator.addMethod("facebook", function (value) {
+		return /^http[s]?:\/\/(www|[a-zA-Z]{2}-[a-zA-Z]{2})\.facebook\.com\/(pages\/[a-zA-Z0-9\.-]+\/[0-9]+|[a-zA-Z0-9\.-]+)[\/]?$/.test(value);
 	});
-	$.validator.addMethod("linkedin", function(value) {
-		return /^[a-z\d_]{3,12}$/.test(value);
+	$.validator.addMethod("linkedin", function (value) {
+		return /^http[s]?:\/\/((www|\w\w)\.)?linkedin.com\/((in\/[^\/]+\/?)|(pub\/[^\/]+\/((\w|\d)+\/?){3}))$/.test(value);
 	});
-	$.validator.addMethod("googleplus", function(value) {
-		return /^[a-z\d_]{3,12}$/.test(value);
+	$.validator.addMethod("googleplus", function (value) {
+		return /^((http|https):\/\/)?(www[.])?plus\.google\.com\/.?\/?.?\/?([\w\W0-9]*)$/.test(value);
 	});
 
 
