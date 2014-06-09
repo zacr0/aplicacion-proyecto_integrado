@@ -85,19 +85,31 @@ block content
             .form-group.has-feedback
               p
                 strong <i class='fa fa-twitter'></i> - Usuario de Twitter:
-              input(id='twitter',name='twitter',placeholder='Ejemplo: @usuario',type='text').form-control.text-center
+              if (datosUsuario.social[0])
+                input(id='twitter',name='twitter',placeholder='Ejemplo: @usuario',value='#{datosUsuario.social[0].twitter}',type='text').form-control.text-center
+              else
+                input(id='twitter',name='twitter',placeholder='Ejemplo: @usuario',type='text').form-control.text-center
             .form-group.has-feedback
               p
                 strong <i class='fa fa-facebook'></i> - Perfil de Facebook:
-              input(id='facebook',name='facebook',placeholder='Ejemplo: https://www.facebook.com/usuario',type='text').form-control.text-center
+              if (datosUsuario.social[0])
+                input(id='facebook',name='facebook',placeholder='Ejemplo: https://www.facebook.com/usuario',value='#{datosUsuario.social[0].facebook}',type='text').form-control.text-center
+              else
+                input(id='facebook',name='facebook',placeholder='Ejemplo: https://www.facebook.com/usuario',type='text').form-control.text-center
             .form-group.has-feedback
               p
                 strong <i class='fa fa-linkedin'></i> - Perfil de LinkedIn:
-              input(id='linkedin',name='linkedin',placeholder='Ejemplo: https://www.linkedin.com/in/usuario',type='text').form-control.text-center
+              if (datosUsuario.social[0])
+                input(id='linkedin',name='linkedin',placeholder='Ejemplo: https://www.linkedin.com/in/usuario',value='#{datosUsuario.social[0].linkedin}',type='text').form-control.text-center
+              else
+                input(id='linkedin',name='linkedin',placeholder='Ejemplo: https://www.linkedin.com/in/usuario',type='text').form-control.text-center
             .form-group.has-feedback
               p
                 strong <i class='fa fa-google-plus'></i> - Perfil de Google+:
-              input(id='googleplus',name='googleplus',placeholder='Ejemplo.: https://plus.google.com/129348983',type='text').form-control.text-center
+              if (datosUsuario.social[0])
+                input(id='googleplus',name='googleplus',placeholder='Ejemplo.: https://plus.google.com/129348983',value='#{datosUsuario.social[0].googleplus}',type='text').form-control.text-center
+              else
+                input(id='googleplus',name='googleplus',placeholder='Ejemplo.: https://plus.google.com/129348983',type='text').form-control.text-center
             input(type='submit', value='Actualizar datos').btn.btn-block.btn-primary
 
 

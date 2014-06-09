@@ -184,20 +184,13 @@ var Usuario = require('../models/Usuario'),
 				}
 				
 				if (passEncrypt === user.pass){
-					console.log('Twitter ' + req.body.twitter);
-					console.log('Facebook ' + req.body.facebook);
-					console.log('Linkedin ' + req.body.linkedin);
-					console.log('Googleplus ' + req.body.googleplus);
-
-					// No se insertan los valores de los perfiles
 					Usuario.update( { usuario : req.params.usuario }, 
 					{ $set : { email : req.body.email , fechaNacimiento: req.body.fechaNacimiento, pass: newPassEncrypt, 
-						social: {'twitter': req.body.twitter, 'facebook': req.body.facebook, 'linkedin': req.body.linkedin, 'googleplus': req.body.googleplus} } },
+						social: [{'twitter': req.body.twitter, 'facebook': req.body.facebook, 'linkedin': req.body.linkedin, 'googleplus': req.body.googleplus}] } },
 						function (err, data) {
 							if (err) {
 								return console.error(err);
 							}
-							console.log(user);
 			        		res.render('editar', {usuario: req.session.usuario,
 			        			datosUsuario: user,
 			        			success: true
