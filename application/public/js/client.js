@@ -72,12 +72,23 @@ $(function() {
 	// Validacion de formulario
 	$('#form-registro').validate({
 		errorPlacement: function(label, element) {
-			label.insertAfter(element);
+			if ($(element).attr('type') !== 'radio') {
+				label.insertAfter(element);
+				$(element).parent().addClass('has-error');
+			} else {
+				label.appendTo($('#msgError'));
+				$(element).parent().parent().addClass('has-error');
+			}
+
 			label.addClass('control-label');
-			$(element).parent().addClass('has-error');
+			
 		},
 		unhighlight: function (element) {
-			$(element).parent().removeClass('has-error');
+			if ($(element).attr('type') !== 'radio') {
+				$(element).parent().removeClass('has-error');
+			} else {
+				$(element).parent().parent().removeClass('has-error');
+			}
 		},
 		rules: {
 			usuario: {
@@ -206,36 +217,40 @@ $(function() {
 	
 
 // PAGINA DE USUARIOS
+	// Deshabilita enlace actual
 	$('ul.nav li.disabled a').click(function(){
 		return false;
 	});
 
+	// Buscador de usuarios con AJAX
 	$('#buscador').keyup( function () {
 		var word;
 		if( $('#buscador').val() !== '' )
 			word = $('#buscador').val();
 
 		$.ajax({
-          url: "/usuarios/buscar/" + word,
-          type: 'GET',
-		  success: function(result){
-            if (result){
-              $('#perfil, #error').remove();
-              
-              var perfil;
-              for(var i = 0; i < result.users.length; i++){
-              	if (result.users[i].perfil === 'profesor')
-                  	perfil = '<span class="glyphicon glyphicon-book"></span> ';
-                else
-                  	perfil = '<span class="glyphicon glyphicon-pencil"></span> ';
-              	$('#usuarios').after('<article class="text-center col-xs-6 col-sm-4 col-md-3 col-lg-3" id="perfil"> \
-              		<a href="/perfil/' + result.users[i].usuario + '" title="Perfil de ' + result.users[i].nombre + ' ' + result.users[i].apellidos + '" id="enlacePerfil"> \
-              		<img src=' + result.users[i].foto + ' id="imagenPerfil" height="100" width="100" class="img-circle"/> \
-              		<p>' + perfil + result.users[i].nombre + ' ' + result.users[i].apellidos + '</p></a></article>');
-              } // for
-            } // if
-          } // success
-        });
+			url: "/usuarios/buscar/" + word,
+			type: 'GET',
+			success: function(result){
+				if (result){
+					$('#perfil, #error').remove();
+
+					var perfil;
+
+					for(var i = 0; i < result.users.length; i++){
+						if (result.users[i].perfil === 'profesor')
+							perfil = '<span class="glyphicon glyphicon-book"></span> ';
+						else
+							perfil = '<span class="glyphicon glyphicon-pencil"></span> ';
+
+						$('#usuarios').after('<article class="text-center col-xs-6 col-sm-4 col-md-3 col-lg-3" id="perfil"> \
+							<a href="/perfil/' + result.users[i].usuario + '" title="Perfil de ' + result.users[i].nombre + ' ' + result.users[i].apellidos + '" id="enlacePerfil"> \
+							<img src=' + result.users[i].foto + ' id="imagenPerfil" height="100" width="100" class="img-circle"/> \
+							<p>' + perfil + result.users[i].nombre + ' ' + result.users[i].apellidos + '</p></a></article>');
+              		} // for
+            	} // if
+         	} // success
+         });
 	});
 
 // PAGINA DE PERFIL
@@ -307,16 +322,52 @@ $(function() {
 				equalTo: '#newPassword'
 			},
 			twitter: {
-
+				required: {
+					depends: function (element) {
+						return $("#twitter").val() !== '';
+					}
+				},
+				twitter: {
+					depends: function (element) {
+						return $("#twitter").val() !== '';
+					}
+				}
 			},
 			facebook: {
-
+				required: {
+					depends: function (element) {
+						return $("#facebook").val() !== '';
+					}
+				},
+				facebook: {
+					depends: function (element) {
+						return $("#facebook").val() !== '';
+					}
+				}
 			},
 			linkedin: {
-
+				required: {
+					depends: function (element) {
+						return $("#linkedin").val() !== '';
+					}
+				},
+				linkedin: {
+					depends: function (element) {
+						return $("#linkedin").val() !== '';
+					}
+				}
 			},
 			googleplus: {
-
+				required: {
+					depends: function (element) {
+						return $("#googleplus").val() !== '';
+					}
+				},
+				googleplus: {
+					depends: function (element) {
+						return $("#googleplus").val() !== '';
+					}
+				}
 			}
 		},
 		messages: {
@@ -327,22 +378,34 @@ $(function() {
 			newPassword: {
 				pwd: "La contraseña debe tener al menos 6 caracteres, \
 					una minúscula, una mayúscula y un número."
+			},
+			twitter: {
+				twitter: 'El valor introducido no es usuario de Twitter válido.'
+			},
+			facebook: {
+				facebook: 'El valor introducido no es una dirección Facebook válida.'
+			},
+			linkedin: {
+				linkedin: 'El valor introducido no es una dirección LinkedIn válida.'
+			},
+			googleplus: {
+				googleplus: 'El valor introducido no es una dirección Google+ válida.'
 			}
 		}
 	});
 
 	// Validaciones para perfiles sociales:
-	$.validator.addMethod("twitter", function(value) {
-		return /^[a-z\d_]{3,12}$/.test(value);
+	$.validator.addMethod("twitter", function (value) {
+		return /^@?(\w){1,15}$/.test(value);
 	});
-	$.validator.addMethod("facebook", function(value) {
-		return /^[a-z\d_]{3,12}$/.test(value);
+	$.validator.addMethod("facebook", function (value) {
+		return /^http[s]?:\/\/(www|[a-zA-Z]{2}-[a-zA-Z]{2})\.facebook\.com\/(pages\/[a-zA-Z0-9\.-]+\/[0-9]+|[a-zA-Z0-9\.-]+)[\/]?$/.test(value);
 	});
-	$.validator.addMethod("linkedin", function(value) {
-		return /^[a-z\d_]{3,12}$/.test(value);
+	$.validator.addMethod("linkedin", function (value) {
+		return /^http[s]?:\/\/((www|\w\w)\.)?linkedin.com\/((in\/[^\/]+\/?)|(pub\/[^\/]+\/((\w|\d)+\/?){3}))$/.test(value);
 	});
-	$.validator.addMethod("googleplus", function(value) {
-		return /^[a-z\d_]{3,12}$/.test(value);
+	$.validator.addMethod("googleplus", function (value) {
+		return /^((http|https):\/\/)?(www[.])?plus\.google\.com\/.?\/?.?\/?([\w\W0-9]*)$/.test(value);
 	});
 
 
