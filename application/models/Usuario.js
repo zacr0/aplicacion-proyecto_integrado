@@ -11,7 +11,8 @@ var Usuario = new Schema({
   perfil: String,
   id_promocion: Schema.ObjectId,
   id_curso: Schema.ObjectId,
-  asignaturasProfesor: [String]
+  asignaturasProfesor: [String],
+  social: {type: {}}
 });
 
 exports = module.exports = mongoose.model('usuario', Usuario);

@@ -56,6 +56,17 @@ block content
 
     if (anuncios && anuncios.length > 0)
       - var j = 0;
+      div(class="text-center")
+        ul(class="pagination pagination-centered")
+          li
+            a(href=queryparams ? querystring + "&page=1" : querystring + "?page=1") Más recientes
+          - for( var i = parseInt(page,10) - 4; i <= parseInt(page, 10) + 4; i++)
+            - if (i >0 && i <= pages) {
+              li(class= (page == i ? 'active' : ''))
+                a(href=queryparams ? querystring + "&page=" + i : querystring + "?page=" + i)= i
+            -}
+          li
+            a(href= queryparams ? querystring + "&page=" + pages : querystring + "?page=" + pages) Más antiguos
       each anuncio, j in anuncios
         .col-xs-12.col-sm-6.col-md-4.col-lg-3
           article.anuncio.panel.panel-primary
@@ -75,6 +86,18 @@ block content
                | #{anuncio.fechaPublicacion.getDate()}/#{anuncio.fechaPublicacion.getMonth()+1}/#{anuncio.fechaPublicacion.getFullYear()}, 
               time(datetime="#{anuncio.fechaPublicacion.getHours()}:#{anuncio.fechaPublicacion.getMinutes()}:#{anuncio.fechaPublicacion.getSeconds()}").
                 #{anuncio.fechaPublicacion.getHours()}:#{anuncio.fechaPublicacion.getMinutes()}:#{anuncio.fechaPublicacion.getSeconds()}
+      div(class="clearfix")
+      div(class="text-center")
+        ul(class="pagination pagination-centered")
+          li
+            a(href=queryparams ? querystring + "&page=1" : querystring + "?page=1") Más recientes
+          - for (var i = parseInt(page,10) - 4; i <= parseInt(page, 10) + 4; i++)
+            - if(i >0 && i <= pages){
+              li(class= (page == i ? 'active' : ''))
+                a(href=queryparams ? querystring + "&page=" + i : querystring + "?page=" + i)= i
+            -}
+          li
+            a(href= queryparams ? querystring + "&page=" + pages : querystring + "?page=" + pages) Más antiguos
     else
       p.text-center.
         Parece que no hay anuncios todavía, ¿por qué no
