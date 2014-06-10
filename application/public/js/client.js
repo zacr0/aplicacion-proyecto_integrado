@@ -233,7 +233,7 @@ $(function() {
 			type: 'GET',
 			success: function(result){
 				if (result){
-					$('#perfil, #error').remove();
+					$('article, #error').remove();
 
 					var perfil;
 

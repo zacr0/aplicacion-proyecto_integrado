@@ -9,9 +9,6 @@ var Anuncio = require('../models/Anuncio'),
 				queryAnuncio = Anuncio.find().sort({fechaPublicacion: -1}).skip((page-1)*20).limit(20),
         		querystring = req.url.replace(/(\&)?(\?)?page=.+(\&)?/,''),
         		queryparams = querystring.split('?').length > 1  && querystring.split('?')[1] !== "";
-				console.log('page: ' + page);
-				console.log('querystring: ' + querystring);
-				console.log('queryparams: ' + queryparams);
 
 			if (req.session.usuario != undefined) {
 
