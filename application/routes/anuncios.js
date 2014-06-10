@@ -4,31 +4,44 @@ var Anuncio = require('../models/Anuncio'),
 	async = require('async'),
 	route = function (app) {
 		app.get('/anuncios', function(req, res) {
-			var page = req.query.page || 1,
-				totalResults,
-				queryAnuncio = Anuncio.find().sort({fechaPublicacion: -1}).skip((page-1)*20).limit(20),
-        		querystring = req.url.replace(/(\&)?(\?)?page=.+(\&)?/,''),
-        		queryparams = querystring.split('?').length > 1  && querystring.split('?')[1] !== "";
 
 			if (req.session.usuario != undefined) {
+				var page,
+					pages,
+					totalResults,
+					queryAnuncio,
+	        		querystring = req.url.replace(/(\&)?(\?)?page=.+(\&)?/,''),
+	        		queryparams = querystring.split('?').length > 1  && querystring.split('?')[1] !== "";
 
 				async.series([
 					function (callback) {
 					  	Anuncio.find().count(function (err, count) {
-					      if(err) {
-					        req.flash('error', err);
-					        return res.redirect("/");
-					      }
-					      totalResults = count;
-					      console.log('Numero total anuncios: ' + totalResults);
-					      callback();
+					  		if (err) {
+					  			req.flash('error', err);
+					  			return res.redirect("/");
+					  		}
+					  		totalResults = count;
+					  		console.log('Numero total anuncios: ' + totalResults);
+					  		callback();
 					    });
 					}, function (callback) {
+						page = req.query.page || 1;
+						pages = Math.ceil(totalResults / 20);
+						
+						if (page > pages || req.query.page < 1 || isNaN(page)) {
+							page = 1;
+						}
+
+						queryAnuncio = Anuncio.find().sort({fechaPublicacion: - 1})
+													.skip((page - 1) * 20).limit(20);
+
 						queryAnuncio.exec( function (err, dataAnuncios) {
 							if (dataAnuncios.length > 0) {
 								res.render('anuncios', {usuario: req.session.usuario,
-									querystring: querystring, queryparams: queryparams,
-									page: page, pages: Math.ceil(totalResults/20),
+									querystring: querystring, 
+									queryparams: queryparams,
+									page: page, 
+									pages: Math.ceil(totalResults / 20),
 									anuncios: dataAnuncios });
 							} else {
 								console.log("No hay anuncios");
