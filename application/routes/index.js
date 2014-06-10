@@ -2,6 +2,7 @@ var Usuario = require('../models/Usuario'),
     Curso = require('../models/Curso'),
     Promocion = require('../models/Promocion'),
     Asignatura = require('../models/Asignatura'),
+    Clave = require('../models/Clave'),
     async = require('async'),
     crypto = require('crypto'),
     user,
@@ -137,6 +138,14 @@ var Usuario = require('../models/Usuario'),
                                 }); // promocion
                             } // else
                         }, function (callback) {
+                            ///////
+                            // Aqui se hace la consulta a Clave
+                            if (req.body.perfil === 'profesor') {
+
+                            } else {
+
+                            }
+                            ////////
                             user.save(function (err) {
                                 if (err) {
                                     req.session.error = err;
