@@ -167,7 +167,7 @@ var Usuario = require('../models/Usuario'),
         }); // app.post/perfil/usuario/editar/foto
 		
 		// Actualizacion de datos de usuario
-		app.post('/perfil/:usuario/editar/datos', function (req, res) {
+		app.post('/perfil/:usuario/editar', function (req, res) {
 			Usuario.findOne({usuario : req.params.usuario}, function (err, user){
 				if (err) {
 					return console.error(err);
@@ -191,9 +191,12 @@ var Usuario = require('../models/Usuario'),
 							if (err) {
 								return console.error(err);
 							}
-			        		res.render('editar', {usuario: req.session.usuario,
-			        			datosUsuario: user,
-			        			success: true
+
+							Usuario.findOne({usuario : req.params.usuario}, function (err, user){
+			        			res.render('editar', {usuario: req.session.usuario,
+			        				datosUsuario: user,
+			        				success: true
+			        			});
 			        		});
 					}); // Usuario.update
 				} else {
