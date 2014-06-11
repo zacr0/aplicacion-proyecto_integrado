@@ -60,7 +60,7 @@ block content
                 title="Contactar con #{datosUsuario.nombre} #{datosUsuario.apellidos}",
                 target="_blank") #{datosUsuario.email}
             
-            if (datosUsuario.social[0])
+            if (datosUsuario.social[0] && (datosUsuario.social[0].twitter || datosUsuario.social[0].facebook || datosUsuario.social[0].linkedin || datosUsuario.social[0].googleplus))
               p
                 strong Redes sociales:
                 ul
