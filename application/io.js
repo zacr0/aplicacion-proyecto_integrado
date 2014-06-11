@@ -7,6 +7,7 @@ module.exports = function(io) {
         rooms = ['Pasillo'];
 
 io.on('connection', function (socket) {
+
         // Introducimos al usuario en la sala por defecto
         socket.room = rooms[0];
 

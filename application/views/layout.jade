@@ -9,10 +9,8 @@ html(lang='es')
     meta(name='author', content='Pablo Medina Suarez, Ruben Rodriguez Ramirez')
     // Bootstrap core CSS
     link(rel='stylesheet', href='/lib/bootstrap/css/bootstrap.min.css')
-    //-link(rel='stylesheet', href='//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css')
-    link(rel='stylesheet', href='/lib/font-awesome/css/font-awesome.min.css')
+    link(rel='stylesheet', href='/lib/fontello/css/fontello.css')
     block custom-styles
-    script(src="/socket.io/socket.io.js")
     //-script(src="https://cdn.socket.io/socket.io-1.0.2.js")
     //HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries 
     //if lt IE 9
@@ -24,14 +22,16 @@ html(lang='es')
   //- JavaScript al final del body
   //Bootstrap core JavaScript
   //-script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js')
-  script(src='/js/jquery.min.js')
-  script(src='/lib/bootstrap/js/bootstrap.min.js')
+  //script(src='/js/jquery.min.js')
+  //script(src='/lib/bootstrap/js/bootstrap.min.js')
   //JavaScript cliente
-  script(src='/js/bootstrap-datepicker.min.js')
-  script(src='/js/jquery.validate.min.js')
-  script(src='/js/additional-methods.min.js')
-  script(src='/js/messages_es.min.js')
-  script(src='/js/Autolinker.min.js')
+  //script(src='/js/bootstrap-datepicker.min.js')
+  //script(src='/js/jquery.validate.min.js')
+  //script(src='/js/additional-methods.min.js')
+  //script(src='/js/messages_es.min.js')
+  //script(src='/js/Autolinker.min.js')
+  script(src="/socket.io/socket.io.js")
+  script(src='/js/libraries.js')
   script(src='/js/client.js')
     
   block custom-scripts
