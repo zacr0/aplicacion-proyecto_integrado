@@ -30,23 +30,23 @@ block content
                   legend Datos de conexión
                   .form-group
                     .col-xs-12.col-sm-12.col-md-10.col-md-offset-1
-                      input.form-control(id='usuario',name='usuario',placeholder='Usuario (obligatorio)', type='text', required)
+                      input.form-control(id='usuario',name='usuario',placeholder='Usuario (*)', type='text', required)
                   .form-group
                     .col-xs-12.col-sm-12.col-md-10.col-md-offset-1
-                      input.form-control(id='pass',name='pass',placeholder='Contraseña (obligatorio)', type='password', required)
+                      input.form-control(id='pass',name='pass',placeholder='Contraseña (*)', type='password', required)
                   .form-group
                     .col-xs-12.col-sm-12.col-md-10.col-md-offset-1
                       input.form-control(id='confirmpass',name='confirmpass',placeholder='Contraseña (confirmación)', type='password', required)
                   legend Datos personales
                   .form-group
                     .col-xs-12.col-sm-12.col-md-10.col-md-offset-1
-                      input.form-control(id='nombre',name='nombre',placeholder='Nombre (obligatorio)', type='text', required)
+                      input.form-control(id='nombre',name='nombre',placeholder='Nombre (*)', type='text', required)
                   .form-group
                     .col-xs-12.col-sm-12.col-md-10.col-md-offset-1
-                      input.form-control(id='apellidos',name='apellidos',placeholder='Apellidos (obligatorio)', type='text', required)
+                      input.form-control(id='apellidos',name='apellidos',placeholder='Apellidos (*)', type='text', required)
                   .form-group
                     .col-xs-12.col-sm-12.col-md-10.col-md-offset-1
-                      input.form-control(id='email',name='email',placeholder='Email (obligatorio)', type='email', required)
+                      input.form-control(id='email',name='email',placeholder='Email (*)', type='email', required)
                   .form-group
                     .col-xs-12.col-sm-12.col-md-10.col-md-offset-1
                       input.form-control(id='fechanacimiento',name='fechanacimiento',placeholder='Fecha de nacimiento', type='text')
@@ -80,9 +80,9 @@ block content
                     .col-xs-12.col-sm-12.col-md-10.col-md-offset-1
                       //- (Este campo aparece solo si el usuario es un profesor, sera obligatorio)
                       //- (Las opciones de este campo son resultado de una consulta a asignaturas)
-                      input.form-control(id='passProfesor',name='passProfesor',placeholder='Clave de profesores (obligatorio)', type='password')
+                      input.form-control(id='passProfesor',name='passProfesor',placeholder='Clave de profesores (*)', type='password')
                       p.help-block.
-                        Esta clave te será provista por un <a href='mailto:zacro.suarez@gmail.com?Subject=Clave de registro como profesor', title='Contacta con un administrador', target='_blank'>administrador</a>. 
+                        Esta clave te será provista por un <a href='mailto:zacro.suarez@gmail.com?Subject=Solicitud clave de registro como profesor', title='Contacta con un administrador', target='_blank'>administrador</a>. 
                       p.lead ¿Qué asignaturas impartes?
                       each asignatura in asignaturaData
                         label(for="asignatura")

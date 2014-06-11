@@ -61,7 +61,7 @@ block content
           form(id='form-datos', action='/perfil/' + usuario + '/editar', method='post',accept-charset='UTF-8')
             .form-group.has-feedback
               p(for='email')
-                strong Email (obligatorio):
+                strong Email (*):
               input(type='email', id='email',name='email', value='#{datosUsuario.email}', placeholder='Email' required).form-control.text-center
             .form-group.has-feedback
               - var fechaNacimiento = (datosUsuario.fechaNacimiento.getMonth()+1) + '/' + datosUsuario.fechaNacimiento.getDate() + '/' + datosUsuario.fechaNacimiento.getFullYear()
@@ -70,7 +70,7 @@ block content
               input.form-control(id='fechaNacimiento',name='fechaNacimiento',value='#{fechaNacimiento}',placeholder='Fecha de nacimiento', type='text' required).text-center
             .form-group.has-feedback
               p(for='pass')
-                strong Contraseña actual (obligatorio):
+                strong Contraseña actual (*):
               input(id='pass',name='pass',placeholder='Contraseña actual',type='password', required).form-control.text-center
             .form-group.has-feedback
               p(for='newPassword')
@@ -107,9 +107,9 @@ block content
               p
                 strong <i class='fa-google-plus'></i> - Perfil de Google+:
               if (datosUsuario.social[0])
-                input(id='googleplus',name='googleplus',placeholder='Ejemplo.: https://plus.google.com/129348983',value='#{datosUsuario.social[0].googleplus}',type='text').form-control.text-center
+                input(id='googleplus',name='googleplus',placeholder='Ejemplo.: https://www.plus.google.com/129348983',value='#{datosUsuario.social[0].googleplus}',type='text').form-control.text-center
               else
-                input(id='googleplus',name='googleplus',placeholder='Ejemplo.: https://plus.google.com/129348983',type='text').form-control.text-center
+                input(id='googleplus',name='googleplus',placeholder='Ejemplo.: https://www.plus.google.com/129348983',type='text').form-control.text-center
             input(type='submit', value='Actualizar datos').btn.btn-block.btn-primary
 
 
