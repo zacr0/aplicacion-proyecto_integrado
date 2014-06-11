@@ -92,8 +92,10 @@ var Usuario = require('../models/Usuario'),
                             return res.render('registro', 
                                 {error: 'El nombre de usuario introducido ' +
                                 'ya existe, introduzca otro.', 
+                                asignaturaData: asignaturaData,
                                 cursoData: cursoData, 
-                                promocionData: promocionData});
+                                promocionData: promocionData
+                            });
                         }
                     });
 
@@ -102,7 +104,6 @@ var Usuario = require('../models/Usuario'),
                     });
 
                     stream.on('close', function () {
-                        console.log('Ok');
                         callback();
                     });
 
@@ -164,7 +165,8 @@ var Usuario = require('../models/Usuario'),
                                                 'no es válida, inténtelo de nuevo.', 
                                                 cursoData: cursoData,
                                                 asignaturaData: asignaturaData,
-                                                promocionData: promocionData});
+                                                promocionData: promocionData
+                                            });
                                         }
                                     }
                                 })
