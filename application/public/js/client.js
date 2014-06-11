@@ -402,13 +402,13 @@ $(function() {
 		return /^@?(\w){1,15}$/.test(value);
 	});
 	$.validator.addMethod("facebook", function (value) {
-		return /^http[s]?:\/\/(www|[a-zA-Z]{2}-[a-zA-Z]{2})\.facebook\.com\/(pages\/[a-zA-Z0-9\.-]+\/[0-9]+|[a-zA-Z0-9\.-]+)[\/]?$/.test(value);
+		return /^http[s]?:\/\/(www\.)?facebook\.com\/(pages\/[a-zA-Z0-9\.-]+\/[0-9]+|[a-zA-Z0-9\.-]+)[\/]?$/.test(value);
 	});
 	$.validator.addMethod("linkedin", function (value) {
-		return /^http[s]?:\/\/((www|\w\w)\.)?linkedin.com\/((in\/[^\/]+\/?)|(pub\/[^\/]+\/((\w|\d)+\/?){3}))$/.test(value);
+		return /^http[s]?:\/\/(www\.)?linkedin.com\/((in\/[^\/]+\/?)|(pub\/[^\/]+\/((\w|\d)+\/?){3}))$/.test(value);
 	});
 	$.validator.addMethod("googleplus", function (value) {
-		return /^((http|https):\/\/)?(www[.])?plus\.google\.com\/.?\/?.?\/?([\w\W0-9]*)$/.test(value);
+		return /^http[s]?:\/\/(www\.)?plus\.google\.com\/.?\/?.?\/?([\w\W0-9]*)$/.test(value);
 	});
 
 
