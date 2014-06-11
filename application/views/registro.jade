@@ -31,6 +31,7 @@ block content
                   .form-group
                     .col-xs-12.col-sm-12.col-md-10.col-md-offset-1
                       input.form-control(id='usuario',name='usuario',placeholder='Usuario (*)', type='text', required)
+                      input.form-control(id='usuario',name='usuario',placeholder='Usuario (*)', value= user ? user.usuario : null, type='text', required)
                   .form-group
                     .col-xs-12.col-sm-12.col-md-10.col-md-offset-1
                       input.form-control(id='pass',name='pass',placeholder='Contraseña (*)', type='password', required)
@@ -40,16 +41,16 @@ block content
                   legend Datos personales
                   .form-group
                     .col-xs-12.col-sm-12.col-md-10.col-md-offset-1
-                      input.form-control(id='nombre',name='nombre',placeholder='Nombre (*)', type='text', required)
+                      input.form-control(id='nombre',name='nombre',placeholder='Nombre (*)', value= user ? user.nombre : null, type='text', required)
                   .form-group
                     .col-xs-12.col-sm-12.col-md-10.col-md-offset-1
-                      input.form-control(id='apellidos',name='apellidos',placeholder='Apellidos (*)', type='text', required)
+                      input.form-control(id='apellidos',name='apellidos',placeholder='Apellidos (*)', value= user ? user.apellidos : null, type='text', required)
                   .form-group
                     .col-xs-12.col-sm-12.col-md-10.col-md-offset-1
-                      input.form-control(id='email',name='email',placeholder='Email (*)', type='email', required)
+                      input.form-control(id='email',name='email',placeholder='Email (*)', value= user ? user.email : null, type='email', required)
                   .form-group
                     .col-xs-12.col-sm-12.col-md-10.col-md-offset-1
-                      input.form-control(id='fechanacimiento',name='fechanacimiento',placeholder='Fecha de nacimiento', type='text')
+                      input.form-control(id='fechanacimiento',name='fechanacimiento',placeholder='Fecha de nacimiento', value= user ? user.fechaNacimiento : null, type='text')
                   legend Tipo de perfil
                   .form-group
                     .col-xs-12.col-sm-12.col-md-10.col-md-offset-1.text-center

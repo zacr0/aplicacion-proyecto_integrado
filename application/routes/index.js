@@ -10,12 +10,12 @@ var Usuario = require('../models/Usuario'),
     promocionData,
     asignaturaData,
     route = function (app) {
-    	app.get('/', function (req, res) {
-    		res.render('index');
-    	});
+        app.get('/', function (req, res) {
+            res.render('index');
+        });
 
         // Login
-    	app.get('/login', function (req, res) {
+        app.get('/login', function (req, res) {
             if (req.session.usuario != undefined) {
                 res.redirect('perfil');
             } else {
@@ -60,7 +60,7 @@ var Usuario = require('../models/Usuario'),
         // Registro
         var queryAsignaturas = Asignatura.find().sort( { "nombre": 1 } );
 
-    	app.get('/registro', function (req, res) {
+        app.get('/registro', function (req, res) {
             async.series([
                 function cursos(callback) {
                     Promocion.find(function (err, data){
@@ -80,9 +80,9 @@ var Usuario = require('../models/Usuario'),
                     });
                 }
             ]);
-    	}); // app.get/registro
+        }); // app.get/registro
 
-    	app.post('/registro', function (req, res) {
+        app.post('/registro', function (req, res) {
             var query = Usuario.find();
             var stream = query.stream();
 
@@ -163,7 +163,8 @@ var Usuario = require('../models/Usuario'),
                                         } else {
                                             return res.render('registro', 
                                                 {error: 'La clave de profesor introducida ' +
-                                                'no es válida, inténtelo de nuevo.', 
+                                                'no es válida, inténtelo de nuevo.',
+                                                user: user,
                                                 cursoData: cursoData,
                                                 asignaturaData: asignaturaData,
                                                 promocionData: promocionData
