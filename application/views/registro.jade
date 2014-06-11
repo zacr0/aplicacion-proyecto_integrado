@@ -30,7 +30,7 @@ block content
                   legend Datos de conexión
                   .form-group
                     .col-xs-12.col-sm-12.col-md-10.col-md-offset-1
-                      input.form-control(id='usuario',name='usuario',placeholder='Usuario (obligatorio)', type='text', required)
+                      input.form-control(id='usuario',name='usuario',placeholder='Usuario (obligatorio)', value= user ? user.usuario : null, type='text', required)
                   .form-group
                     .col-xs-12.col-sm-12.col-md-10.col-md-offset-1
                       input.form-control(id='pass',name='pass',placeholder='Contraseña (obligatorio)', type='password', required)
@@ -40,16 +40,16 @@ block content
                   legend Datos personales
                   .form-group
                     .col-xs-12.col-sm-12.col-md-10.col-md-offset-1
-                      input.form-control(id='nombre',name='nombre',placeholder='Nombre (obligatorio)', type='text', required)
+                      input.form-control(id='nombre',name='nombre',placeholder='Nombre (obligatorio)', value= user ? user.nombre : null, type='text', required)
                   .form-group
                     .col-xs-12.col-sm-12.col-md-10.col-md-offset-1
-                      input.form-control(id='apellidos',name='apellidos',placeholder='Apellidos (obligatorio)', type='text', required)
+                      input.form-control(id='apellidos',name='apellidos',placeholder='Apellidos (obligatorio)', value= user ? user.apellidos : null, type='text', required)
                   .form-group
                     .col-xs-12.col-sm-12.col-md-10.col-md-offset-1
-                      input.form-control(id='email',name='email',placeholder='Email (obligatorio)', type='email', required)
+                      input.form-control(id='email',name='email',placeholder='Email (obligatorio)', value= user ? user.email : null, type='email', required)
                   .form-group
                     .col-xs-12.col-sm-12.col-md-10.col-md-offset-1
-                      input.form-control(id='fechanacimiento',name='fechanacimiento',placeholder='Fecha de nacimiento', type='text')
+                      input.form-control(id='fechanacimiento',name='fechanacimiento',placeholder='Fecha de nacimiento', value= user ? user.fechaNacimiento : null, type='text')
                   legend Tipo de perfil
                   .form-group
                     .col-xs-12.col-sm-12.col-md-10.col-md-offset-1.text-center
@@ -57,7 +57,7 @@ block content
                         input(type='radio',id='alumno',name='perfil',value='alumno', required)
                         | Soy un alumno
                       label.radio-inline
-                        input(type='radio',id='profesor',name='perfil',value='profesor')
+                        input(type='radio',id='profesor',name='perfil',value='profesor', checked= user ? 'checked' : null)
                         | Soy un profesor
                       #msgError
                   .form-group.visible-alumno
