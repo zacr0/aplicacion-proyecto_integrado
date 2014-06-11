@@ -30,7 +30,6 @@ block content
                   legend Datos de conexión
                   .form-group
                     .col-xs-12.col-sm-12.col-md-10.col-md-offset-1
-                      input.form-control(id='usuario',name='usuario',placeholder='Usuario (*)', type='text', required)
                       input.form-control(id='usuario',name='usuario',placeholder='Usuario (*)', value= user ? user.usuario : null, type='text', required)
                   .form-group
                     .col-xs-12.col-sm-12.col-md-10.col-md-offset-1
@@ -50,7 +49,7 @@ block content
                       input.form-control(id='email',name='email',placeholder='Email (*)', value= user ? user.email : null, type='email', required)
                   .form-group
                     .col-xs-12.col-sm-12.col-md-10.col-md-offset-1
-                      input.form-control(id='fechanacimiento',name='fechanacimiento',placeholder='Fecha de nacimiento', value= user ? user.fechaNacimiento : null, type='text')
+                      input.form-control(id='fechanacimiento',name='fechanacimiento',placeholder='Fecha de nacimiento', value= user ? ((user.fechaNacimiento.getMonth())+1) + '/' + user.fechaNacimiento.getDate() + '/' + user.fechaNacimiento.getFullYear() : null, type='text')
                   legend Tipo de perfil
                   .form-group
                     .col-xs-12.col-sm-12.col-md-10.col-md-offset-1.text-center
