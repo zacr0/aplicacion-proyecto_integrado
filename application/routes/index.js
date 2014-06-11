@@ -76,7 +76,8 @@ var Usuario = require('../models/Usuario'),
                 }, function resultados(callback) {
                     res.render('registro', {cursoData: cursoData, 
                         promocionData: promocionData,
-                        asignaturaData: asignaturaData});
+                        asignaturaData: asignaturaData
+                    });
                 }
             ]);
     	}); // app.get/registro

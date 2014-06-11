@@ -38,7 +38,7 @@ $(function() {
 	$('.visible-profesor').hide();
 
 	// Muestra y deselecciona opciones de los perfiles
-	$('input[name=perfil]').click(function () {
+	$('input[name=perfil]').change(function () {
 		if (this.checked && this.id == "alumno") {
 			$(".visible-alumno").show();
 			$("#alumno").prop('required', true);
@@ -50,8 +50,8 @@ $(function() {
 		if (this.checked && this.id == "profesor") {
 			$(".visible-profesor").show();
 			$("#passProfesor").prop('required', true);
-			$("select#promocion :selected").removeAttr("selected");
-			$("select#curso :selected").removeAttr("selected");
+			$("select#promocion").val(0);
+			$("select#curso").val(0);
 			$(".visible-alumno").hide();
 		}
 	});

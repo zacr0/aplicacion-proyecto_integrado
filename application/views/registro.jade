@@ -65,7 +65,7 @@ block content
                       //- (Este campo aparece solo si el usuario es un alumno, sera obligatorio)
                       //- (Las opciones de este campo son resultado de una consulta a promociones)
                       select(id='promocion',name='promocion').form-control
-                        option(selected='selected', disabled) ¿Cuál es tu promoción?
+                        option(value='0', selected='selected', disabled) ¿Cuál es tu promoción?
                         - each promocion in promocionData
                           option(value="#{promocion.nombre}") #{promocion.nombre}
                   .form-group.visible-alumno
@@ -73,7 +73,7 @@ block content
                       //- (Este campo aparece solo si el usuario es un alumno, sera obligatorio)
                       //- (Las opciones de este campo son resultado de una consulta a cursos)
                       select(id='curso',name='curso').form-control
-                        option(selected='selected', disabled) ¿Cuál es tu curso?
+                        option(value='0', selected='selected', disabled) ¿Cuál es tu curso?
                         - each curso in cursoData
                           option(value="#{curso.nombre}", disabled) #{curso.nombre}
                   .form-group.visible-profesor
