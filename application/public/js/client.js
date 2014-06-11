@@ -41,12 +41,15 @@ $(function() {
 	$('input[name=perfil]').click(function () {
 		if (this.checked && this.id == "alumno") {
 			$(".visible-alumno").show();
-			$("#alumno").prop('required');
+			$("#alumno").prop('required', true);
+			$("#passProfesor").removeProp('required');
+			$("input[name=passProfesor]").val('');
 			$("input[name=asignatura]").prop('checked', false);
 			$(".visible-profesor").hide();
 		} 
 		if (this.checked && this.id == "profesor") {
 			$(".visible-profesor").show();
+			$("#passProfesor").prop('required', true);
 			$("select#promocion :selected").removeAttr("selected");
 			$("select#curso :selected").removeAttr("selected");
 			$(".visible-alumno").hide();

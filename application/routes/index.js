@@ -2,6 +2,7 @@ var Usuario = require('../models/Usuario'),
     Curso = require('../models/Curso'),
     Promocion = require('../models/Promocion'),
     Asignatura = require('../models/Asignatura'),
+    Clave = require('../models/Clave'),
     async = require('async'),
     crypto = require('crypto'),
     user,
@@ -121,6 +122,7 @@ var Usuario = require('../models/Usuario'),
                     user.email = req.body.email;
                     user.fechaNacimiento = req.body.fechanacimiento;
                     user.perfil = req.body.perfil;
+                    user.social = [];
 
                     async.series([
                         function (callback){
@@ -137,19 +139,50 @@ var Usuario = require('../models/Usuario'),
                                 }); // promocion
                             } // else
                         }, function (callback) {
-                            user.save(function (err) {
-                                if (err) {
-                                    req.session.error = err;
-                                    console.log('Error al registrar usuario');
-                                    res.render('registro', {error: req.session.error, 
-                                        cursoData: cursoData, 
-                                        promocionData: promocionData
-                                    });
-                                    return console.error(err);
-                                }
-                                console.log('Usuario registrado');
-                                res.render('login', {success: true});
-                            }); // save
+                            if (req.body.perfil === 'profesor') {
+                                Clave.findOne({nombre: 'claveProfesores', password: req.body.passProfesor}, function (err, pass) {
+                                    if (err) {
+                                        return console.error(err);
+                                    } else {
+                                        if (pass) {
+                                            user.save(function (err) {
+                                                if (err) {
+                                                    req.session.error = err;
+                                                    console.log('Error al registrar usuario');
+                                                    res.render('registro', {error: req.session.error, 
+                                                        cursoData: cursoData, 
+                                                        promocionData: promocionData
+                                                    });
+                                                    return console.error(err);
+                                                }
+                                                console.log('Usuario registrado');
+                                                res.render('login', {success: true});
+                                            }); // save
+                                        } else {
+                                            return res.render('registro', 
+                                                {error: 'La clave de profesor introducida ' +
+                                                'no es válida, inténtelo de nuevo.', 
+                                                cursoData: cursoData,
+                                                asignaturaData: asignaturaData,
+                                                promocionData: promocionData});
+                                        }
+                                    }
+                                })
+                            } else {
+                                user.save(function (err) {
+                                    if (err) {
+                                        req.session.error = err;
+                                        console.log('Error al registrar usuario');
+                                        res.render('registro', {error: req.session.error, 
+                                            cursoData: cursoData, 
+                                            promocionData: promocionData
+                                        });
+                                        return console.error(err);
+                                    }
+                                    console.log('Usuario registrado');
+                                    res.render('login', {success: true});
+                                }); // save
+                            }
                         }
                     ]); // async.series
 
