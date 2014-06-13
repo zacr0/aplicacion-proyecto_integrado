@@ -5,7 +5,7 @@ block title
 
 block custom-styles
   link(rel='stylesheet', href='/stylesheets/style.css')
-  link(rel='stylesheet', href='/stylesheets/datepicker.css')
+  link(rel='stylesheet', href='/stylesheets/datepicker.min.css')
 
 block content
   .container
@@ -30,26 +30,26 @@ block content
                   legend Datos de conexión
                   .form-group
                     .col-xs-12.col-sm-12.col-md-10.col-md-offset-1
-                      input.form-control(id='usuario',name='usuario',placeholder='Usuario (obligatorio)', value= user ? user.usuario : null, type='text', required)
+                      input.form-control(id='usuario',name='usuario',placeholder='Usuario (*)', value= user ? user.usuario : null, type='text', required)
                   .form-group
                     .col-xs-12.col-sm-12.col-md-10.col-md-offset-1
-                      input.form-control(id='pass',name='pass',placeholder='Contraseña (obligatorio)', type='password', required)
+                      input.form-control(id='pass',name='pass',placeholder='Contraseña (*)', type='password', required)
                   .form-group
                     .col-xs-12.col-sm-12.col-md-10.col-md-offset-1
                       input.form-control(id='confirmpass',name='confirmpass',placeholder='Contraseña (confirmación)', type='password', required)
                   legend Datos personales
                   .form-group
                     .col-xs-12.col-sm-12.col-md-10.col-md-offset-1
-                      input.form-control(id='nombre',name='nombre',placeholder='Nombre (obligatorio)', value= user ? user.nombre : null, type='text', required)
+                      input.form-control(id='nombre',name='nombre',placeholder='Nombre (*)', value= user ? user.nombre : null, type='text', required)
                   .form-group
                     .col-xs-12.col-sm-12.col-md-10.col-md-offset-1
-                      input.form-control(id='apellidos',name='apellidos',placeholder='Apellidos (obligatorio)', value= user ? user.apellidos : null, type='text', required)
+                      input.form-control(id='apellidos',name='apellidos',placeholder='Apellidos (*)', value= user ? user.apellidos : null, type='text', required)
                   .form-group
                     .col-xs-12.col-sm-12.col-md-10.col-md-offset-1
-                      input.form-control(id='email',name='email',placeholder='Email (obligatorio)', value= user ? user.email : null, type='email', required)
+                      input.form-control(id='email',name='email',placeholder='Email (*)', value= user ? user.email : null, type='email', required)
                   .form-group
                     .col-xs-12.col-sm-12.col-md-10.col-md-offset-1
-                      input.form-control(id='fechanacimiento',name='fechanacimiento',placeholder='Fecha de nacimiento', value= user ? user.fechaNacimiento : null, type='text')
+                      input.form-control(id='fechanacimiento',name='fechanacimiento',placeholder='Fecha de nacimiento', value= user ? ((user.fechaNacimiento.getMonth())+1) + '/' + user.fechaNacimiento.getDate() + '/' + user.fechaNacimiento.getFullYear() : null, type='text')
                   legend Tipo de perfil
                   .form-group
                     .col-xs-12.col-sm-12.col-md-10.col-md-offset-1.text-center
@@ -65,7 +65,7 @@ block content
                       //- (Este campo aparece solo si el usuario es un alumno, sera obligatorio)
                       //- (Las opciones de este campo son resultado de una consulta a promociones)
                       select(id='promocion',name='promocion').form-control
-                        option(selected='selected', disabled) ¿Cuál es tu promoción?
+                        option(value='0', selected='selected', disabled) ¿Cuál es tu promoción?
                         - each promocion in promocionData
                           option(value="#{promocion.nombre}") #{promocion.nombre}
                   .form-group.visible-alumno
@@ -73,16 +73,16 @@ block content
                       //- (Este campo aparece solo si el usuario es un alumno, sera obligatorio)
                       //- (Las opciones de este campo son resultado de una consulta a cursos)
                       select(id='curso',name='curso').form-control
-                        option(selected='selected', disabled) ¿Cuál es tu curso?
+                        option(value='0', selected='selected', disabled) ¿Cuál es tu curso?
                         - each curso in cursoData
                           option(value="#{curso.nombre}", disabled) #{curso.nombre}
                   .form-group.visible-profesor
                     .col-xs-12.col-sm-12.col-md-10.col-md-offset-1
                       //- (Este campo aparece solo si el usuario es un profesor, sera obligatorio)
                       //- (Las opciones de este campo son resultado de una consulta a asignaturas)
-                      input.form-control(id='passProfesor',name='passProfesor',placeholder='Clave de profesores', type='password')
+                      input.form-control(id='passProfesor',name='passProfesor',placeholder='Clave de profesores (*)', type='password')
                       p.help-block.
-                        Esta clave te será provista por un <a href='mailto:zacro.suarez@gmail.com?Subject=Clave de registro como profesor', title='Contacta con un administrador', target='_blank'>administrador</a>. 
+                        Esta clave te será provista por un <a href='mailto:zacro.suarez@gmail.com?Subject=Solicitud clave de registro como profesor', title='Contacta con un administrador', target='_blank'>administrador</a>. 
                       p.lead ¿Qué asignaturas impartes?
                       each asignatura in asignaturaData
                         label(for="asignatura")
