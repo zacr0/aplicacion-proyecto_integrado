@@ -1,0 +1,77 @@
+extends layout
+
+block title
+  title SocialGCap - Editar asignaturas
+
+block custom-styles
+  link(rel='stylesheet', href='/stylesheets/style.css')
+
+block content
+  .container
+    - var activo = 'perfil';
+    include navbar
+
+    header.page-header
+      h1 Editar asignaturas impartidas
+
+    ul.nav.nav-tabs
+        li
+          a(href="/perfil", title="Ver datos de perfil") Perfil
+        li
+          a(href="/perfil/#{usuario}/editar", title='Edita los datos de tu perfil') Editar perfil     
+        li
+          a(href="/perfil/#{usuario}/anuncios", title='Ver anuncios publicados') Anuncios publicados
+        li.active
+          a(href="#", title='Edita las asignaturas que impartes') Editar asignaturas impartidas
+
+    section.well
+      if error
+        .row.text-center
+          .alert.alert-danger.alert-dismissable
+            button(type="button",data-dismiss="alert",aria-hidden="true").close 
+              | &times;
+            strong 
+              | ¡Lo sentimos! 
+            p=error
+      if success
+        .row.text-center
+          .alert.alert-success.alert-dismissable
+            button(type="button",data-dismiss="alert",aria-hidden="true").close 
+              | &times;
+            strong 
+              | ¡Todo correcto! 
+            p Asignaturas actualizadas correctamente.
+      form(id='form-asignaturas',method='post', action='/perfil/#{usuario}/editar/asignaturas')
+        .row
+          .col-xs-12.col-sm-4.col-md-4.col-lg-4
+            - for (i = 0; i < asignaturas.length / 3; i++) {
+                if datosUsuario.asignaturasProfesor.length > 0
+                  - var checked = datosUsuario.asignaturasProfesor.indexOf(asignaturas[i].nombre) !=-1
+                label(for="asignatura")
+                  input(type='checkbox',name='asignatura', value="#{asignaturas[i].nombre}", checked=checked)
+                  |  #{asignaturas[i].nombre}.
+                br
+            - }
+          .col-xs-12.col-sm-4.col-md-4.col-lg-4
+            - for (i; i < asignaturas.length / 3 * 2; i++) {
+                if datosUsuario.asignaturasProfesor.length > 0
+                  - var checked = datosUsuario.asignaturasProfesor.indexOf(asignaturas[i].nombre) !=-1
+                label(for="asignatura")
+                  input(type='checkbox',name='asignatura', value="#{asignaturas[i].nombre}", checked=checked)
+                  |  #{asignaturas[i].nombre}.
+                br
+            - }
+          .col-xs-12.col-sm-4.col-md-4.col-lg-4
+            - for (i ; i < asignaturas.length / 3 * 3; i++) {
+                if datosUsuario.asignaturasProfesor.length > 0
+                  - var checked = datosUsuario.asignaturasProfesor.indexOf(asignaturas[i].nombre) !=-1
+                label(for="asignatura")
+                  input(type='checkbox',name='asignatura', value="#{asignaturas[i].nombre}", checked=checked)
+                  |  #{asignaturas[i].nombre}.
+                br
+            - }
+        .row
+          hr
+          input(type='submit', value='Actualizar asignaturas').btn.btn-block.btn-primary
+
+    include footer
