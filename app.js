@@ -11,10 +11,8 @@ var express = require('express'),
     server = require('http').Server(app),
     io = require('socket.io')(server),
     mongoose = require('mongoose'),
-    db = mongoose.connect('mongodb://pablo:pablo@ds043388.mongolab.com:43388/proyectointegrado'),
-    //db = mongoose.connect('mongodb://localhost:27017/proyectointegrado'),
-    //db = mongoose.connect('mongodb://user:password@server'),
-    //db = mongoose.connect('mongodb://host:port/database'),
+    // Esta linea debe reeemplazarse por el servidor
+    db = mongoose.connect('mongodb://user:password@server:port/database'),
     async = require('async'),
     admin_routes = require('./routes/admin_routes'); // Module for routing
 
